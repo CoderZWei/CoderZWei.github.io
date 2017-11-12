@@ -88,7 +88,8 @@
 <meta property="og:description" content="之前都是在CSDN写博客，但是其排版实在是不美观且不方便，在GitHub上拥有一个属于自己的博客也是蛮有逼格的，通过hexo框架，使用markdown语法直接写博客也是十分方便的。在搭建过程中踩了很多坑，以此博客来记录搭建博客的过程。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2017/11/05/github搭建博客教程/1.png">
-<meta property="og:updated_time" content="2017-11-06T07:32:23.638Z">
+<meta property="og:image" content="http://yoursite.com/2017/11/05/github搭建博客教程/2.png">
+<meta property="og:updated_time" content="2017-11-12T08:06:47.344Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="github搭建博客教程">
 <meta name="twitter:description" content="之前都是在CSDN写博客，但是其排版实在是不美观且不方便，在GitHub上拥有一个属于自己的博客也是蛮有逼格的，通过hexo框架，使用markdown语法直接写博客也是十分方便的。在搭建过程中踩了很多坑，以此博客来记录搭建博客的过程。">
@@ -361,8 +362,18 @@
 <p>这时便可在 <a href="https://github名.github.io/" target="_blank" rel="external">https://github名.github.io/</a> 访问自己的博客，还可以使用github提供的主题，如果觉得那些主题不太美观，操作不太方便，可以使用第三方框架，这里我使用的是十分流行的hexo框架，其操作十分方便，新建文章只需几行命令，还有很多样式可供选择。</p>
 <p>欲使用hexo，需安装hexo、node.js、Git</p>
 <p>其中node.js和Git到官网下载软件然后点击安装就可，hexo在命令行中输入：npm install nexo-cli  -g安装。</p>
-<p>接着熟悉一下hexo的基本操作</p>
+<p>接着熟悉一下hexo的几个基本操作</p>
 <p>hexo init 初始化网站</p>
+<p>hexo g 生成网站</p>
+<p>hexo s 开启本地服务器</p>
+<p>hexo d 代码上传</p>
+<p>接着在本地新建一个文件夹，文件夹名为刚刚新建的仓库名，进入文件夹右键“Git Bash Here”，输入”hexo init”初始化网站</p>
+<p>打开_config.yml文件，将theme标签内容改为”next“(我这里用的是next主题，也可以使用其它主题或默认配置)</p>
+<p>将deploy标签改为如下所示：</p>
+<img src="/2017/11/05/github搭建博客教程/2.png">
+<p>检查SSH keys的设置：输入”ssh -T git@github.com”查看是否连接成功，若失败可查看这个<a href="http://www.cnblogs.com/itmyhome/p/4131245.html" target="_blank" rel="external">教程</a>进行配置</p>
+<p>新建一个博客：hexo n “test”，输入”hexo g”重新生成，”hexo s”在本地查看效果</p>
+<p>最后输入：hexo d 提交到github合并，在浏览器中输入之前所说的地址便可以浏览博客</p>
 
       
     </div>
@@ -479,7 +490,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

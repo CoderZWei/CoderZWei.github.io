@@ -79,14 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="about">
-<meta property="og:url" content="http://yoursite.com/about/index.html">
+<meta name="description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。 首先是将深度学习与目标检测相结合的先驱者：RCNN RCNN算法分为四步：1）通过selective search方法从输入图像中选出1k~2k个候选区域 2）对于每个候选区域，使用卷积神">
+<meta property="og:type" content="article">
+<meta property="og:title" content="目标检测方法综述">
+<meta property="og:url" content="http://yoursite.com/2017/11/12/目标检测方法综述/index.html">
 <meta property="og:site_name" content="blog">
+<meta property="og:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。 首先是将深度学习与目标检测相结合的先驱者：RCNN RCNN算法分为四步：1）通过selective search方法从输入图像中选出1k~2k个候选区域 2）对于每个候选区域，使用卷积神">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-06T07:22:44.142Z">
+<meta property="og:updated_time" content="2017-11-12T07:51:45.482Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="about">
+<meta name="twitter:title" content="目标检测方法综述">
+<meta name="twitter:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。 首先是将深度学习与目标检测相结合的先驱者：RCNN RCNN算法分为四步：1）通过selective search方法从输入图像中选出1k~2k个候选区域 2）对于每个候选区域，使用卷积神">
 
 
 
@@ -116,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/about/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/12/目标检测方法综述/"/>
 
 
 
 
 
-  <title>about | blog</title>
+  <title>目标检测方法综述 | blog</title>
   
 
 
@@ -247,33 +250,149 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/12/目标检测方法综述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="blog">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">about</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
+          <h1 class="post-title" itemprop="name headline">目标检测方法综述</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-12T15:16:43+08:00">
+                2017-11-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-      </div>
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。</p>
+<p>首先是将深度学习与目标检测相结合的先驱者：<a href="https://github.com/rbgirshick/rcnn" target="_blank" rel="external">RCNN</a></p>
+<p>RCNN算法分为四步：<br>1）通过selective search方法从输入图像中选出1k~2k个候选区域</p>
+<p>2）对于每个候选区域，使用卷积神经网络提取特征</p>
+<p>3）将特征送入每一类的SVM分类器，判断是否属于该类（这里是一个分类的过程）</p>
+<p>4）使用回归器精细修正候选框位置（这里是一个回归的过程）</p>
+<p>补充：</p>
+<p>selective search思想：<br>1、使用一种过分割手段，将图像分割成小区域（1k~2k个）</p>
+<p>2、查看现有小区域，按照合并规则合并可能性最高的相邻两个区域。重复直到整张图像合并成一个区域位置</p>
+<p>3、输出所有曾经存在过的区域，所谓候选区域</p>
+<p>存在的问题：</p>
+<p>由于要对每个候选区域使用深度网络提取特征，带来了很大的重复计算，使得算法的运行时间大大加长</p>
+<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><h3 id="YOLO2"><a href="#YOLO2" class="headerlink" title="YOLO2"></a>YOLO2</h3>
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/啦啦啦/" rel="next" title="啦啦啦">
+                <i class="fa fa-chevron-left"></i> 啦啦啦
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -306,8 +425,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -373,6 +501,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast-R-CNN"><span class="nav-number">1.</span> <span class="nav-text">Fast R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPPNet"><span class="nav-number">2.</span> <span class="nav-text">SPPNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Faster-R-CNN"><span class="nav-number">3.</span> <span class="nav-text">Faster R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO"><span class="nav-number">4.</span> <span class="nav-text">YOLO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSD"><span class="nav-number">5.</span> <span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO2"><span class="nav-number">6.</span> <span class="nav-text">YOLO2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
