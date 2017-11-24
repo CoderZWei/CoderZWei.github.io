@@ -79,13 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="CoderZWei&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+<meta name="description" content="深度缓冲是一个表面(表面是一个像素点阵，用于存储2D图形数据)，用于记录一个像素的深度信息 前缓冲与后缓冲用于交换链(几个表面组成一个交换链，使帧动画之间的过渡平滑)，由于应用程序的帧率与显示器的刷新速度不同，为了显示全部帧动画，在前缓冲的帧数据显示之后，后缓冲区的作为前缓冲区待显示，原本的前缓冲区作为后缓冲区存储数据，交替进行，即可显示全部帧动画">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Directx中的深度缓冲 前缓冲 后缓冲">
+<meta property="og:url" content="http://yoursite.com/2017/11/24/Directx中的深度缓冲-前缓冲-后缓冲/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="深度缓冲是一个表面(表面是一个像素点阵，用于存储2D图形数据)，用于记录一个像素的深度信息 前缓冲与后缓冲用于交换链(几个表面组成一个交换链，使帧动画之间的过渡平滑)，由于应用程序的帧率与显示器的刷新速度不同，为了显示全部帧动画，在前缓冲的帧数据显示之后，后缓冲区的作为前缓冲区待显示，原本的前缓冲区作为后缓冲区存储数据，交替进行，即可显示全部帧动画">
 <meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2017-11-24T07:41:40.285Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CoderZWei&#39;s blog">
+<meta name="twitter:title" content="Directx中的深度缓冲 前缓冲 后缓冲">
+<meta name="twitter:description" content="深度缓冲是一个表面(表面是一个像素点阵，用于存储2D图形数据)，用于记录一个像素的深度信息 前缓冲与后缓冲用于交换链(几个表面组成一个交换链，使帧动画之间的过渡平滑)，由于应用程序的帧率与显示器的刷新速度不同，为了显示全部帧动画，在前缓冲的帧数据显示之后，后缓冲区的作为前缓冲区待显示，原本的前缓冲区作为后缓冲区存储数据，交替进行，即可显示全部帧动画">
 
 
 
@@ -115,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/24/Directx中的深度缓冲-前缓冲-后缓冲/"/>
 
 
 
 
 
-  <title>Archive | CoderZWei's blog</title>
+  <title>Directx中的深度缓冲 前缓冲 后缓冲 | CoderZWei's blog</title>
   
 
 
@@ -140,7 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,333 +248,147 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/24/Directx中的深度缓冲-前缓冲-后缓冲/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Directx中的深度缓冲 前缓冲 后缓冲</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-24T15:40:45+08:00">
+                2017-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 8 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/关于岭回归/" itemprop="url">
-              
-                <span itemprop="name">关于岭回归</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:52:57+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/基于Android-WIFI直连的P2P聊天程序/" itemprop="url">
-              
-                <span itemprop="name">基于Android WIFI直连的P2P聊天程序</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:50:51+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/Android天气类app实现/" itemprop="url">
-              
-                <span itemprop="name">Android天气类app实现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:43:37+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <a id="more"></a>
+<p>深度缓冲是一个表面(表面是一个像素点阵，用于存储2D图形数据)，用于记录一个像素的深度信息</p>
+<p>前缓冲与后缓冲用于交换链(几个表面组成一个交换链，使帧动画之间的过渡平滑)，由于应用程序的帧率与显示器的刷新速度不同，为了显示全部帧动画，在前缓冲的帧数据显示之后，后缓冲区的作为前缓冲区待显示，原本的前缓冲区作为后缓冲区存储数据，交替进行，即可显示全部帧动画</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/浅谈Android中的PendingIntent/" itemprop="url">
-              
-                <span itemprop="name">浅谈Android中的PendingIntent</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:42:42+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/Directx中的深度缓冲-前缓冲-后缓冲/" itemprop="url">
-              
-                <span itemprop="name">Directx中的深度缓冲 前缓冲 后缓冲</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:40:45+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/tensorflow数据读取/" itemprop="url">
-              
-                <span itemprop="name">tensorflow数据读取</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:07:48+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/目标检测方法综述/" itemprop="url">
-              
-                <span itemprop="name">目标检测方法综述</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:16:43+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/05/github搭建博客教程/" itemprop="url">
-              
-                <span itemprop="name">github搭建博客教程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-05T13:09:33+08:00"
-              content="2017-11-05" >
-          11-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/24/tensorflow数据读取/" rel="next" title="tensorflow数据读取">
+                <i class="fa fa-chevron-left"></i> tensorflow数据读取
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/24/浅谈Android中的PendingIntent/" rel="prev" title="浅谈Android中的PendingIntent">
+                浅谈Android中的PendingIntent <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -578,6 +396,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -811,6 +633,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 

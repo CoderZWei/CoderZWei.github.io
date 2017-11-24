@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="教程,技术," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="机器学习开发所使用的框架，最流行的莫过于tensorflow了，但是其api略显晦涩难懂，更新快，导致学起来比较吃力。本文主要介绍在tensorflow中如何读取数据。">
-<meta name="keywords" content="教程,技术">
+<meta name="description" content="为了要练习Android开发，打算写一些app作为练习项目，第一个写的是手机拨号器，实现了手机系统拨号应用的常用基本功能，由于比较简单，所以就不写到博客里了。这个是第二个项目，实现了手机天气应用的基本功能。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tensorflow数据读取">
-<meta property="og:url" content="http://yoursite.com/2017/11/24/tensorflow数据读取/index.html">
+<meta property="og:title" content="Android天气类app实现">
+<meta property="og:url" content="http://yoursite.com/2017/11/24/Android天气类app实现/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="机器学习开发所使用的框架，最流行的莫过于tensorflow了，但是其api略显晦涩难懂，更新快，导致学起来比较吃力。本文主要介绍在tensorflow中如何读取数据。">
+<meta property="og:description" content="为了要练习Android开发，打算写一些app作为练习项目，第一个写的是手机拨号器，实现了手机系统拨号应用的常用基本功能，由于比较简单，所以就不写到博客里了。这个是第二个项目，实现了手机天气应用的基本功能。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-24T07:38:05.892Z">
+<meta property="og:image" content="http://yoursite.com/2017/11/24/Android天气类app实现/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/24/Android天气类app实现/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/24/Android天气类app实现/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/24/Android天气类app实现/4.png">
+<meta property="og:updated_time" content="2017-11-24T08:01:59.259Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tensorflow数据读取">
-<meta name="twitter:description" content="机器学习开发所使用的框架，最流行的莫过于tensorflow了，但是其api略显晦涩难懂，更新快，导致学起来比较吃力。本文主要介绍在tensorflow中如何读取数据。">
+<meta name="twitter:title" content="Android天气类app实现">
+<meta name="twitter:description" content="为了要练习Android开发，打算写一些app作为练习项目，第一个写的是手机拨号器，实现了手机系统拨号应用的常用基本功能，由于比较简单，所以就不写到博客里了。这个是第二个项目，实现了手机天气应用的基本功能。">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/24/Android天气类app实现/1.jpg">
 
 
 
@@ -120,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/24/tensorflow数据读取/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/24/Android天气类app实现/"/>
 
 
 
 
 
-  <title>tensorflow数据读取 | CoderZWei's blog</title>
+  <title>Android天气类app实现 | CoderZWei's blog</title>
   
 
 
@@ -263,7 +267,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/24/tensorflow数据读取/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/24/Android天气类app实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CoderZWei">
@@ -280,7 +284,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">tensorflow数据读取</h1>
+          <h1 class="post-title" itemprop="name headline">Android天气类app实现</h1>
         
 
         <div class="post-meta">
@@ -292,7 +296,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-24T15:07:48+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-24T15:43:37+08:00">
                 2017-11-24
               </time>
             
@@ -302,28 +306,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -352,17 +334,34 @@
       
 
       
-        <p>机器学习开发所使用的框架，最流行的莫过于tensorflow了，但是其api略显晦涩难懂，更新快，导致学起来比较吃力。本文主要介绍在tensorflow中如何读取数据。</p>
+        <p>为了要练习Android开发，打算写一些app作为练习项目，第一个写的是手机拨号器，实现了手机系统拨号应用的常用基本功能，由于比较简单，所以就不写到博客里了。这个是第二个项目，实现了手机天气应用的基本功能。</p>
 <a id="more"></a>
-<p>在早期的版本中，数据读取有两种方式：</p>
-<p>一种是最常用的先用tf.placeholder预留位置，然后读取数据，在run的时候通过feed_dict输入其中，但是数据量大的时候数据读取写起来很麻烦；</p>
-<p>另一种方式是通过queue即队列从文件中读取数据，具体使用方法可查看<a href="https://zhuanlan.zhihu.com/p/27238630" target="_blank" rel="external">这里</a></p>
-<p>这里主要介绍的是tensorflow中新的读取方式，在1.4版本中，其模块位于tf.data.Dataset中。</p>
-<p>dataset = tf.data.Dataset.from_tensor_slices((filenames))<br>dataset = dataset.map(_parse_function)<br>dataset = dataset.shuffle(buffer_size=10000).batch(batch_size).repeat(100)<br>iterator = dataset.make_initializable_iterator()<br>next_element = iterator.get_next()</p>
-<p>with tf. Session() as sess:</p>
-<p>​    sess.run(iterator.initializer)</p>
-<p>​    for i in range(epochs)：</p>
-<p>​         batch_x = sess.run(next_element)</p>
+<p>运行截图如下：</p>
+<img src="/2017/11/24/Android天气类app实现/1.jpg"><img src="/2017/11/24/Android天气类app实现/1.jpg"><img src="/2017/11/24/Android天气类app实现/1.jpg">
+<p>需要实现的主要功能有：天气数据获取；城市定位；城市切换 下面开始逐一说明：</p>
+<p>一、天气数据获取</p>
+<p>我这里用的是百度提供的API，注册并下载百度开发者的SDK，再按照demo里的调用示例，即可获得所要查询城市天气数据</p>
+<p>首先新建一个类继承自Application类，在类中实现SDK的初始化，并在项目配置文件AndroidManifest.xml中application标签下android:name中指定该类，application中代码如下：</p>
+<p>public class MyApplication extends Application {<br>​      public LocationService locationService;<br>​    public Vibrator mVibrator;<br>​    private static MyApplication instance;<br>​    @Override<br>​    public void onCreate() {<br>​        ApiStoreSDK.init(this,”您的apikey”);<br>​        locationService =new LocationService(getApplicationContext());<br>​        mVibrator=(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);<br>​        SDKInitializer.initialize(getApplicationContext());<br>​        instance=this;<br>​        super.onCreate();<br>​    }<br>​    public static MyApplication getInstance(){<br>​        return instance;<br>​    }<br>}</p>
+<p>与此功能相关的代码为 ApiStoreSDK.init(this,”您的apikey”);</p>
+<p>在类中接口调用的代码为：</p>
+<p>​    Parameters para=new Parameters();<br>​                        para.put(“city”,city);<br>​                        ApiStoreSDK.execute(“<a href="http://apis.baidu.com/heweather/weather/free&quot;,ApiStoreSDK.GET" target="_blank" rel="external">http://apis.baidu.com/heweather/weather/free&quot;,ApiStoreSDK.GET</a>,<br>​                                para,new ApiCallBack(){<br>​                                    @Override<br>​                                    public void onSuccess(int i, String s) {<br>​                                        super.onSuccess(i, s);<br>​                                  //字符串s即为查询所获得数据，具体解析看查看API文档<br>​      }});}</p>
+<p>二、城市定位</p>
+<p>实现这个功能时遇到的麻烦最多，一开始的想法是通过Android自带的LOCATION_SERVICE功能取得位置数据，但是在调用</p>
+<p>locationManager.getLastKnownLocation方法时返回的Location总是为null，查了资料有的说是与手机有关，有的说是因为无法使用Google服务，于是果断换百度的定位SDK。仿照demo中的代码实现一个简单的定位，但在执行SDKInitializer.initialize(getApplication())这句时都会报错，一开始以为是自己代码的问题，调试了半天还是无法解决。仔细看错误原因才发现是因为没有添加.so文件，只添加了jar包，添加之后依然报相同的错误，那就是添加.so文件失败了。在网上找了好多方法都无法成功，最终决定索性用最简单的方法试一试，首先在libs目录下添加armeabi及arm64-8a目录(这是我所用到的，不同版本及功能添加 的不同）,将自己所需要的.so文件复制进去，如下图所示：</p>
+<img src="/2017/11/24/Android天气类app实现/4.png">
+<p>之后在build.gradle文件中添加如下一句:</p>
+<p> compile fileTree(include: [‘*.jar’], dir: ‘libs’);</p>
+<p>点击build-&gt;make project，之后再次运行，发现错误已解决，并可以取得正确数据</p>
+<p>其中application类中的相关代码为</p>
+<p>​        locationService =new LocationService(getApplicationContext());<br>​        mVibrator=(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);<br>​        SDKInitializer.initialize(getApplicationContext());</p>
+<p>java类中的相关代码为：</p>
+<p>​        locationService = ((MyApplication) getApplication()).locationService;<br>​        locationService.registerListener(mListener);<br>​        locationService.setLocationOption(locationService.getDefaultLocationClientOption());</p>
+<p>​        locationService.start();</p>
+<p>private BDLocationListener mListener = new BDLocationListener() {<br>​        @Override<br>​        public void onReceiveLocation(BDLocation location) {<br>​            // TODO Auto-generated method stub<br>​            if (null != location &amp;&amp; location.getLocType() != BDLocation.TypeServerError) {<br>​                city=location.getCity();<br>​              if (city.contains(“市”)){<br>​                 city=city.replace(“市”,””);<br>​              }}}};</p>
+<p>三、城市切换 </p>
+<p>在图2所示界面可选择所要查询的城市，点击之后将此城市存入数据库，在图3所示界面可对选择过的城市列表进行管理，在图1所示界面中通过手势的左右滑动，可以实现不同城市间的转换，此功能通过ViewPager+Fragment组合实现。</p>
+<p>这里有一点要说明，在滚动ViewPager时，为了保存Fragment的状态，防止被初始化，将适配器adapter继承自FragmentStatePagerAdapter即可</p>
 
       
     </div>
@@ -378,14 +377,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/教程/" rel="tag"># 教程</a>
-          
-            <a href="/tags/技术/" rel="tag"># 技术</a>
-          
-        </div>
-      
 
       
       
@@ -395,8 +386,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/12/目标检测方法综述/" rel="next" title="目标检测方法综述">
-                <i class="fa fa-chevron-left"></i> 目标检测方法综述
+              <a href="/2017/11/24/浅谈Android中的PendingIntent/" rel="next" title="浅谈Android中的PendingIntent">
+                <i class="fa fa-chevron-left"></i> 浅谈Android中的PendingIntent
               </a>
             
           </div>
@@ -405,8 +396,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/24/Directx中的深度缓冲-前缓冲-后缓冲/" rel="prev" title="Directx中的深度缓冲 前缓冲 后缓冲">
-                Directx中的深度缓冲 前缓冲 后缓冲 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/24/基于Android-WIFI直连的P2P聊天程序/" rel="prev" title="基于Android WIFI直连的P2P聊天程序">
+                基于Android WIFI直连的P2P聊天程序 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
