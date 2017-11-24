@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。 首先是将深度学习与目标检测相结合的先驱者：RCNN RCNN算法分为四步：1）通过selective search方法从输入图像中选出1k~2k个候选区域 2）对于每个候选区域，使用卷积神">
+<meta name="description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="目标检测方法综述">
 <meta property="og:url" content="http://yoursite.com/2017/11/12/目标检测方法综述/index.html">
-<meta property="og:site_name" content="blog">
-<meta property="og:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。 首先是将深度学习与目标检测相结合的先驱者：RCNN RCNN算法分为四步：1）通过selective search方法从输入图像中选出1k~2k个候选区域 2）对于每个候选区域，使用卷积神">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-12T07:51:45.482Z">
+<meta property="og:updated_time" content="2017-11-24T07:08:25.238Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="目标检测方法综述">
-<meta name="twitter:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。 首先是将深度学习与目标检测相结合的先驱者：RCNN RCNN算法分为四步：1）通过selective search方法从输入图像中选出1k~2k个候选区域 2）对于每个候选区域，使用卷积神">
+<meta name="twitter:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。">
 
 
 
@@ -125,7 +125,7 @@
 
 
 
-  <title>目标检测方法综述 | blog</title>
+  <title>目标检测方法综述 | CoderZWei's blog</title>
   
 
 
@@ -155,7 +155,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">blog</span>
+        <span class="site-title">CoderZWei's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -271,7 +271,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="blog">
+      <meta itemprop="name" content="CoderZWei's blog">
     </span>
 
     
@@ -330,6 +330,7 @@
 
       
         <p>近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。</p>
+<a id="more"></a>
 <p>首先是将深度学习与目标检测相结合的先驱者：<a href="https://github.com/rbgirshick/rcnn" target="_blank" rel="external">RCNN</a></p>
 <p>RCNN算法分为四步：<br>1）通过selective search方法从输入图像中选出1k~2k个候选区域</p>
 <p>2）对于每个候选区域，使用卷积神经网络提取特征</p>
@@ -340,8 +341,22 @@
 <p>2、查看现有小区域，按照合并规则合并可能性最高的相邻两个区域。重复直到整张图像合并成一个区域位置</p>
 <p>3、输出所有曾经存在过的区域，所谓候选区域</p>
 <p>存在的问题：</p>
-<p>由于要对每个候选区域使用深度网络提取特征，带来了很大的重复计算，使得算法的运行时间大大加长</p>
-<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><h3 id="YOLO2"><a href="#YOLO2" class="headerlink" title="YOLO2"></a>YOLO2</h3>
+<p>速度很慢</p>
+<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><p>解决了RCNN的三个问题：</p>
+<p>1、速度慢</p>
+<p>RCNN的候选框存在大量重叠，之后还要把他们输入到卷积神经网络提取特征，因此存在很大的优化空间。</p>
+<p>Fast R-CNN则是先将整张图片归一化后直接输入到深度网络，在第五个卷积层再得到每个候选框的特征</p>
+<p>对比：</p>
+<p>RCNN：许多候选框（比如两千个）–&gt;CNN–&gt;得到每个候选框的特征–&gt;分类+回归</p>
+<p>Fast RCNN：一张完整图片–&gt;CNN–&gt;得到每张候选框的特征–&gt;分类+回归</p>
+<p>2、占用空间大</p>
+<p>RCNN中独立的分类器和回归器需要大量特征作为训练样本</p>
+<p>在Fast RCNN中，类别判断和位置精调统一用深度网络实现，不再需要额外存储</p>
+<h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><p>RCNN和Fast RCNN都是采用Selective Search方法，运行在CPU中，花费了和检测网络差不多的时间，因此成为了目标检测提速的一个瓶颈，Faster RCNN就是用来解决这个问题。</p>
+<p>将目标检测的四个基本步骤（候选区域生成、特征提取、分类、位置精修）统一到一个深度网络框架之内，所有计算没有重复，完全在GPU中完成，大大提高了运行速度</p>
+<p>可以视为 区域生成网络+fast RCNN，用区域生成网络（RPN，region proposal network）代替了fast RCNN的Selective Search方法，将整个目标检测任务放到一个网络中，实现了端到端的训练，建议框计算几乎不会给检测网络的计算带来消耗。</p>
+<p>RPN网络和Fast RCNNN的目标检测网络共享计算，所以在这两个网络之间共享一系列卷积层。RPN将一个图像（任意大小）作为输入，输出矩形目标建议框的集合，每个框有一个objectness得分</p>
+<h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><h3 id="YOLO2"><a href="#YOLO2" class="headerlink" title="YOLO2"></a>YOLO2</h3>
       
     </div>
     
@@ -365,8 +380,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/05/啦啦啦/" rel="next" title="啦啦啦">
-                <i class="fa fa-chevron-left"></i> 啦啦啦
+              <a href="/2017/11/05/github搭建博客教程/" rel="next" title="github搭建博客教程">
+                <i class="fa fa-chevron-left"></i> github搭建博客教程
               </a>
             
           </div>
@@ -374,6 +389,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/24/tensorflow数据读取/" rel="prev" title="tensorflow数据读取">
+                tensorflow数据读取 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -454,7 +473,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -465,7 +484,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -476,7 +495,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

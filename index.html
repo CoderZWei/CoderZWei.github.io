@@ -80,12 +80,12 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="blog">
+<meta property="og:title" content="CoderZWei&#39;s blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="blog">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:locale" content="en">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="blog">
+<meta name="twitter:title" content="CoderZWei&#39;s blog">
 
 
 
@@ -121,7 +121,7 @@
 
 
 
-  <title>blog</title>
+  <title>CoderZWei's blog</title>
   
 
 
@@ -152,7 +152,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">blog</span>
+        <span class="site-title">CoderZWei's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -259,6 +259,130 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/24/tensorflow数据读取/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/24/tensorflow数据读取/" itemprop="url">tensorflow数据读取</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-24T15:07:48+08:00">
+                2017-11-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>机器学习开发所使用的框架，最流行的莫过于tensorflow了，但是其api略显晦涩难懂，更新快，导致学起来比较吃力。本文主要介绍在tensorflow中如何读取数据。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/24/tensorflow数据读取/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/12/目标检测方法综述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,7 +392,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="blog">
+      <meta itemprop="name" content="CoderZWei's blog">
     </span>
 
     
@@ -329,162 +453,14 @@
 
       
         
-          
-            <p>近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。</p>
-<p>首先是将深度学习与目标检测相结合的先驱者：<a href="https://github.com/rbgirshick/rcnn" target="_blank" rel="external">RCNN</a></p>
-<p>RCNN算法分为四步：<br>1）通过selective search方法从输入图像中选出1k~2k个候选区域</p>
-<p>2）对于每个候选区域，使用卷积神经网络提取特征</p>
-<p>3）将特征送入每一类的SVM分类器，判断是否属于该类（这里是一个分类的过程）</p>
-<p>4）使用回归器精细修正候选框位置（这里是一个回归的过程）</p>
-<p>补充：</p>
-<p>selective search思想：<br>1、使用一种过分割手段，将图像分割成小区域（1k~2k个）</p>
-<p>2、查看现有小区域，按照合并规则合并可能性最高的相邻两个区域。重复直到整张图像合并成一个区域位置</p>
-<p>3、输出所有曾经存在过的区域，所谓候选区域</p>
-<p>存在的问题：</p>
-<p>由于要对每个候选区域使用深度网络提取特征，带来了很大的重复计算，使得算法的运行时间大大加长</p>
-<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><h3 id="YOLO2"><a href="#YOLO2" class="headerlink" title="YOLO2"></a>YOLO2</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/啦啦啦/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="CoderZWei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/panpan.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/啦啦啦/" itemprop="url">啦啦啦</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-05T16:14:26+08:00">
-                2017-11-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端/" itemprop="url" rel="index">
-                    <span itemprop="name">前端</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
+          <p>近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/11/12/目标检测方法综述/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -540,7 +516,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="blog">
+      <meta itemprop="name" content="CoderZWei's blog">
     </span>
 
     
@@ -623,7 +599,7 @@
 
       
         
-          <p>之前都是在CSDN写博客，但是其排版实在是不美观且不方便，在GitHub上拥有一个属于自己的博客也是蛮有逼格的，通过hexo框架，使用markdown语法直接写博客也是十分方便的。在搭建过程中踩了很多坑，以此博客来记录搭建博客的过程。</p>
+          <p>之前都是在CSDN写博客，但是其排版实在是不美观且不方便，在GitHub上拥有一个属于自己的博客也是蛮有逼格的，通过hexo框架，使用markdown语法直接写博客也十分方便。看了网上的一些教程，自己实践搭建的时候踩了很多坑，以此博客来记录搭建博客的过程。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/11/05/github搭建博客教程/#more" rel="contents">
@@ -631,147 +607,6 @@
             </a>
           </div>
           <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/test/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="CoderZWei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/panpan.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/05/test/" itemprop="url">test</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-05T09:25:33+08:00">
-                2017-11-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/图片/" itemprop="url" rel="index">
-                    <span itemprop="name">图片</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <img src="/2017/11/05/test/5.jpg">
-          
         
       
     </div>
@@ -855,7 +690,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -866,7 +701,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">1</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -877,7 +712,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
