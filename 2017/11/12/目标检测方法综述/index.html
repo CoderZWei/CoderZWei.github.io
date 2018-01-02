@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-24T07:38:48.310Z">
+<meta property="og:updated_time" content="2017-12-15T07:02:06.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="目标检测方法综述">
 <meta name="twitter:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。">
@@ -354,6 +354,7 @@
       
         <p>近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。</p>
 <a id="more"></a>
+<p>目前目标检测领域主要分为两个方向，一种是以RCNN为代表的基于Region Proposal的思路（RCNN，SPP-NET，Fast-RCNN，Faster-RCNN等），识别精度较低；另一种是以YOLO为代表的基于回归的思路（YOLO，SSD等），识别效率高。</p>
 <p>首先是将深度学习与目标检测相结合的先驱者：<a href="https://github.com/rbgirshick/rcnn" target="_blank" rel="external">RCNN</a></p>
 <p>RCNN算法分为四步：<br>1）通过selective search方法从输入图像中选出1k~2k个候选区域</p>
 <p>2）对于每个候选区域，使用卷积神经网络提取特征</p>
@@ -365,6 +366,8 @@
 <p>3、输出所有曾经存在过的区域，所谓候选区域</p>
 <p>存在的问题：</p>
 <p>速度很慢</p>
+<p>1、每个图像都要产生2000个region proposal，然后经过AlexNet，需要很大的时间和资源</p>
+<p>2、需要分别训练三个不同的模型：CNN（generate image features）、SVM（predict the class）、bounding-box regression（tighten the bounding boxes）</p>
 <h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><p>解决了RCNN的三个问题：</p>
 <p>1、速度慢</p>
 <p>RCNN的候选框存在大量重叠，之后还要把他们输入到卷积神经网络提取特征，因此存在很大的优化空间。</p>
@@ -375,11 +378,18 @@
 <p>2、占用空间大</p>
 <p>RCNN中独立的分类器和回归器需要大量特征作为训练样本</p>
 <p>在Fast RCNN中，类别判断和位置精调统一用深度网络实现，不再需要额外存储</p>
-<h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><p>RCNN和Fast RCNN都是采用Selective Search方法，运行在CPU中，花费了和检测网络差不多的时间，因此成为了目标检测提速的一个瓶颈，Faster RCNN就是用来解决这个问题。</p>
+<h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><p>Faster RCNN解决的是摒弃selective search，全部用CNN，真正实现end-to-end的方式。</p>
+<p>RCNN和Fast RCNN都是采用Selective Search方法，运行在CPU中，花费了和检测网络差不多的时间，因此成为了目标检测提速的一个瓶颈，Faster RCNN就是用来解决这个问题。</p>
 <p>将目标检测的四个基本步骤（候选区域生成、特征提取、分类、位置精修）统一到一个深度网络框架之内，所有计算没有重复，完全在GPU中完成，大大提高了运行速度</p>
 <p>可以视为 区域生成网络+fast RCNN，用区域生成网络（RPN，region proposal network）代替了fast RCNN的Selective Search方法，将整个目标检测任务放到一个网络中，实现了端到端的训练，建议框计算几乎不会给检测网络的计算带来消耗。</p>
-<p>RPN网络和Fast RCNNN的目标检测网络共享计算，所以在这两个网络之间共享一系列卷积层。RPN将一个图像（任意大小）作为输入，输出矩形目标建议框的集合，每个框有一个objectness得分</p>
-<h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><h3 id="YOLO2"><a href="#YOLO2" class="headerlink" title="YOLO2"></a>YOLO2</h3>
+<p>RPN网络和Fast RCNN的目标检测网络共享计算，所以在这两个网络之间共享一系列卷积层。RPN将一个图像（任意大小）作为输入，输出矩形目标建议框的集合，每个框有一个objectness得分</p>
+<h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><p>RCNN、SPP-NET、Fast-RCNN、Faster-RCNN之类的算法都是基于RPN+分类的算法，均为two stage，无法达到实时性，而SSD以及之后的YOLO系列，都是one stage。</p>
+<p>SSD在保证速度和精度情况下，使用singe deep neural network，直接预测bounding box的坐标和类别的目标检测算法。</p>
+<p>本文主要贡献：</p>
+<p>1）论文发表时是最快的目标检测算法，比YOLO更快更精准（YOLO9000已经提速），精度逼近Faster RCNN</p>
+<p>2）SSD方法的核心就是predict object，以及其归属类别的score；同时，在feature map上使用小的卷积核，去predict一系列bounding boxes的box offsets</p>
+<p>2）</p>
+<h3 id="YOLO2"><a href="#YOLO2" class="headerlink" title="YOLO2"></a>YOLO2</h3>
       
     </div>
     
@@ -504,7 +514,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -581,7 +591,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
