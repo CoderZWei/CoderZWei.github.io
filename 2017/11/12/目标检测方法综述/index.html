@@ -79,18 +79,28 @@
 
 
 
-<meta name="description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。">
+<meta name="description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，做一个简单的综述，整理了一些网上的资料，以后若需要再深入研究。">
 <meta name="keywords" content="技术,理论">
 <meta property="og:type" content="article">
 <meta property="og:title" content="目标检测方法综述">
 <meta property="og:url" content="http://yoursite.com/2017/11/12/目标检测方法综述/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。">
+<meta property="og:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，做一个简单的综述，整理了一些网上的资料，以后若需要再深入研究。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-12-15T07:02:06.854Z">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/rcnn.svg">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/iou.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/SPP_Layer.png">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/fast-rcnn.svg">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/ROI_pooling.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/faster-rcnn.svg">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/ssd.svg">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/yolo.svg">
+<meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/YOLO.jpg">
+<meta property="og:updated_time" content="2018-01-13T07:41:56.551Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="目标检测方法综述">
-<meta name="twitter:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。">
+<meta name="twitter:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，做一个简单的综述，整理了一些网上的资料，以后若需要再深入研究。">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/rcnn.svg">
 
 
 
@@ -352,23 +362,54 @@
       
 
       
-        <p>近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，以下做一个简单的综述，以后若需要再深入研究。</p>
+        <p>近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，做一个简单的综述，整理了一些网上的资料，以后若需要再深入研究。</p>
 <a id="more"></a>
 <p>目前目标检测领域主要分为两个方向，一种是以RCNN为代表的基于Region Proposal的思路（RCNN，SPP-NET，Fast-RCNN，Faster-RCNN等），识别精度较低；另一种是以YOLO为代表的基于回归的思路（YOLO，SSD等），识别效率高。</p>
-<p>首先是将深度学习与目标检测相结合的先驱者：<a href="https://github.com/rbgirshick/rcnn" target="_blank" rel="external">RCNN</a></p>
+<h3 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h3><p>首先是将深度学习与目标检测相结合的先驱者：<a href="https://github.com/rbgirshick/rcnn" target="_blank" rel="external">RCNN</a></p>
+<img src="/2017/11/12/目标检测方法综述/rcnn.svg">
+<p>这是基于卷积神经网络的物体检测的奠基之作，其核心思想是在对每张图片选取多个区域，然后每个区域作为一个样本进入一个卷积神经网络来抽取特征，最后使用分类器来对齐分类，和一个回归器来得到准确的边框。</p>
+<p>RCNN系统由三个模块组成：</p>
+<p>1）生成类别独立的区域提案</p>
+<p>2）一个CNN卷积神经网络，从每个区域提取一个固定长度（4096维）的特征向量</p>
+<p>3）一组具有特定类别的SVM</p>
 <p>RCNN算法分为四步：<br>1）通过selective search方法从输入图像中选出1k~2k个候选区域</p>
-<p>2）对于每个候选区域，使用卷积神经网络提取特征</p>
+<p>2）对于每个候选区域，将其wrap到固定的大小的scale，使用卷积神经网络提取特征</p>
 <p>3）将特征送入每一类的SVM分类器，判断是否属于该类（这里是一个分类的过程）</p>
-<p>4）使用回归器精细修正候选框位置（这里是一个回归的过程）</p>
-<p>补充：</p>
+<p>4）使用回归器精细修正候选框位置（这里是一个回归的过程）。对于每一region给出包含实物类别多少的分数，选出前几个大数值，然后再用非极大值抑制canny来进行边缘检测，最后就会得到所对应的bounding-box</p>
+<h4 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h4><h4 id="selective-search"><a href="#selective-search" class="headerlink" title="selective search"></a>selective search</h4><p>主要特点是：</p>
+<p>1）可以捕获到不同尺度的检测（通过分组分层[Hierarchical Grouping]实现）</p>
+
+<p>2）可以进行不同策略的检测，比如颜色、纹理等</p>
+<p>3）计算速度比穷举搜索有大幅提高</p>
 <p>selective search思想：<br>1、使用一种过分割手段，将图像分割成小区域（1k~2k个）</p>
 <p>2、查看现有小区域，按照合并规则合并可能性最高的相邻两个区域。重复直到整张图像合并成一个区域位置</p>
 <p>3、输出所有曾经存在过的区域，所谓候选区域</p>
+<h4 id="IOU（交并比）"><a href="#IOU（交并比）" class="headerlink" title="IOU（交并比）"></a>IOU（交并比）</h4><p>一个定位精度评价公式，代表bounding box与ground truth的重叠度，如下图所示：</p>
+<img src="/2017/11/12/目标检测方法综述/iou.jpg">
+<p>矩形框A、B的一个重合度IOU计算公式为：</p>
+<p>IOU=(A∩B)/(A∪B)</p>
+<p>也就是矩形框A、B的重叠面积占A、B并集的面积比例：</p>
+<p>IOU=SI/(SA+SB-SI)</p>
+<h4 id="NMS（非极大值抑制）"><a href="#NMS（非极大值抑制）" class="headerlink" title="NMS（非极大值抑制）"></a>NMS（非极大值抑制）</h4><p>常用于目标检测领域，用于将上一步中的检测结果进行融合，因为一个目标可能被检测出多个窗口，而我们只希望保留一个。</p>
+<p>先假设有6个矩形框，根据分类器类别分类概率做排序，从小到大分别属于车辆的概率分别为A、B、C、D、E、F。</p>
+<p>(1)从最大概率矩形框F开始，分别判断A~E与F的重叠度IOU是否大于某个设定的阈值;</p>
+<p>(2)假设B、D与F的重叠度超过阈值，那么就扔掉B、D；并标记第一个矩形框F，是我们保留下来的。</p>
+<p>(3)从剩下的矩形框A、C、E中，选择概率最大的E，然后判断E与A、C的重叠度（IOU），重叠度大于一定的阈值，那么就扔掉；并标记E是我们保留下来的第二个矩形框。</p>
+<p>就这样一直重复，找到所有被保留下来的矩形框。</p>
 <p>存在的问题：</p>
 <p>速度很慢</p>
 <p>1、每个图像都要产生2000个region proposal，然后经过AlexNet，需要很大的时间和资源</p>
 <p>2、需要分别训练三个不同的模型：CNN（generate image features）、SVM（predict the class）、bounding-box regression（tighten the bounding boxes）</p>
-<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><p>解决了RCNN的三个问题：</p>
+<h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><p>创新点主要是提出了空间金字塔池化，不同于RCNN，SPPNet在训练和测试的时候可以输入不同大小的图片，这样就避免了裁剪、缩放等操作带来的性能方面的下降，通过不同尺度的图片训练可以防止过拟合；同时，其在速度方面也比RCNN提升了很多。</p>
+<p>SPPNet工作流程：</p>
+<p>1）首先通过selective search，对待检测的图片进行搜索得到2000个候选窗口，这一步和RCNN一样。</p>
+<p>2）特征提取阶段，这一步就是和RCNN的最大区别了。同样是用卷积神经网络进行特征提取，但是SPPNet用的是金字塔池化。这一步的具体操作如下：把整张待检测的图片，输入到CNN中进行特征提取得到feature maps，然后在feature maps中找到各个候选框的区域，再对各个候选框采用金字塔空间池化，提取出固定长度的特征向量。而RCNN输入的是每个候选框，然后再通过CNN网络，因为速度优化了很多。</p>
+<p>3）最后一步也是和RCNN一样，采用SVM算法进行特征向量进行分类识别。</p>
+<p>空间金字塔结构如下所示：</p>
+<img src="/2017/11/12/目标检测方法综述/SPP_Layer.png">
+<h3 id="Fast-R-CNN"><a href="#Fast-R-CNN" class="headerlink" title="Fast R-CNN"></a>Fast R-CNN</h3><img src="/2017/11/12/目标检测方法综述/fast-rcnn.svg">
+<p>在继承RCNN的同时，吸收了SPPNet的特点进行了改进。</p>
+<p>解决了RCNN的三个问题：</p>
 <p>1、速度慢</p>
 <p>RCNN的候选框存在大量重叠，之后还要把他们输入到卷积神经网络提取特征，因此存在很大的优化空间。</p>
 <p>Fast R-CNN则是先将整张图片归一化后直接输入到深度网络，在第五个卷积层再得到每个候选框的特征</p>
@@ -378,18 +419,68 @@
 <p>2、占用空间大</p>
 <p>RCNN中独立的分类器和回归器需要大量特征作为训练样本</p>
 <p>在Fast RCNN中，类别判断和位置精调统一用深度网络实现，不再需要额外存储</p>
-<h3 id="SPPNet"><a href="#SPPNet" class="headerlink" title="SPPNet"></a>SPPNet</h3><h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><p>Faster RCNN解决的是摒弃selective search，全部用CNN，真正实现end-to-end的方式。</p>
+<p>算法流程：</p>
+<p>1）每张图片通过selective search生成2000个region proposal</p>
+<p>2）用多个卷积和最大池化层处理整个图像以产生一个卷积特征图</p>
+<p>3）然后针对每个region proposal，ROI pooling（其实是单层的SPP layer）层提取固定长度的特征向量生成固定大小的feature map</p>
+<p>4）继续经过两个全连接层得到特征向量，特征向量经由各自的全连接层得到两个输出向量：第一个是分类，使用softmax；第二个是每一类的bounding box回归，利用softmax loss和smooth L1 loss对分类对分类概率和边框回归（Bounding Box Regression）联合训练</p>
+<p>注：ROI pooling层将每个候选区域均匀分成M×N块，对每块进行max pooling，将特征图上大小不一的候选区域转变为大小统一的特征向量，然后送入下一层，如下图所示：</p>
+<img src="/2017/11/12/目标检测方法综述/ROI_pooling.jpg">
+<p>在本文中，一个ROI是一个矩形窗口到一个conv特征的映射，每个ROI由四元组（r，c，h，w）定义，表示其左上角（r，c）及其高度和宽度（h，w）</p>
+<h3 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h3><img src="/2017/11/12/目标检测方法综述/faster-rcnn.svg">
+<p>Faster RCNN解决的是摒弃selective search，全部用CNN，真正实现end-to-end的方式。</p>
 <p>RCNN和Fast RCNN都是采用Selective Search方法，运行在CPU中，花费了和检测网络差不多的时间，因此成为了目标检测提速的一个瓶颈，Faster RCNN就是用来解决这个问题。</p>
 <p>将目标检测的四个基本步骤（候选区域生成、特征提取、分类、位置精修）统一到一个深度网络框架之内，所有计算没有重复，完全在GPU中完成，大大提高了运行速度</p>
 <p>可以视为 区域生成网络+fast RCNN，用区域生成网络（RPN，region proposal network）代替了fast RCNN的Selective Search方法，将整个目标检测任务放到一个网络中，实现了端到端的训练，建议框计算几乎不会给检测网络的计算带来消耗。</p>
 <p>RPN网络和Fast RCNN的目标检测网络共享计算，所以在这两个网络之间共享一系列卷积层。RPN将一个图像（任意大小）作为输入，输出矩形目标建议框的集合，每个框有一个objectness得分</p>
-<h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><p>RCNN、SPP-NET、Fast-RCNN、Faster-RCNN之类的算法都是基于RPN+分类的算法，均为two stage，无法达到实时性，而SSD以及之后的YOLO系列，都是one stage。</p>
-<p>SSD在保证速度和精度情况下，使用singe deep neural network，直接预测bounding box的坐标和类别的目标检测算法。</p>
+<p>RPN工作流程：</p>
+<ol>
+<li>在输入特征上放置一个填充为1通道是256的3×3填充为1通道是256的3×3卷积。这样每个像素，连同它的周围8个像素，都没映射成一个长为256的向量。</li>
+<li>以对每个像素为中心生成数个大小和长宽比预先设计好的kk个默认边框，通常也叫<strong>锚框</strong>。</li>
+<li>对每个边框，使用其中心像素对应的256维向量作为特征，RPN训练一个2类分类器来判断这个区域是不是含有任何感兴趣的物体还是只是背景，和一个4维输出的回归器来预测一个更准确的边框。</li>
+<li>对于所有的锚框，个数为nmk如果输入大小是n×m，选出被判断成还有物体的，然后将他们对应的回归器预测的边框作为输入放进接下来的RoI池化层</li>
+</ol>
+<h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><img src="/2017/11/12/目标检测方法综述/ssd.svg">
+<p>RCNN、SPP-NET、Fast-RCNN、Faster-RCNN之类的算法都是基于RPN+分类的算法，均为two stage，无法达到实时性，而SSD以及之后的YOLO系列，都是one stage。</p>
+<p>SSD在保证速度和精度情况下，使用singe deep neural network，直接预测bounding box的坐标和类别的目标检测算法，由于省略了region proposal的提议以及特征采样，速度得到了很大的提升。</p>
 <p>本文主要贡献：</p>
 <p>1）论文发表时是最快的目标检测算法，比YOLO更快更精准（YOLO9000已经提速），精度逼近Faster RCNN</p>
-<p>2）SSD方法的核心就是predict object，以及其归属类别的score；同时，在feature map上使用小的卷积核，去predict一系列bounding boxes的box offsets</p>
-<p>2）</p>
-<h3 id="YOLO2"><a href="#YOLO2" class="headerlink" title="YOLO2"></a>YOLO2</h3>
+<p>2）The core of SSD is predicting category scores and box offsets for a fixed set of default bounding boxes using small convolutional filters applied to feature maps</p>
+<p>它跟Faster R-CNN主要有两点不一样</p>
+<ol>
+<li><p>对于锚框，我们不再首先判断它是不是含有感兴趣物体，再将正类锚框放入真正物体分类。SSD里我们直接使用一个<code>num_class+1</code>类分类器来判断它对应的是哪类物体，还是只是背景。我们也不再有额外的回归器对边框再进一步预测，而是直接使用单个回归器来预测真实边框。</p>
+</li>
+<li><p>SSD不只是对卷积神经网络输出的特征做预测，它会进一步将特征通过卷积和池化层变小来做预测。这样达到多尺度预测的效果。</p>
+<p>​</p>
+</li>
+</ol>
+<h3 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h3><img src="/2017/11/12/目标检测方法综述/yolo.svg">
+<p>YOLO将物体检测作为回归问题求解，基于一个单独的end-to-end网络，完成从原图像的输入到物体位置和类别的输出。</p>
+<p>从网络设计上，YOLO与rcnn、fast rcnn及faster rcnn的区别如下：</p>
+<p>1） YOLO训练和检测均是在一个单独网络中进行。YOLO没有显示地求取region proposal的过程。而rcnn/fast rcnn 采用分离的模块（独立于网络之外的selective search方法）求取候选框（可能会包含物体的矩形区域），训练过程因此也是分成多个模块进行。Faster rcnn使用RPN（region proposal network）卷积网络替代rcnn/fast rcnn的selective search模块，将RPN集成到fast rcnn检测网络中，得到一个统一的检测网络。尽管RPN与fast rcnn共享卷积层，但是在模型训练过程中，需要反复训练RPN网络和fast rcnn网络（注意这两个网络核心卷积层是参数共享的）。</p>
+<p>2）YOLO将物体检测作为一个回归问题进行求解，输入图像经过一次inference，便能得到图像中所有物体的位置和其所属类别及相应的置信概率。而rcnn/fast rcnn/faster rcnn将检测结果分为两部分求解：物体类别（分类问题），物体位置即bounding box（回归问题）。</p>
+<img src="/2017/11/12/目标检测方法综述/YOLO.jpg">
+<p>YOLO网络借鉴了GoogLeNet分类网络结构，但是没有使用inception模块，而是使用1×1卷积层（此处1×1卷积层是为了跨通道信息整合）+3×3卷积层替代。</p>
+<p>不管是Faster R-CNN还是SSD，它们生成的锚框仍然有大量是相互重叠的，从而导致仍然有大量的区域被重复计算了。YOLO试图来解决这个问题。它将图片特征均匀的切成 S×S 个格子，每一块当做一个锚框，若图中物体的中心位置的坐标落入某个格子，那么这个格子就负责检测出这个物体。每个锚框预测B个bounding box（包含物体的矩形信息），以及这个锚框主要包含哪个物体，也就是C个物体属于某种类别的概率信息。</p>
+<p>Bounding box信息包含5个数据值，分别是x,y,w,h,和confidence。其中x,y是指当前格子预测得到的物体的bounding box的中心位置的坐标。w,h是bounding box的宽度和高度。注意：实际训练过程中，w和h的值使用图像的宽度和高度进行归一化到[0,1]区间内；x，y是bounding box中心位置相对于当前格子位置的偏移值，并且被归一化到[0,1]。</p>
+<p>confidence反映当前bounding box是否包含物体以及物体位置的准确性，计算方式如下：</p>
+<p>confidence = P(object)*IOU</p>
+<p> 若bounding box包含物体，则P(object) = 1；否则P(object) = 0. IOU(intersection over union)为预测bounding box与物体真实区域的交集面积（以像素为单位，用真实区域的像素面积归一化到[0,1]区间）。</p>
+<p>因此，YOLO网络最终的全连接层的输出维度为S×S×（B×5）+C。作者采用的输入图像分辨率为448×448，S=7,B=2，采用VOC 20类标注物体作为训练数据，C=20。</p>
+<p>注：</p>
+<p>1）由于输出层为全连接层，因此在检测时，YOLO模型只支持与训练图像相同的输入分辨率</p>
+<p>2）虽然每个格子可以预测B个bounding box，但是最终只选择IOU最高的bounding box作为物体检测输出，即每个格子最多只预测出一个物体。当物体占画面比例较小，如图像中包含畜群或鸟群时，每个格子可以包含多个物体，但却只能检测出其中一个，这是YOLO方法的一个缺陷。</p>
+<p>3）YOLO的准确率没有最好的检测系统准确率高，但其可以快速识别图象中的目标，可以实现实时监测</p>
+<p>训练步骤：</p>
+<p>1）预训练。使用ImageNet 1000类数据训练YOLO网络的前20个卷积层+1个average池化层+1个全连接层。训练图像分辨率resize到224x224</p>
+<p>2）用步骤1）得到的前20个卷积层网络参数来初始化YOLO模型前20个卷积层的网络参数，然后用VOC 20类标注数据进行YOLO模型训练。为提高图像精度，在训练检测模型时，将输入图像分辨率resize到448x448。</p>
+<h3 id="YOLO-v2"><a href="#YOLO-v2" class="headerlink" title="YOLO v2"></a>YOLO v2</h3><p>YOLO v2对YOLO进行一些地方的改进，其主要包括：</p>
+<ol>
+<li>使用更好的卷积神经网络来做特征提取，使用更大输入图片448×448使得特征输出大小增大到13×13</li>
+<li>不再使用均匀切来的锚框，而是对训练数据里的真实锚框做聚类，然后使用聚类中心作为锚框。相对于SSD和Faster R-CNN来说可以大幅降低锚框的个数。</li>
+<li>不再使用YOLO的全连接层来预测，而是同SSD一样使用卷积。例如假设使用5个锚框（聚类为5类），那么物体分类使用通道数是<code>5*(1+num_classes)</code>的1×1卷积，边框回归使用通道数<code>4*5</code>.</li>
+</ol>
+
       
     </div>
     
@@ -571,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast-R-CNN"><span class="nav-number">1.</span> <span class="nav-text">Fast R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPPNet"><span class="nav-number">2.</span> <span class="nav-text">SPPNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Faster-R-CNN"><span class="nav-number">3.</span> <span class="nav-text">Faster R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO"><span class="nav-number">4.</span> <span class="nav-text">YOLO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSD"><span class="nav-number">5.</span> <span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO2"><span class="nav-number">6.</span> <span class="nav-text">YOLO2</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RCNN"><span class="nav-number">1.</span> <span class="nav-text">RCNN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#补充："><span class="nav-number">1.1.</span> <span class="nav-text">补充：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#selective-search"><span class="nav-number">1.2.</span> <span class="nav-text">selective search</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IOU（交并比）"><span class="nav-number">1.3.</span> <span class="nav-text">IOU（交并比）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NMS（非极大值抑制）"><span class="nav-number">1.4.</span> <span class="nav-text">NMS（非极大值抑制）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPPNet"><span class="nav-number">2.</span> <span class="nav-text">SPPNet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fast-R-CNN"><span class="nav-number">3.</span> <span class="nav-text">Fast R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Faster-R-CNN"><span class="nav-number">4.</span> <span class="nav-text">Faster R-CNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSD"><span class="nav-number">5.</span> <span class="nav-text">SSD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO"><span class="nav-number">6.</span> <span class="nav-text">YOLO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#YOLO-v2"><span class="nav-number">7.</span> <span class="nav-text">YOLO v2</span></a></li></ol></div>
             
 
           </div>
