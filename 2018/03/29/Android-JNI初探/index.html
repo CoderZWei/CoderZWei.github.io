@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/11.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/12.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/13.png">
-<meta property="og:updated_time" content="2018-03-29T10:55:54.691Z">
+<meta property="og:updated_time" content="2018-03-29T11:01:16.503Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android JNI初探">
 <meta name="twitter:description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。 首先在SDK Manager中下载NDK：  首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&amp;gt;Open Module Settings-&amp;gt;查看 Android NDK location 是">
@@ -350,7 +350,7 @@
 <p>发现根目录下的local.properties文件里多了一行ndk的路径：</p>
 <img src="/2018/03/29/Android-JNI初探/3.png">
 <p>接着在根目录下的gradle.propertie文件里加入一行：android.useDeprecatedNdk=true</p>
-<p>因为现在Android studio已经支持通过cmake方式进行JNI编程，所以这里强制使用ndk方式（这部步貌似可以省去）</p>
+<p>因为现在Android studio已经支持通过cmake方式进行JNI编程，所以这里强制使用ndk方式（这步貌似可以省去）</p>
 <img src="/2018/03/29/Android-JNI初探/4.png">
 <p>接下来就开始写java和相关的C/C++代码了</p>
 <p>首先在app/src/main/java/包名 目录下新建一个Java文件MyJni.java:</p>
@@ -360,7 +360,7 @@
 <p>在app/src/main文件夹下新建一个jni类型的文件夹，然后打开Android studio的terminal终端，在其中输入：</p>
 <p>javah -jni -classpath D:\project\JNI2\app\build\intermediates\classes\debug com.example.weizhang.MyJni，就会在jni文件夹下生成一个.h头文件：</p>
 <img src="/2018/03/29/Android-JNI初探/7.png">
-<p>我们新建一个与之对应的C++ source文件，并实现相关函数，注意如果是C++的话要加extern “C”{} ，因为jni默认按照C的规则查找函数</p>
+<p>我们新建一个与之对应的C++ source文件，并实现相关函数，注意如果是C++的话要加extern “C”{…} ，因为jni默认按照C的规则查找函数</p>
 <img src="/2018/03/29/Android-JNI初探/8.png">
 <p>然后在jni文件夹下新建Android.mk和Application.mk文件，并写入如下内容：</p>
 <img src="/2018/03/29/Android-JNI初探/9.png">
@@ -369,7 +369,8 @@
 <img src="/2018/03/29/Android-JNI初探/11.jpg">
 <p>在app目录下的build.gradle文件里写入：</p>
 <img src="/2018/03/29/Android-JNI初探/12.jpg">
-<p>在MainActivity中写入：</p>
+<p>然后build一下项目</p>
+<p>在MainActivity中写入代码：</p>
 <img src="/2018/03/29/Android-JNI初探/13.png">
 <p>大功告成 ！</p>
 <p>参考链接：</p>
