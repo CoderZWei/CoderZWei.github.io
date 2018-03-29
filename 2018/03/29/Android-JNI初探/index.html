@@ -79,13 +79,30 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="CoderZWei&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/archives/2017/11/index.html">
+<meta name="description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。 首先在SDK Manager中下载NDK：  首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&amp;gt;Open Module Settings-&amp;gt;查看 Android NDK location 是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android JNI初探">
+<meta property="og:url" content="http://yoursite.com/2018/03/29/Android-JNI初探/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。 首先在SDK Manager中下载NDK：  首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&amp;gt;Open Module Settings-&amp;gt;查看 Android NDK location 是">
 <meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/4.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/5.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/8.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/9.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/10.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/11.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/12.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/13.png">
+<meta property="og:updated_time" content="2018-03-29T10:55:54.691Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="CoderZWei&#39;s blog">
+<meta name="twitter:title" content="Android JNI初探">
+<meta name="twitter:description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。 首先在SDK Manager中下载NDK：  首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&amp;gt;Open Module Settings-&amp;gt;查看 Android NDK location 是">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/1.jpg">
 
 
 
@@ -115,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/archives/2017/11/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/29/Android-JNI初探/"/>
 
 
 
 
 
-  <title>Archive | CoderZWei's blog</title>
+  <title>Android JNI初探 | CoderZWei's blog</title>
   
 
 
@@ -140,7 +157,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -244,333 +261,174 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/29/Android-JNI初探/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">Android JNI初探</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-29T18:04:09+08:00">
+                2018-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        Um..! 12 posts in total. Keep on posting.
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/关于岭回归/" itemprop="url">
-              
-                <span itemprop="name">关于岭回归</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:52:57+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/基于Android-WIFI直连的P2P聊天程序/" itemprop="url">
-              
-                <span itemprop="name">基于Android WIFI直连的P2P聊天程序</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:50:51+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
+      
+        <p>因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。</p>
+<p>首先在SDK Manager中下载NDK：</p>
+<img src="/2018/03/29/Android-JNI初探/1.jpg">
+<p>首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&gt;Open Module Settings-&gt;查看 Android NDK location 是否正确-&gt;选择ok编译 （这里记得要把NDK  location加到环境变量里，否则后面会出错）</p>
+<img src="/2018/03/29/Android-JNI初探/2.png">
+<p>发现根目录下的local.properties文件里多了一行ndk的路径：</p>
+<img src="/2018/03/29/Android-JNI初探/3.png">
+<p>接着在根目录下的gradle.propertie文件里加入一行：android.useDeprecatedNdk=true</p>
+<p>因为现在Android studio已经支持通过cmake方式进行JNI编程，所以这里强制使用ndk方式（这部步貌似可以省去）</p>
+<img src="/2018/03/29/Android-JNI初探/4.png">
+<p>接下来就开始写java和相关的C/C++代码了</p>
+<p>首先在app/src/main/java/包名 目录下新建一个Java文件MyJni.java:</p>
+<img src="/2018/03/29/Android-JNI初探/5.jpg">
+<p>然后点击Build-&gt;Make Project，这时会在app/build/intermediates/classes/debug/包名 目录下生成对应的class文件：</p>
 
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/Android天气类app实现/" itemprop="url">
-              
-                <span itemprop="name">Android天气类app实现</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:43:37+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+<p>在app/src/main文件夹下新建一个jni类型的文件夹，然后打开Android studio的terminal终端，在其中输入：</p>
+<p>javah -jni -classpath D:\project\JNI2\app\build\intermediates\classes\debug com.example.weizhang.MyJni，就会在jni文件夹下生成一个.h头文件：</p>
+<img src="/2018/03/29/Android-JNI初探/7.png">
+<p>我们新建一个与之对应的C++ source文件，并实现相关函数，注意如果是C++的话要加extern “C”{} ，因为jni默认按照C的规则查找函数</p>
+<img src="/2018/03/29/Android-JNI初探/8.png">
+<p>然后在jni文件夹下新建Android.mk和Application.mk文件，并写入如下内容：</p>
+<img src="/2018/03/29/Android-JNI初探/9.png">
+<img src="/2018/03/29/Android-JNI初探/10.png">
+<p>在终端进入jni目录，输入指令：ndk-build，便可以在app/src/main/libs目录下查看到生成的.so文件</p>
+<img src="/2018/03/29/Android-JNI初探/11.jpg">
+<p>在app目录下的build.gradle文件里写入：</p>
+<img src="/2018/03/29/Android-JNI初探/12.jpg">
+<p>在MainActivity中写入：</p>
+<img src="/2018/03/29/Android-JNI初探/13.png">
+<p>大功告成 ！</p>
+<p>参考链接：</p>
+<p>1、<a href="https://blog.csdn.net/leilifengxingmw/article/details/71598687" target="_blank" rel="external">https://blog.csdn.net/leilifengxingmw/article/details/71598687</a></p>
+<p>2、<a href="https://blog.csdn.net/mingyueyixi/article/details/65449723" target="_blank" rel="external">https://blog.csdn.net/mingyueyixi/article/details/65449723</a> </p>
+<p>3、<a href="https://www.jianshu.com/p/81a97a43c176" target="_blank" rel="external">https://www.jianshu.com/p/81a97a43c176</a></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/浅谈Android中的PendingIntent/" itemprop="url">
-              
-                <span itemprop="name">浅谈Android中的PendingIntent</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:42:42+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/Directx中的深度缓冲-前缓冲-后缓冲/" itemprop="url">
-              
-                <span itemprop="name">Directx中的深度缓冲 前缓冲 后缓冲</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:40:45+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/24/tensorflow数据读取/" itemprop="url">
-              
-                <span itemprop="name">tensorflow数据读取</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-24T15:07:48+08:00"
-              content="2017-11-24" >
-          11-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/12/目标检测方法综述/" itemprop="url">
-              
-                <span itemprop="name">目标检测方法综述</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-12T15:16:43+08:00"
-              content="2017-11-12" >
-          11-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/05/github搭建博客教程/" itemprop="url">
-              
-                <span itemprop="name">github搭建博客教程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-05T13:09:33+08:00"
-              content="2017-11-05" >
-          11-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/15/模型压缩/" rel="next" title="模型压缩">
+                <i class="fa fa-chevron-left"></i> 模型压缩
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -578,6 +436,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -811,6 +673,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
