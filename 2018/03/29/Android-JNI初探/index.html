@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。 首先在SDK Manager中下载NDK：  首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&amp;gt;Open Module Settings-&amp;gt;查看 Android NDK location 是">
+<meta name="description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android JNI初探">
 <meta property="og:url" content="http://yoursite.com/2018/03/29/Android-JNI初探/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。 首先在SDK Manager中下载NDK：  首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&amp;gt;Open Module Settings-&amp;gt;查看 Android NDK location 是">
+<meta property="og:description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/2.png">
@@ -98,10 +98,10 @@
 <meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/11.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/12.jpg">
 <meta property="og:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/13.png">
-<meta property="og:updated_time" content="2018-03-29T11:01:16.503Z">
+<meta property="og:updated_time" content="2018-04-25T14:41:26.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android JNI初探">
-<meta name="twitter:description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。 首先在SDK Manager中下载NDK：  首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&amp;gt;Open Module Settings-&amp;gt;查看 Android NDK location 是">
+<meta name="twitter:description" content="因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。">
 <meta name="twitter:image" content="http://yoursite.com/2018/03/29/Android-JNI初探/1.jpg">
 
 
@@ -343,6 +343,7 @@
 
       
         <p>因工作需要，设计到了Android JNI开发，搞了好几个小时，踩了无数坑，终于弄出了一个简单的demo，这里记录一下配置流程。</p>
+<a id="more"></a>
 <p>首先在SDK Manager中下载NDK：</p>
 <img src="/2018/03/29/Android-JNI初探/1.jpg">
 <p>首先新建一个Android project，这里名为JNI，所在目录为D:/project/JNI2。然后右键项目-&gt;Open Module Settings-&gt;查看 Android NDK location 是否正确-&gt;选择ok编译 （这里记得要把NDK  location加到环境变量里，否则后面会出错）</p>
@@ -373,6 +374,7 @@
 <p>在MainActivity中写入代码：</p>
 <img src="/2018/03/29/Android-JNI初探/13.png">
 <p>大功告成 ！</p>
+<p>ps：额。。。晚上回去后发现高版本的Android studio只需要在新建工程的时候点选 “Include C++ project”  就可以启用jni功能了。。</p>
 <p>参考链接：</p>
 <p>1、<a href="https://blog.csdn.net/leilifengxingmw/article/details/71598687" target="_blank" rel="external">https://blog.csdn.net/leilifengxingmw/article/details/71598687</a></p>
 <p>2、<a href="https://blog.csdn.net/mingyueyixi/article/details/65449723" target="_blank" rel="external">https://blog.csdn.net/mingyueyixi/article/details/65449723</a> </p>
