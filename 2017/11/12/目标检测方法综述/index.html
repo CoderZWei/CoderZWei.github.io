@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/ssd.svg">
 <meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/yolo.svg">
 <meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/YOLO.jpg">
-<meta property="og:updated_time" content="2018-01-13T07:41:56.551Z">
+<meta property="og:updated_time" content="2018-04-25T16:49:09.579Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="目标检测方法综述">
 <meta name="twitter:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，做一个简单的综述，整理了一些网上的资料，以后若需要再深入研究。">
@@ -433,12 +433,14 @@
 <p>将目标检测的四个基本步骤（候选区域生成、特征提取、分类、位置精修）统一到一个深度网络框架之内，所有计算没有重复，完全在GPU中完成，大大提高了运行速度</p>
 <p>可以视为 区域生成网络+fast RCNN，用区域生成网络（RPN，region proposal network）代替了fast RCNN的Selective Search方法，将整个目标检测任务放到一个网络中，实现了端到端的训练，建议框计算几乎不会给检测网络的计算带来消耗。</p>
 <p>RPN网络和Fast RCNN的目标检测网络共享计算，所以在这两个网络之间共享一系列卷积层。RPN将一个图像（任意大小）作为输入，输出矩形目标建议框的集合，每个框有一个objectness得分</p>
+<p>算法流程：</p>
+<p>1、首先将原始图片经过VGG网络等提取出高级特征(如VGG的第五层卷积层)生成特征图</p>
+<p>2、将特征图送入RPN网络，RPN网络对anchor进行分类(是否为有效区域)和边框回归，返回感兴趣区域(region of interests ,rois)</p>
+<p>3、将rois和特征图一起送入roi pooling层，得到长度统一的特征向量，然后经过如vgg网络中的其余几层，对其所属类别进行分类，边框进行回归</p>
 <p>RPN工作流程：</p>
 <ol>
-<li>在输入特征上放置一个填充为1通道是256的3×3填充为1通道是256的3×3卷积。这样每个像素，连同它的周围8个像素，都没映射成一个长为256的向量。</li>
-<li>以对每个像素为中心生成数个大小和长宽比预先设计好的kk个默认边框，通常也叫<strong>锚框</strong>。</li>
-<li>对每个边框，使用其中心像素对应的256维向量作为特征，RPN训练一个2类分类器来判断这个区域是不是含有任何感兴趣的物体还是只是背景，和一个4维输出的回归器来预测一个更准确的边框。</li>
-<li>对于所有的锚框，个数为nmk如果输入大小是n×m，选出被判断成还有物体的，然后将他们对应的回归器预测的边框作为输入放进接下来的RoI池化层</li>
+<li>首先将特征图(宽高为W、H)经过一个卷积核为1*1，输出维度为num_anchors*2的卷积层（输出为W*H* (num_anchors*2) ），这是因为特征图上的每一点都对应了num_anchors个anchor(一个点有九个anchor，因为缩放级数为三个，每个矩形的长宽比为3种，所以为3*3)，而每个anchor又都有一个foreground概率和background概率，然后将其reshape并softmax，这样便得到了其分类的输出</li>
+<li>将特征图输入一个卷积核为1*1，输出维度为num_anchors*4的卷积层(分别代表各个坐标的偏移值)</li>
 </ol>
 <h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><img src="/2017/11/12/目标检测方法综述/ssd.svg">
 <p>RCNN、SPP-NET、Fast-RCNN、Faster-RCNN之类的算法都是基于RPN+分类的算法，均为two stage，无法达到实时性，而SSD以及之后的YOLO系列，都是one stage。</p>
@@ -605,7 +607,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

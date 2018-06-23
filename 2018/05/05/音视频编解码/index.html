@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="常见的视频文件有.mp4、.flv、.wmv格式等，但我们都知道这个文件中是既包括了音频序列又包含了视频(图像)序列的，事实上就是在这两者之上做了一个封装。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音视频编解码">
+<meta property="og:url" content="http://yoursite.com/2018/05/05/音视频编解码/index.html">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="常见的视频文件有.mp4、.flv、.wmv格式等，但我们都知道这个文件中是既包括了音频序列又包含了视频(图像)序列的，事实上就是在这两者之上做了一个封装。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/05/05/音视频编解码/process.png">
+<meta property="og:updated_time" content="2018-06-23T15:53:01.698Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="音视频编解码">
+<meta name="twitter:description" content="常见的视频文件有.mp4、.flv、.wmv格式等，但我们都知道这个文件中是既包括了音频序列又包含了视频(图像)序列的，事实上就是在这两者之上做了一个封装。">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/05/音视频编解码/process.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/05/音视频编解码/"/>
+
+
+
+
+
+  <title>音视频编解码 | CoderZWei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CoderZWei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/音视频编解码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">音视频编解码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-05T20:21:08+08:00">
+                2018-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>常见的视频文件有.mp4、.flv、.wmv格式等，但我们都知道这个文件中是既包括了音频序列又包含了视频(图像)序列的，事实上就是在这两者之上做了一个封装。</p>
+<a id="more"></a>
+<p>当视频播放器播放一个网络上的视频文件时，要经过以下步骤：解协议-&gt;解封装-&gt;解码音、视频-&gt;音、视频同步-&gt;送到音频、视频播放设备，流程如下：</p>
+<img src="/2018/05/05/音视频编解码/process.png">
+<p>在本地播放视频文件的时候，没有解封装这一过程。</p>
+<p><strong>解协议</strong>：将流媒体协议的数据，解析为标准的相应的封装格式数据。视音频在网络上传播的时候，常常采用各种流媒体协议，例如HTTP，RTMP，或是MMS等等。这些协议在传输视音频数据的同时，也会传输一些信令数据。这些信令数据包括对播放的控制（播放，暂停，停止），或者对网络状态的描述等。解协议的过程中会去除掉信令数据而只保留视音频数据。例如，采用RTMP协议传输的数据，经过解协议操作后，输出FLV格式的数据。</p>
+<p><strong>解封装</strong>：将输入的封装格式的数据，分离成为音频流压缩编码数据和视频流压缩编码数据。封装格式种类很多，例如MP4，MKV，RMVB，TS，FLV，AVI等等，它的作用就是将已经压缩编码的视频数据和音频数据按照一定的格式放到一起。例如，FLV格式的数据，经过解封装操作后，输出H.264编码的视频码流和AAC编码的音频码流。</p>
+<p><strong>解码</strong>：将视频/音频压缩编码数据，解码成为非压缩的视频/音频原始数据。音频的压缩编码标准包含AAC，MP3，AC-3等等，视频的压缩编码标准则包含H.264，MPEG2，VC-1等等。解码是整个系统中最重要也是最复杂的一个环节。通过解码，压缩编码的视频数据输出成为非压缩的颜色数据，例如YUV420P，RGB等等；压缩编码的音频数据输出成为非压缩的音频抽样数据，例如PCM数据。</p>
+<p><strong>视音频同步</strong>：根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</p>
+<p><strong>流媒</strong>：多媒体的一种，是指在传送的时候可以边传边播，媒体供应商在网络上传输媒体数据的同时，用户可以一遍不断地接收并播放。比如在视频传输的时候，通过视频流的方式，不是一次将整个文件发送出去，而是将其按播放的时间顺序划分为小的片段，类似于图像中的帧，然后将这些片段依次发送给用户。</p>
+<p><strong>流媒体协议</strong>：是服务器与客户端之间通信遵循的规定，当前网络上主要的流媒体协议如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>传输层协议</th>
+<th>客户端</th>
+<th>目前使用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTSP+RTP</td>
+<td>IETF</td>
+<td>TCP+UDP</td>
+<td>VLC, WMP</td>
+<td>IPTV</td>
+</tr>
+<tr>
+<td>RTMP</td>
+<td>Adobe Inc.</td>
+<td>TCP</td>
+<td>Flash</td>
+<td>互联网直播</td>
+</tr>
+<tr>
+<td>RTMFP</td>
+<td>Adobe Inc.</td>
+<td>UDP</td>
+<td>Flash</td>
+<td>互联网直播</td>
+</tr>
+<tr>
+<td>MMS</td>
+<td>Microsoft Inc.</td>
+<td>TCP/UDP</td>
+<td>WMP</td>
+<td>互联网直播+点播</td>
+</tr>
+<tr>
+<td>HTTP</td>
+<td>WWW+IETF</td>
+<td>TCP</td>
+<td>Flash</td>
+<td>互联网点播</td>
+</tr>
+</tbody>
+</table>
+<p>RTSP+RTP经常用于IPTV领域。因为其采用UDP传输视音频，支持组播，效率较高。但其缺点是网络不好的情况下可能会丢包，影响视频观看质量。因而围绕IPTV的视频质量的研究还是挺多的。</p>
+<p><strong>封装格式</strong>：把视频码流和音频码流按照一定的格式存储在一个文件中，当前主流的封装格式如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>流媒体</th>
+<th>支持的视频编码</th>
+<th>支持的音频编码</th>
+<th>目前使用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AVI</td>
+<td>Microsoft Inc.</td>
+<td>不支持</td>
+<td>几乎所有格式</td>
+<td>几乎所有格式</td>
+<td>BT下载影视</td>
+</tr>
+<tr>
+<td>MP4</td>
+<td>MPEG</td>
+<td>支持</td>
+<td>MPEG-2, MPEG-4, H.264, H.263等</td>
+<td>AAC, MPEG-1 Layers I, II, III, AC-3等</td>
+<td>互联网视频网站</td>
+</tr>
+<tr>
+<td>TS</td>
+<td>MPEG</td>
+<td>支持</td>
+<td>MPEG-1, MPEG-2, MPEG-4, H.264</td>
+<td>MPEG-1 Layers I, II, III, AAC,</td>
+<td>IPTV，数字电视</td>
+</tr>
+<tr>
+<td>FLV</td>
+<td>Adobe Inc.</td>
+<td>支持</td>
+<td>Sorenson, VP6, H.264</td>
+<td>MP3, ADPCM, Linear PCM, AAC等</td>
+<td>互联网视频网站</td>
+</tr>
+<tr>
+<td>MKV</td>
+<td>CoreCodec Inc.</td>
+<td>支持</td>
+<td>几乎所有格式</td>
+<td>几乎所有格式</td>
+<td>互联网视频网站</td>
+</tr>
+<tr>
+<td>RMVB</td>
+<td>Real Networks Inc.</td>
+<td>支持</td>
+<td>RealVideo 8, 9, 10</td>
+<td>AAC, Cook Codec, RealAudio Lossless</td>
+<td>BT下载影视</td>
+</tr>
+</tbody>
+</table>
+<p>由表可见，除了AVI之外，其他封装格式都支持流媒体，即可以“边下边播”。有些格式更“万能”一些，支持的视音频编码标准多一些，比如MKV。而有些格式则支持的相对比较少，比如说RMVB。</p>
+<p><strong>视频编码</strong>：将视频像素数据(RGB，YUV)压缩成为视频码流，如果视频不经过压缩而是以一帧一帧图像进行存储的话，视频文件会非常大，而视频压缩通过利用相邻帧之间的相似性和人眼的视觉延迟，将帧进行压缩编码编码存储，可以将视频文件大小缩小几百上千倍。当前主要的视频编码如下：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>推出时间</th>
+<th>目前使用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HEVC(H.265)</td>
+<td>MPEG/ITU-T</td>
+<td>2013</td>
+<td>研发中</td>
+</tr>
+<tr>
+<td>H.264</td>
+<td>MPEG/ITU-T</td>
+<td>2003</td>
+<td>各个领域</td>
+</tr>
+<tr>
+<td>MPEG4</td>
+<td>MPEG</td>
+<td>2001</td>
+<td>不温不火</td>
+</tr>
+<tr>
+<td>MPEG2</td>
+<td>MPEG</td>
+<td>1994</td>
+<td>数字电视</td>
+</tr>
+<tr>
+<td>VP9</td>
+<td>Google</td>
+<td>2013</td>
+<td>研发中</td>
+</tr>
+<tr>
+<td>VP8</td>
+<td>Google</td>
+<td>2008</td>
+<td>不普及</td>
+</tr>
+<tr>
+<td>VC-1</td>
+<td>Microsoft Inc.</td>
+<td>2006</td>
+<td>微软平台</td>
+</tr>
+</tbody>
+</table>
+<p><strong>音频编码</strong>：将音频采样数据(PCM等)压缩成为音频码流，作用同视频编码。当前主要的音频编码如下：</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>推出时间</th>
+<th>目前使用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AAC</td>
+<td>MPEG</td>
+<td>1997</td>
+<td>各个领域（新）</td>
+</tr>
+<tr>
+<td>AC-3</td>
+<td>Dolby Inc.</td>
+<td>1992</td>
+<td>电影</td>
+</tr>
+<tr>
+<td>MP3</td>
+<td>MPEG</td>
+<td>1993</td>
+<td>各个领域（旧）</td>
+</tr>
+<tr>
+<td>WMA</td>
+<td>Microsoft Inc.</td>
+<td>1999</td>
+<td>微软平台</td>
+</tr>
+</tbody>
+</table>
+<p>音频编码流程：硬件采集-&gt;PCM编码-&gt;分帧(生成原始数据块，以帧的形式存在)-&gt;封装(AAC等)</p>
+<p>参考自：</p>
+<p><a href="https://blog.csdn.net/leixiaohua1020/article/details/18893769" target="_blank" rel="external">https://blog.csdn.net/leixiaohua1020/article/details/18893769</a></p>
+<p><a href="https://www.cnblogs.com/lidabo/p/7234671.html" target="_blank" rel="external">https://www.cnblogs.com/lidabo/p/7234671.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/29/Android-JNI初探/" rel="next" title="Android JNI初探">
+                <i class="fa fa-chevron-left"></i> Android JNI初探
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/05/AAC音频编码/" rel="prev" title="AAC音频编码">
+                AAC音频编码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/panpan.jpg"
+                alt="CoderZWei" />
+            
+              <p class="site-author-name" itemprop="name">CoderZWei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CoderZWei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

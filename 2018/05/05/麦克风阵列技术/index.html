@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="麦克风阵列技术要先对声源进行定位，再形成波束指向声源位置，所以其可以分为两个方面：声源定位和波束形成。首先通过声源定位算法得到声源的大致角度，然后送至波束形成模块(或者盲源分离模块，两者不可同时使用)，对目标角度的声音信号进行增强。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="麦克风阵列技术">
+<meta property="og:url" content="http://yoursite.com/2018/05/05/麦克风阵列技术/index.html">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="麦克风阵列技术要先对声源进行定位，再形成波束指向声源位置，所以其可以分为两个方面：声源定位和波束形成。首先通过声源定位算法得到声源的大致角度，然后送至波束形成模块(或者盲源分离模块，两者不可同时使用)，对目标角度的声音信号进行增强。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/05/05/麦克风阵列技术/LCMV.png">
+<meta property="og:image" content="http://yoursite.com/2018/05/05/麦克风阵列技术/LCMV_equation.png">
+<meta property="og:updated_time" content="2018-06-23T15:53:34.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="麦克风阵列技术">
+<meta name="twitter:description" content="麦克风阵列技术要先对声源进行定位，再形成波束指向声源位置，所以其可以分为两个方面：声源定位和波束形成。首先通过声源定位算法得到声源的大致角度，然后送至波束形成模块(或者盲源分离模块，两者不可同时使用)，对目标角度的声音信号进行增强。">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/05/麦克风阵列技术/LCMV.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/05/麦克风阵列技术/"/>
+
+
+
+
+
+  <title>麦克风阵列技术 | CoderZWei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CoderZWei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/麦克风阵列技术/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">麦克风阵列技术</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-05T20:51:35+08:00">
+                2018-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>麦克风阵列技术要先对声源进行定位，再形成波束指向声源位置，所以其可以分为两个方面：声源定位和波束形成。首先通过声源定位算法得到声源的大致角度，然后送至波束形成模块(或者盲源分离模块，两者不可同时使用)，对目标角度的声音信号进行增强。</p>
+<a id="more"></a>
+<p>在近场声源中，一般不需要用到波束形成算法，因为此时的信噪比已经足够高，普通的单通道降噪就可以了。</p>
+<p><strong>声源定位</strong></p>
+<p>1）声达时间差(TDOA)<br>声达时间差(TDOA)的定位技术，这类声源定位方法一般分为二个步骤进行(TDOA估计、TDOA定位)：先进行声达时间差估计，并从中获取传声器阵列中阵元间的声延迟(TDOA)；再利用获取的声达时间差，结合已知的传声器阵列的空间位置进一步定位出声源的位置，定位的方法有MLE最大似然估计、最小方差、球形差值和线性相交等。</p>
+<p>近场、远场的划分：当目标声源离阵列中心的距离远远大于目标信号波长时就是远场；离阵列中心的距离远远小于目标信号波长时可以看作近场。</p>
+<p>TDOA是近场声源，处理球面波(需要考虑各通道接收信号之间的幅度差，副督察携带着声源方位的重要信息)，可以定位，但不能测向，？算法结构简单，运算量小，但是需要三个以上监测站才行，并且只能用于单个声源的定位。</p>
+<p>DOA是远场声源，处理平面波(各通道接收到的信号幅度是一致的)，可以定位、测向，两个监测站就可以</p>
+<p>2）基于高分辨率谱估计常见的是MUSIC算法，这种算法可以对多声源进行定位，并且定位精度较高，但是它需要进行迭代和梯度运算以及矩阵求逆，运算量极大。</p>
+<p>3）基于最大输出功率的定位方法需要预知或者预估计出噪声的相关信息，这些信息一般很难获得，所以这种方法很少被应用。</p>
+<p><strong>波束形成（Beamforming）</strong></p>
+<p>波束形成算法的目的：融合多个通道的信息抑制非目标方向的干扰源，增强目标方向的声音。波束形成算法需要解决的核心问题是估计空间滤波器W，它的输入是麦克风阵列采集的多通道语音信号，它的输出是增强后的单路语音信号。</p>
+<p>波束形成算法的条件：最少为两个麦克风，因为需要对不同通道的声源信号做延迟估计</p>
+<p>波束形成可分为常规的波束形成CBF，Conventional Beam Forming和自适应波束形成ABF，Adaptive Beam Forming。CBF是最简单的非自适应波束形成，对各个麦克风的输出进行加权求和得到波束，在CBF中，各个通道的权值是固定的，作用是抑制阵列方向图的旁瓣电平，以滤除旁瓣区域的干扰和噪声。</p>
+<p>现在也有人将深度学习用于波束形成，但是当训练集和测试集不匹配时，算法性能会下降。</p>
+<p>ABF在CBF的基础之上，对干扰和噪声进行空域自适应滤波。ABF中，采用不同的滤波器得到不同的算法，即不同通道的幅度加权值是根据某种最优准则进行调整和优化，常用的准则如LMS(最小均方误差)、LS、MSNR(最大信噪比准则)、LCMV（线性约束最小方差，linearly constrained Minimum Variance）、MLH(最大似然比准则)。自适应波束形成法可以使用较少数目的麦克风就可以获得良好的对相关噪声的消除效果，因此应用广泛。使用最多的波束形成方法包括：最小方差响应失真波束形成、最大信噪比波束形成、广义旁瓣滤波波束形成、多通道维纳滤波波束形成等。</p>
+<p>基于最大输出功率的可控波束形成技术 Beamforming，它的基本思想就是将各阵元采集来的信号进行加权求和形成波束，通过搜索声源的可能位置来引导该波束，修改权值使得传声器阵列的输出信号功率最大。这种方法既能在时域中使用，也能在频域中使用。它在时域中的时间平移等价于在频域中的相位延迟。在频域处理中，首先使用一个包含自谱和互谱的矩阵，我们称之为互谱矩阵(Cross-Spectral Matrix，CSM)。在每个感兴趣频率之处，阵列信号的处理给出了在每个给定的空间扫描网格点上或每个信号到达方向(Direction ofArrival，DOA)的能量水平。因此，阵列表示了一种与声源分布相关联的响应求和后的数量。</p>
+<p><strong>线性约束最小方差(LCMV)波束形成法：</strong>对麦克风阵列的加权系数不断的进行迭代更新，在保证目标方向上语音信号功率不衰减的前提下，使输出信号的功率达到最小，这样就可以使噪声功率达到最小，是常用的自适应波束形成方法之一。</p>
+<p>LCMV准则可表示为：</p>
+<img src="/2018/05/05/麦克风阵列技术/LCMV.png">
+<p>其中，R为接收信号的自相关，C为M×(J+1)维约束矩阵，f为(J+1)维约束向量，M为阵列中天线数，J为干扰信号的个数，上述方程的最优解为：</p>
+<img src="/2018/05/05/麦克风阵列技术/LCMV_equation.png">
+<p><strong>广义旁瓣相消器(GSC)波束形成法：</strong>是LCMV的一种等效的实现结构，GSC结构将自适应波束形成的约束优化问题转换为无约束的优化问题</p>
+<p><strong>延时求和(Delay and sum)波束形成：</strong>最基本的波束形成方法。该方法使用多个麦克风采集信号，经过时延估计和时延补偿后，将各通道的语音信号进行同步，加权后进行求和运算得到输出信号。因为它采用的加权系数在运算后，可以将目标方向上的语音信号全部保存下来，而噪声信号被衰减了，从而达到语音增强的效果。</p>
+<p>最早的延时求和方法是固定波束形成法，它的加权系数是固定值（相当于每个角度的滤波器权值都要保存）。固定波束形成法将多麦克风通道采集到的音频信号通过加权后得到输出信号，其结构简单、运算量小，但是需要较多的麦克风才能得到良好的语音增强效果；且固定波束形成法仅仅对于非相关噪声的消噪效果不错，对于相关噪声则效果很差，所以它目前应用较少。</p>
+<p>Delay and Sum波束形成：<a href="http://www.cnblogs.com/xingshansi/p/6937576.html" target="_blank" rel="external">http://www.cnblogs.com/xingshansi/p/6937576.html</a></p>
+<p><strong>MVDR波束形成：</strong>在保留有效信号的情况下保持最大功率信号输出，实际上相当于去噪。使用vad操作可以判断每一帧是语音段还是噪声段，输入到MVDR中，抑制噪声，加强语音（是LCMV准则的应用）。</p>
+<p>时延估计：常用的有广义互相关时延估计法和LMS时延估计法。广义互相关时延估计法利用多通道采集到的语音信号具有多通道采集到的语音信号具有高度相关性为基础，计算互相关函数的功率谱，通过波峰可以估算出时延值。因为语音直达信号会经过多次反射再到达麦克风(混响信号)，与语音直达信号仍然具有高度相关性，这样会在计算互相关功率谱时，产生一些伪波峰，干扰到对实际时延的判断。强的噪声信号，尤其是相关噪声信号，也会产生一些波峰来进行干扰，所以广义互相关时延估计法对于强噪声和强混响的情况下并不适用。</p>
+<p>LMS时延估计法用一个通道的信号去逼近另一个通道的信号，通过对输出信号的判断，可以看出两通道语音信号是否通过逼近后达到同步，当完全同步时，匹配时使用的时间延迟就是估算值。LMS算法复杂度较大。</p>
+<p>参考：</p>
+<p><a href="https://wenku.baidu.com/view/ea4baa61f4335a8102d276a20029bd64783e623a.html" target="_blank" rel="external">https://wenku.baidu.com/view/ea4baa61f4335a8102d276a20029bd64783e623a.html</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/23420891" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/23420891</a></p>
+<p><a href="http://www.keygotech.com/cn/solution/ssl/array/noise-source-location-based-on-mic-array" target="_blank" rel="external">http://www.keygotech.com/cn/solution/ssl/array/noise-source-location-based-on-mic-array</a></p>
+<p><a href="https://www.leiphone.com/news/201707/rd8sWYQ5qyLUAnx7.html" target="_blank" rel="external">https://www.leiphone.com/news/201707/rd8sWYQ5qyLUAnx7.html</a></p>
+<p><a href="https://wenku.baidu.com/view/cd9edbeea1c7aa00b42acb06.html" target="_blank" rel="external">https://wenku.baidu.com/view/cd9edbeea1c7aa00b42acb06.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/05/shell基本语法/" rel="next" title="shell基本语法">
+                <i class="fa fa-chevron-left"></i> shell基本语法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/05/音频数据知识点/" rel="prev" title="音频数据知识点">
+                音频数据知识点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/panpan.jpg"
+                alt="CoderZWei" />
+            
+              <p class="site-author-name" itemprop="name">CoderZWei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CoderZWei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="目的：将输入的语音序列转换为对应的文字序列(根据输入的一段语音信号，找出一个文字序列，使其与语音信号的匹配度最高，一般用概率表示)，数学表示为： W*=argmax[W] P(W|X)，W表示文字序列，X表示语音信号，利用贝叶斯公式可得：W*=argmax[W] P(X|W)P(W)/P(X)=argmax(W) P(X|W)P(W)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="语音识别流程">
+<meta property="og:url" content="http://yoursite.com/2018/05/05/语音识别流程/index.html">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="目的：将输入的语音序列转换为对应的文字序列(根据输入的一段语音信号，找出一个文字序列，使其与语音信号的匹配度最高，一般用概率表示)，数学表示为： W*=argmax[W] P(W|X)，W表示文字序列，X表示语音信号，利用贝叶斯公式可得：W*=argmax[W] P(X|W)P(W)/P(X)=argmax(W) P(X|W)P(W)">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/2018/05/05/语音识别流程/语音识别流程.jpg">
+<meta property="og:image" content="https://www.zhihu.com/equation?tex=P%28W%29">
+<meta property="og:image" content="http://yoursite.com/2018/05/05/语音识别流程/GMM-HMM.png">
+<meta property="og:image" content="http://yoursite.com/2018/05/05/语音识别流程/DNN-HMM.png">
+<meta property="og:image" content="http://yoursite.com/2018/05/05/语音识别流程/DNN-HMM1.png">
+<meta property="og:image" content="http://yoursite.com/2018/05/05/语音识别流程/FFDNN.jpg">
+<meta property="og:updated_time" content="2018-06-23T15:52:51.506Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="语音识别流程">
+<meta name="twitter:description" content="目的：将输入的语音序列转换为对应的文字序列(根据输入的一段语音信号，找出一个文字序列，使其与语音信号的匹配度最高，一般用概率表示)，数学表示为： W*=argmax[W] P(W|X)，W表示文字序列，X表示语音信号，利用贝叶斯公式可得：W*=argmax[W] P(X|W)P(W)/P(X)=argmax(W) P(X|W)P(W)">
+<meta name="twitter:image" content="http://yoursite.com/2018/05/05/语音识别流程/语音识别流程.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/05/语音识别流程/"/>
+
+
+
+
+
+  <title>语音识别流程 | CoderZWei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CoderZWei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/语音识别流程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">语音识别流程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-05T20:52:46+08:00">
+                2018-05-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>目的：将输入的语音序列转换为对应的文字序列(根据输入的一段语音信号，找出一个文字序列，使其与语音信号的匹配度最高，一般用概率表示)，数学表示为：</p>
+<p>W*=argmax[W] P(W|X)，W表示文字序列，X表示语音信号，利用贝叶斯公式可得：W*=argmax[W] P(X|W)P(W)/P(X)=argmax(W) P(X|W)P(W)</p>
+<a id="more"></a>
+<p>传统语音识别系统的流程：</p>
+<img src="/2018/05/05/语音识别流程/语音识别流程.jpg">
+<p><strong>名词解释</strong></p>
+<p>1、语言模型(language model)：计算P(W)，表示一个文字序列本身的概率，即这一串词或字本身有多“像话”，常见</p>
+<p>​    一般利用链式法则，把一个句子的概率拆解成其中每个词的概率之积，设W由w1,w2,…,wn组成，则P(W)可以拆成：P(W)=P(w1)P(w2|w1)P(w3|w1,w2)…P(Wn|w1,w2,…,w(n-1) )，每一项都是在已知之前所有词的条件下，当前词的概率。</p>
+<p>当条件太长的时候，概率就不好估计了，所以最常见的做法是认为每个词的概率分布只依赖于历史中最后的若干个词。这样的语言模型称为<strong>n-gram模型</strong>，在n-gram模型中，每个词的概率分布只依赖于前面n-1个词。例如在bigram（bi-是2的前缀）模型中，<img src="https://www.zhihu.com/equation?tex=P%28W%29" alt="P(W)">是拆成下面这种形式的：</p>
+<p>P(W)=P(w1)P(w2|w1)P(w3|w2)…P(wn|w(n-1) )</p>
+<p>除此之外，目前RNNLM技术已经逐步引入到语音识别中来，通过对更长历史信息的建模，RNNLM较传统使用N-Gram技术对识别性能有了较好的提升，但是考虑到大词汇量语音识别中，如果完全替换N-Gram会带来运算量以及运算时间的大幅增加，因此在知音引擎中，RNNLM用在对N-Gram识别输出的N-Best候选列表的重排序上。</p>
+<p>2、声学模型(acoutic model)：目标是计算每一帧属于什么音素，即计算P(X|W)，计算给定文字后，语音信号的概率，即这句话有多大的概率发成这串语音，常采用HMM模型（观测状态序列为语音序列，隐状态序列为文字序列）。</p>
+<p>首先要知道的是：若干帧对应一个状态，每三个（或五个）状态对应于一个音素，每三个音素对应于一个发音。</p>
+<p>声学模型的发展主要分为四个阶段：</p>
+<p>1)</p>
+<p>可以直接将每帧的特征输入一个多分类网络，然后进行音素类别的分类，则每帧得到一个音素，但是相邻帧之间都是不同而混乱的，这与实际情况不同，因为一个人音往往时很长的，覆盖多个帧。于是产生了以下结构来解决此问题。</p>
+<p>GMM+HMM结构：声学模型输入的是每一帧特征，然后通过GMM对每一个状态对应的观测帧进行拟合（若干帧对应一个状态，一个状态对应于一个GMM，一个音素对应多个状态，一个音素的中间状态是可以自跳转的，从而解决了同一个因素在不同上下文时间长度不同的问题），对语音数据进行建模（通过EM算法对GMM进行训练，得到其概率模型，也就是均值和方差，再送到hmm模型里），再将状态组合成音素(一个音素只有从起始状态跳转到结束状态，一个音素才算是识别结束)。</p>
+<p>最后这个模型框架用GMM模型来建模状态输出概率，也就是在S状态已知的情况下，特征向量x的概率。</p>
+<p>每一个音素用一个包含3个状态的HMM模型建模(每个状态就是hmm模型中的隐藏状态，而音素就是对应的观察状态)，识别出因素，再查找字典，组装成单词。</p>
+<p>由于连续语音中具有协同发音的现象，故需要对前后三个音素共同考虑，称为三音子(Triphone)模型，引入三音子后，将引起hmm模型数量的急剧增加，所以一般会对状态进行聚类，聚类后的状态称为Senone。</p>
+<p>因此，HMM模型的参数训练是逐步精确细化的，一个典型的方式是从一个单高斯的上下文独立的音素模型集开始，通过扩展到上下文相关来逐步精确，然后使用多维混合高斯分布来拟合。</p>
+<p>HMM求解：在已知观察序列的时候，求解最可能的隐藏状态序列，使用维特比算法，假设当前状态只与前一次或几次状态有关(马尔科夫性)，求解(保存)最优(概率最大的)路径(动态规划算法)。</p>
+<blockquote>
+<p>维特比算法(Viterbi)：在给定观测符号序列的条件下，找出概率最大的状态序列</p>
+<p>前向后向算法(Forward-Backward)：求某一观测符号序列的概率</p>
+<p>鲍姆韦尔奇算法(Baum-Welch)：求每一个状态的转移概率和观测符号发射概率</p>
+</blockquote>
+<p>​    </p>
+<p>GMM-HMM模型结构如下：</p>
+<img src="/2018/05/05/语音识别流程/GMM-HMM.png">
+<p>2)DNN+HMM结构：</p>
+<img src="/2018/05/05/语音识别流程/DNN-HMM.png">
+<img src="/2018/05/05/语音识别流程/DNN-HMM1.png">
+<p>DNN的输入是一个多帧的语音向量，输出是不同状态的概率。</p>
+<p>将聚类后的状态(绑定的三元素状态)代替单音素状态作为神经网络的输出单元，这种改善后的DNN-HMM混合模型称为CD-DNN-HMM。</p>
+<p>在CD-DNN-HMM中，对于所有的状态，我们只训练一个完整的DNN来估计状态的后验概率，这与传统的GMM是不同的，因为GMM框架下，我们会使用多个不同的GMM对不同的状态建模。除此之外，典型的DNN输入不是单一的一帧，而是一个2ω+1帧大小的窗口特征，这使得相邻帧的信息可以被有效的利用。</p>
+<p>训练CD-DNN-HMM的第一步通常就是使用无监督的训练数据训练一个GMM-HMM系统，因为DNN训练标注是由GMM-HMM系统采用维特比算法产生得到的，而且标注的质量会影响DNN系统的性能。（我们知道，训练GMM-HMM采用EM算法，只需给定观察序列，而不需给定标注结果，而DNN需要相应的标注结果）。</p>
+<p>FFDNN结构如下：</p>
+<img src="/2018/05/05/语音识别流程/FFDNN.jpg">
+<p>3)DNN+CTC</p>
+<p>之前的建模技术在模型训练时需要满足一个条件，就是训练数据时数据中每一帧都要预先确定对应的标注，即对应DNN输出状态的序号，训练特征序列和标注特征序列必须是等长的，而为了得到标注，需要使用已有模型对训练数据序列和标注序列进行强制对齐，但是基于大数据训练时标注的准备比较耗费时间，同时对齐使用的模型精度往往存在偏差，训练中使用的标注会存在错误。因此引入了CTC(Connectionist Temporal Classification)准则，解决了标注序列与特征序列不等长的问题，通过前向后向算法自动学习语音特征中的模型边界，这种准则与用于时序建模的神经网络(如LSTM)的结合可以直接用于端到端的模型建模，颠覆了语音识别使用接近30年之久的HMM框架。</p>
+<p>CTC的全称是Connectionist Temporal Classification，中文翻译大概是连接时序分类，是一种改进的RNN模型。它要达到的目标就是直接将语音和相应的文字对应起来，实现时序问题的分类。</p>
+<p>CTC在标注符号集中加一个空白符号blank，然后利用RNN进行标注，最后把blank符号和预测出的重复符号消除，比如预测了一个文字序列“——a—bb”，就对应于序列“ab”,这样就可以让RNN对长度小于输入序列的标注序列进行预测了。</p>
+<p>RNN的解码目前还没有好办法，一般会使用最优路径，即只取可能性最大的带blank符号的路径，但是这样实际上不一定对应最终结果的最佳概率值。</p>
+<p>4)End-to-end模型</p>
+<p>由于神经网络强大的建模能力，End-to-end的输出标签也不再需要像传统架构一样的进行细分。例如对于中文，输出不再需要进行细分为状态、音素或者声韵母，直接将汉字作为输出即可；对于英文，考虑到英文单词的数量庞大，可以使用字母作为输出标签。</p>
+<p><strong>流程：</strong></p>
+<p>1、编码：将语音信号转换为向量</p>
+<p>   首先是端点检测(VAD)，只识别有效语音段；然后是分帧，每帧的长度为25ms，每两帧之间有15ms的重叠，然后利用傅里叶变换将时域信号转换为频域信号，并提取出MFCC、PLP、FBANK等特征，得到了长度固定等长(12维)的语音向量。</p>
+<p>2、训练</p>
+<p>​    声学模型+字典+语言模型，声学模型主要描述发音模型下特征的似然概率；语言模型主要描述词间的连接概率；词典主要是完成词和音之间的转换。其中声学模型建模单元一般选择三音素模型。</p>
+<p>3、解码</p>
+<p>传统的语音识别解码都是建立在加权有限状态转换器(Weighted Finite State Transducer，WFST)的基础之上，它是将HMM、词典以及语言模型编译成一个网络。解码就是在这个WFST构造的动态网络空间中，找到最优的输出字符序列。搜索通常使用Viterbi算法，另外为了防止搜索空间爆炸，通常会采用剪枝算法，因此搜索得到的结果可能不是最优结果。</p>
+<p>WFST是一种赋权有向图，当接收到一个输入符号以后，就会由对应的弧跳转到另一个“状态”，并“发射”一个输出符号，弧上还可以赋予权值。其形式化描述如下：<br>半环K上的加权有限状态转换器T是一个八元组T=(Σ,Δ,Q,I,F,E,λ,ρ)T=(Σ,Δ,Q,I,F,E,λ,ρ)，其中ΣΣ为输入符号集合，ΔΔ为输出符号集合，QQ为状态集合，II,QQ为初始状态集合，FF,QQ为终止状态集合，五元关系E⊆Q×(Σ∪ϵ)×(Δ∪ϵ)×K×QE⊆Q×(Σ∪ϵ)×(Δ∪ϵ)×K×Q表示转移函数，映射λ：I→Kλ：I→K表示初始状态的权值，映射ρ：F→Kρ：F→K表示终止状态的权值 。 </p>
+<p>在end-to-end的语音识别系统中，最简单的解码方法是beam search。尽管end-to-end的声学模型中已经包含了一个弱语言模型，但是利用额外的语言模型仍然能够提高识别性能，因此将传统的基于WFST的解码方式和Viterbi算法引入到end-to-end的语音识别系统中也是非常自然的。然而由于声学模型中弱语言模型的存在，解码可能不是最优的。</p>
+<p>参考：</p>
+<p><a href="https://www.zhihu.com/question/35833334" target="_blank" rel="external">https://www.zhihu.com/question/35833334</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/05/语音识别前端算法概述/" rel="next" title="语音识别前端算法概述">
+                <i class="fa fa-chevron-left"></i> 语音识别前端算法概述
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/panpan.jpg"
+                alt="CoderZWei" />
+            
+              <p class="site-author-name" itemprop="name">CoderZWei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CoderZWei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
