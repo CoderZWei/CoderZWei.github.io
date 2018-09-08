@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="教程,技术," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="要实现点对点通信，过程其实很简单，首先要建立连接，接着取得对方节点的ip地址，最后通过socket通信即可实现。">
-<meta name="keywords" content="教程,技术">
+<meta name="description" content="记录查看kaldi训练生成的中间文件内容所需要的命令">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于Android WIFI直连的P2P聊天程序">
-<meta property="og:url" content="http://yoursite.com/2017/11/24/基于Android-WIFI直连的P2P聊天程序/index.html">
+<meta property="og:title" content="kaldi查看文件">
+<meta property="og:url" content="http://yoursite.com/2018/09/08/kaldi查看文件/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="要实现点对点通信，过程其实很简单，首先要建立连接，接着取得对方节点的ip地址，最后通过socket通信即可实现。">
+<meta property="og:description" content="记录查看kaldi训练生成的中间文件内容所需要的命令">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-11-24T08:18:09.819Z">
+<meta property="og:updated_time" content="2018-09-08T06:15:16.130Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于Android WIFI直连的P2P聊天程序">
-<meta name="twitter:description" content="要实现点对点通信，过程其实很简单，首先要建立连接，接着取得对方节点的ip地址，最后通过socket通信即可实现。">
+<meta name="twitter:title" content="kaldi查看文件">
+<meta name="twitter:description" content="记录查看kaldi训练生成的中间文件内容所需要的命令">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/24/基于Android-WIFI直连的P2P聊天程序/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/09/08/kaldi查看文件/"/>
 
 
 
 
 
-  <title>基于Android WIFI直连的P2P聊天程序 | CoderZWei's blog</title>
+  <title>kaldi查看文件 | CoderZWei's blog</title>
   
 
 
@@ -263,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/24/基于Android-WIFI直连的P2P聊天程序/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/08/kaldi查看文件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CoderZWei">
@@ -280,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">基于Android WIFI直连的P2P聊天程序</h1>
+          <h1 class="post-title" itemprop="name headline">kaldi查看文件</h1>
         
 
         <div class="post-meta">
@@ -292,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-24T15:50:51+08:00">
-                2017-11-24
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-08T14:13:59+08:00">
+                2018-09-08
               </time>
             
 
@@ -302,28 +301,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -352,14 +329,96 @@
       
 
       
-        <p>要实现点对点通信，过程其实很简单，首先要建立连接，接着取得对方节点的ip地址，最后通过socket通信即可实现。</p>
+        <p>记录查看kaldi训练生成的中间文件内容所需要的命令</p>
 <a id="more"></a>
-<p>通过Android提供的WiFi直连技术，可获得同一WiFi下的设备列表，选择其中一台即可实现连接。<br>首先要在AndroidManifest.xml文件中添加权限，如下所示：<br> <uses-permission ​="" android:required="true" android:name="android.permission.ACCESS_WIFI_STATE"><br>​    <uses-permission ​="" android:required="true" android:name="android.permission.CHANGE_WIFI_STATE"><br>​    <uses-permission ​="" android:required="true" android:name="android.permission.INTERNET"><br>之后在activity中建立相应的广播接收器和点对点管理器<br>​        private final IntentFilter intentFilter=new IntentFilter();<br>​        WifiP2pManager.Channel mChannel;<br>​        private WifiP2pManager mManager;<br>​        private p2pReceiver receiverP2p;<br>​       ………<br>@Override<br>​    protected void onCreate(Bundle savedInstanceState) {<br>​        super.onCreate(savedInstanceState);<br>​        setContentView(R.layout.activity_second);<br>​        intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);<br>​        intentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);<br>​        intentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);<br>​        intentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);<br>​        mManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);<br>​        mChannel = mManager.initialize(this, getMainLooper(), null);<br>}<br>在onResume中注册此intentfilter和receiverP2p：<br>@Override<br>protected void onResume() {<br>​    super.onResume();<br>​    receiverP2p=new p2pReceiver(mManager,mChannel,SecondActivity.this);<br>​    registerReceiver(receiverP2p,intentFilter);<br>}<br>记得在onDestroy中解除广播：<br>@Override<br>protected void onDestroy() {<br>​    super.onDestroy();<br>​    unregisterReceiver(receiverP2p);<br>}<br>发现周围设备：<br>mManager.discoverPeers(mChannel,new WifiP2pManager.ActionListener(){<br>​    @Override<br>​    public void onSuccess() {</uses-permission></uses-permission></uses-permission></p>
-<p>​    }<br>​    @Override<br>​    public void onFailure(int reason) {</p>
-<p>​    }<br>});<br>监听状态变化：<br>@Override<br> public void onReceive(final Context context, Intent intent) {<br>​       String action=intent.getAction();<br>​     //P2P功能是否打开<br>​     if(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)){<br>​<br>​     }<br>​     //可连接peer改变<br>​     else if(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)){<br>​         if(mManager!=null){<br>​             mManager.requestPeers(mChannel,peerListListener);<br>​         }<br>​     }<br>​     //P2P连接状态改变<br>​     else if(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)){<br>​<br>​     }<br>​     设备设置改变<br>​     }else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {<br>​     }<br>​     peerListListener=new WifiP2pManager.PeerListListener() {<br>​         @Override<br>​         public void onPeersAvailable(WifiP2pDeviceList peerlist) {<br>​          //在这里可选择设备进行连接<br>​         }<br>​     };</p>
-<p> }<br>设备连接方法如下：<br>private void connectPeer(WifiP2pDevice device) {<br>​    final WifiP2pConfig config = new WifiP2pConfig();<br>​    config.deviceAddress = device.deviceAddress;<br>​    mManager.connect(mChannel, config, new WifiP2pManager.ActionListener() {<br>​        @Override<br>​        public void onSuccess() {<br>​           //连接成功<br>​        }</p>
-<p>​        @Override<br>​        public void onFailure(int reason) {<br>​            // 连接失败<br>​        }<br>​    });<br>}<br>通过以上步骤便可在两台Android设备之间建立连接，若要取得GroupOwner地址，在receiverP2p中的onReceive方法中，当intent.getAction()等于WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION时，代表P2P连接状态发生改变，此时可获得IP地址，方法如下：<br>NetworkInfo info=intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);<br>  if(info.isConnected()){<br>​    mManager.requestConnectionInfo(mChannel, new WifiP2pManager.ConnectionInfoListener() {<br>​        @Override<br>​        public void onConnectionInfoAvailable(WifiP2pInfo info) {<br>​            String address=null;<br>​            if(info.groupFormed&amp;&amp;info.isGroupOwner){<br>​                address=info.groupOwnerAddress.getHostAddress().toString();<br>​            }else if(info.groupFormed){<br>​                address=info.groupOwnerAddress.getHostAddress();<br>​            }else {</p>
-<p>​            }<br>​        }<br>​    });<br>}else {<br>​<br>}<br>注意：这里取得的ip地址永远是192.168.49.1，查看源码后发现这是info.groupOwnerAddress的默认值，但是这并不影响。在初次发送消息时，非GroupOwner设备将自己的实际ip地址及消息发送到192.168.49.1，GroupOwner设备即可获得另一台设备的ip地址，之后再将自己的ip地址发送给另一台设备，两台设备之间即可自由通信。</p>
+<ol>
+<li>ark,scp文件</li>
+</ol>
+<p>~/kaldi/src/featbin/copy-feats ark:raw_mfcc_dev.10.ark ark,t:-|head<br>ark存的试二进制文件，scp可以直接用cat命令看。</p>
+<p>   2.fst文件</p>
+<p>~/kaldi/tools/openfst-1.6.2/bin/fstprint L.fst | head -n 10<br>~/kaldi/tools/openfst-1.6.2/bin/fstprint –isymbols=phones.txt –osymbols=words.txt L.fst | head -n 15<br>fstdraw [–isymbols=phones.txt –osymbols=words.txt] L.fst | dot –Tps  |  ps2pdf – L.pdf<br>~/kaldi/tools/openfst-1.6.2/bin/fstdraw –isymbols=phones.txt –osymbols=words.txt HCLG.fst</p>
+<p>3.mfcc 生成的文件<br>~/kaldi/src/featbin/copy-feats ark:raw_mfcc_test_hires.1.ark ark,t:- | head<br>在文件前边加ark关键字，告诉copy-feats是什么格式的，还有后面加一个ark,t:- 表示输出格式为t文本，否则默认是二进制。<br>~/kaldi/src/featbin/copy-feats ark:raw_mfcc_dev.10.ark ark:- |~/kaldi/src/featbin/add-deltas ark:- ark,t:- | head<br>这样可以看到40维的数据</p>
+<p>4.mdl文件<br>~/kaldi/src/gmmbin/gmm-copy –binary=false 0.mdl - </p>
+<p>5.tree文件<br>~/kaldi/src/bin/copy-tree –binary=false tree -<br>~/kaldi/src/bin/draw-tree ../../data/lang/phones.txt tree | dot -Gsize=50,100 -Tps|ps2pdf - tree.pdf</p>
+<p>6.ali.1.gz 对齐文件</p>
+<p>1）~/kaldi/src/bin/copy-int-vector “ark:gunzip -c ali.1.gz|” ark,t:- |head -n 1</p>
+<p>  代表的是每句话和transition-id的对应关系，每个transition-id对应一个特征向量</p>
+<p>$ copy-int-vector “ark:gunzip -c ali.1.gz|” ark,t:- | head -n 1</p>
+<p>如：</p>
+<blockquote>
+<p>speaker001_00003 4 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 16 15 15 15 18 890 889 889 889 889 889 889 892 894 893 893 893 86 88 87 90 89 89 89 89 89 89 89 89 89 89 89 89 89 89 194 193 196 195 195 198 197 386 385 385 385 385 385 385 385 385 388 387 387 390 902 901 901 904 903 906 905 905 905 905 905 905 905 905 905 905 905 914 913 913 916 918 917 917 917 917 917 917 752 751 751 751 751 751 754 753 753 753 753 753 753 753 753 756 755 755 926 925 928 927 927 927 927 927 927 927 930 929 929 929 929 929 929 929 929 4 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 16 18</p>
+</blockquote>
+<p>2）可以先解压 gunzip ali.1.gz<br>然后  ~/kaldi/src/bin/show-alignments ../../data/lang/phones.txt 40.mdl ark:ali.1 |head -n 2</p>
+<p>3）若要查看其中的transition-id和transition-state的对应关系：</p>
+<p>show-transitions data/lang/phones.txt exp/mono/0.mdl</p>
+<p>如：</p>
+<blockquote>
+<p>Transition-state 1: phone = sil hmm-state = 0 pdf = 0</p>
+<p>Transition-id = 1 p = 0.966816 [self-loop]</p>
+<p>Transition-id = 2 p = 0.01 [0 -&gt; 1]</p>
+<p>Transition-id = 3 p = 0.01 [0 -&gt; 2]</p>
+<p>Transition-id = 4 p = 0.013189 [0 -&gt; 3]</p>
+<p>Transition-state 2: phone = sil hmm-state = 1 pdf = 1</p>
+<p>Transition-id = 5 p = 0.970016 [self-loop]</p>
+<p>Transition-id = 6 p = 0.01 [1 -&gt; 2]</p>
+<p>Transition-id = 7 p = 0.01 [1 -&gt; 3]</p>
+<p>Transition-id = 8 p = 0.01 [1 -&gt; 4]</p>
+<p>Transition-state 3: phone = sil hmm-state = 2 pdf = 2</p>
+<p>Transition-id = 9 p = 0.01 [2 -&gt; 1]</p>
+<p>Transition-id = 10 p = 0.968144 [self-loop]</p>
+<p>Transition-id = 11 p = 0.01 [2 -&gt; 3]</p>
+<p>Transition-id = 12 p = 0.0118632 [2 -&gt; 4]</p>
+<p>Transition-state 4: phone = sil hmm-state = 3 pdf = 3</p>
+<p>Transition-id = 13 p = 0.01 [3 -&gt; 1]</p>
+<p>Transition-id = 14 p = 0.01 [3 -&gt; 2]</p>
+<p>Transition-id = 15 p = 0.932347 [self-loop]</p>
+<p>Transition-id = 16 p = 0.0476583 [3 -&gt; 4]</p>
+</blockquote>
+<p>其中一个transition-state对应唯一的pdf，其下又包括多个transition-id</p>
+<p>若要增加可读性：</p>
+<p>show-transitions data/lang/phones.txt exp/mono/final.mdl exp/mono/final.occs | less</p>
+<p>(.occs文件是指occupation counts)</p>
+<p>7.查看mfcc特征文件</p>
+<p>copy-feats copy-matrix</p>
+<p>8.查看vad特征文件</p>
+<p>copy-vector</p>
+<p>9.查看fsts.1.gz</p>
+<p>fstcopy ‘ark:gunzip -c exp/mono0a/fsts.1.gz|’ ark,t:- | head -n 20</p>
+<p>10.查看hmm结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show-transitions phones.txt 1.mdl 1.occs</div></pre></td></tr></table></figure>
+<p>11.查看mdl文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copy-transition-model --binary=false 1.mdl 1.txt</div></pre></td></tr></table></figure>
+<p>12.只查看ali文件的数字对齐部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copy-int-vector ark:1.ali ark,t:-</div></pre></td></tr></table></figure>
+<p>13.查看hmm的整体信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">hmm-info trans.mdl 或 am-info trans.mdl</div><div class="line">输出为：</div><div class="line">hmm-info final.mdl</div><div class="line">number of phones 48</div><div class="line">number of pdfs 144</div><div class="line">number of transition-ids 288</div><div class="line">number of transition-states 144</div></pre></td></tr></table></figure>
+<p>14.查看tree信息</p>
+<p>tree-info tree</p>
+<p>15.查看网络结构和信息</p>
+<p>nnet-am-copy –binary=false baseline/exp/nnet4d/final.mdl - </p>
+<p> nnet-am-info </p>
+<p>16.若要将对齐文件中的transition-id转化为对应的pdf-d:</p>
+<p>ali-to-pdf final.mdl “ark:gunzip -c ali.1.gz|” ark,t:- | head -n 1 </p>
+<blockquote>
+<p>输出</p>
+<p>speaker001_00003 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 3 3 3 4 440 440 440 440 440 440 440 441 442 442 442 442 38 39 39 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 92 92 93 93 93 94 94 188 188 188 188 188 188 188 188 188 189 189 189 190 446 446 446 447 447 448 448 448 448 448 448 448 448 448 448 448 448 452 452 452 453 454 454 454 454 454 454 454 371 371 371 371 371 371 372 372 372 372 372 372 372 372 372 373 373 373 458 458 459 459 459 459 459 459 459 459 460 460 460 460 460 460 460 460 460 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 4 </p>
+</blockquote>
+<p>对比之前的copy-int-vector查看的对其文件的前两帧，4和1两个transition-id都对应于一个pdf-id：0</p>
+<p>17.ali-to-post: 根据得到的pdf-id，生成[pdf, post]对，即pdf与其对应的后验概率</p>
+<blockquote>
+<p>ali-to-pdf final.mdl “ark:gunzip -c ali.1.gz|” ark,t:- | head -n 1 | ali-to-post ark,t:- ark,t:-</p>
+<p> speaker001_00003 [ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ] ……[ 3 1 ][ 3 1 ][ 3 1 ][ 3 1 ][ 4 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 441 1 ][ 442 1 ][ 442 1 ][ 442 1 ][ 442 1 ][ 38 1 ][ 39 1 ][ 39 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 92 1 ][ 92 1 ]…… [ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 3 1 ][ 4 1 ]</p>
+<p>可以得到pdf-id及相应的后验概率，这里均为1</p>
+</blockquote>
+<p>18.G.fst用于对语言模型建模，当使用统计语言模型时，用srilm训练出来的语言模型位arpa格式，可以用arpafst将arpa转换成fst</p>
+<p>训练dnn:</p>
+<p>1、steps/nnet2/train_pnorm_fast.sh </p>
+<p>2、steps/nnet2/train_tanh.sh</p>
+<p><a href="http://www.kaldi-asr.org/doc/append-vector-to-feats_8cc.html" target="_blank" rel="external">append-vector-to-feats</a> ：</p>
+<p>在特征后加vector</p>
+<p><a href="http://www.kaldi-asr.org/doc/compute-spectrogram-feats_8cc.html" target="_blank" rel="external">compute-spectrogram-feats</a> </p>
+<p>计算**特征</p>
+<p>pdf( probability density functions )：概率密度函数</p>
 
       
     </div>
@@ -375,14 +434,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/教程/" rel="tag"># 教程</a>
-          
-            <a href="/tags/技术/" rel="tag"># 技术</a>
-          
-        </div>
-      
 
       
       
@@ -392,8 +443,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/24/Android天气类app实现/" rel="next" title="Android天气类app实现">
-                <i class="fa fa-chevron-left"></i> Android天气类app实现
+              <a href="/2018/09/08/kaldi音频特征提取/" rel="next" title="kaldi音频特征提取">
+                <i class="fa fa-chevron-left"></i> kaldi音频特征提取
               </a>
             
           </div>
@@ -402,8 +453,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/24/关于岭回归/" rel="prev" title="关于岭回归">
-                关于岭回归 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/08/毕设总结/" rel="prev" title="毕设总结">
+                毕设总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
