@@ -79,14 +79,17 @@
 
 
 
+<meta name="description" content="Kaldi是语音识别的工具包，集成了很多语音处理相关的工具，是语音研究人员的必修课。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="kaldi初探">
 <meta property="og:url" content="http://yoursite.com/2018/05/05/kaldi初探/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="Kaldi是语音识别的工具包，集成了很多语音处理相关的工具，是语音研究人员的必修课。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-05-05T12:50:53.992Z">
+<meta property="og:updated_time" content="2018-09-08T06:30:07.466Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kaldi初探">
+<meta name="twitter:description" content="Kaldi是语音识别的工具包，集成了很多语音处理相关的工具，是语音研究人员的必修课。">
 
 
 
@@ -326,7 +329,19 @@
       
 
       
-        
+        <p>Kaldi是语音识别的工具包，集成了很多语音处理相关的工具，是语音研究人员的必修课。</p>
+<a id="more"></a>
+<p>Kaldi的目录结构：</p>
+<p>1、tools：里面存放Kadli所依赖的包的地方，主要有：</p>
+<p>—OpenFST：是一个用来构造有限状态自动机的库，因为hmm模型就是一个有限状态自动机</p>
+<p>—ATLAS：这是一个C++下的线性代数库，做机器学习需要很多矩阵运算</p>
+<p>—LRSTLM：这是一个统计语言模型的工具包</p>
+<p>—sph2pipe：这是宾夕法尼亚大学<a href="https://www.ldc.upenn.edu/" target="_blank" rel="external">linguistic data consortium（LDC）</a>开发的一款处理SPHERE_formatted数字音频文件的软件，它可以将LDC的sph格式的文件转换成其它格式</p>
+<p>2、src：里面是kaldi的源代码</p>
+<p>3、egs：里面是kaldi自带的很多样例</p>
+<p>4、windows：里面是在windows平台上运行kaldi的工具</p>
+<p>5、misc：里面是额外的工具和应用，对于一般的kaldi功能没有必要</p>
+
       
     </div>
     
