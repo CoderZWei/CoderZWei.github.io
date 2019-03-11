@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="实验室的项目用到的开发板是基于Linux的，为了将其联网，折腾了好一阵，以下为两种联网方式的介绍。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-09T06:58:33.576Z">
+<meta property="og:updated_time" content="2019-03-11T03:34:59.301Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux开发板网络设置">
 <meta name="twitter:description" content="实验室的项目用到的开发板是基于Linux的，为了将其联网，折腾了好一阵，以下为两种联网方式的介绍。">
@@ -334,29 +334,29 @@
 <p>基本环境介绍：网线接口ip为10.0.0.60，网关为：10.0.0.21，默认DNS地址为202.112.128.50，备用DNS地址为202.112.128.51</p>
 <p>1、</p>
 <p>第一种方法是将板子通过网线直接连到网口上：</p>
-<p>1）</p>
-<p>vim /etc/network/interfaces</p>
-<p>编辑内容为：</p>
-<p>auto lo<br>iface lo inet loopback<br>auto eth0<br>iface eth0 inet static<br>address 10.0.0.60<br>gateway 10.0.0.21<br>netmask 255.255.255.0</p>
-<p>2）</p>
-<p>vim /etc/resolv.conf （重启电脑后会失效，解决办法是 vim /etc/resolvconf/resolv.conf.d/base）</p>
-<p>编辑内容为：</p>
-<p>nameserver 202.112.128.50<br>nameserver 202.112.128.51<br>route add default gw 202.112.128.50 #添加默认网关</p>
-<p>3）重启网络配置</p>
-<p>sudo /etc/init.d/networking restart</p>
+<p>​    1）</p>
+<p>​    vim /etc/network/interfaces</p>
+<p>​    编辑内容为：</p>
+<p>​        auto lo<br>​        iface lo inet loopback<br>​        auto eth0<br>​        iface eth0 inet static<br>​        address 10.0.0.60<br>​        gateway 10.0.0.21<br>​        netmask 255.255.255.0</p>
+<p>​    2）</p>
+<p>​    vim /etc/resolv.conf （重启电脑后会失效，解决办法是 vim /etc/resolvconf/resolv.conf.d/base）</p>
+<p>​    编辑内容为：</p>
+<p>​        nameserver 202.112.128.50<br>​        nameserver 202.112.128.51<br>​        route add default gw 202.112.128.50 #添加默认网关</p>
+<p>​    3）重启网络配置</p>
+<p>​    sudo /etc/init.d/networking restart</p>
 <p>2、第二种方法是将板子和电脑连接，然后通过电脑连接外网</p>
-<p>1)</p>
-<p>电脑为Windows系统，连接方式为无线连接，打开控制面板-&gt;网络和Internet-&gt;网络和共享中心-&gt;更改适配器设置，选择WLAN连接-&gt;属性-&gt;共享，勾选”允许其他网络用户通过此计算机的Internet连接来连接”，然后选择和板子连接的接口，点击”确定”。注意此时会默认给这个接口分配IP：192.168.137.1。</p>
-<p>接着打开板子，进入系统</p>
-<p>2)vim /etc/network/interfaces</p>
-<p>编辑内容为：</p>
-<p>auto lo<br>iface lo inet loopback<br>auto eth0<br>iface eth0 inet static<br>address 192.168.137.X #随便设一个不为1的数<br>gateway 192.168.137.1 #即把电脑接口IP设为网关<br>netmask 255.255.255.0</p>
-<p>3）</p>
-<p>vim /etc/resolv.conf （重启电脑后会失效，解决办法是 vim /etc/resolvconf/resolv.conf.d/base）</p>
-<p>编辑内容为：</p>
-<p>nameserver 202.112.128.50<br>nameserver 202.112.128.51<br>route add default gw 202.112.128.50 #添加默认网关</p>
-<p>4）重启网络配置</p>
-<p>sudo /etc/init.d/networking restart</p>
+<p>​    1)</p>
+<p>​    电脑为Windows系统，连接方式为无线连接，打开控制面板-&gt;网络和Internet-&gt;网络和共享中心-&gt;更改适配器设置，选择WLAN连接-&gt;属性-&gt;共享，勾选”允许其他网络用户通过此计算机的Internet连接来连接”，然后选择和板子连接的接口，点击”确定”。注意此时会默认给这个接口分配IP：192.168.137.1。</p>
+<p>​    接着打开板子，进入系统</p>
+<p>​    2)vim /etc/network/interfaces</p>
+<p>​    编辑内容为：</p>
+<p>​        auto lo<br>​        iface lo inet loopback<br>​        auto eth0<br>​        iface eth0 inet static<br>​        address 192.168.137.X #随便设一个不为1的数<br>​        gateway 192.168.137.1 #即把电脑接口IP设为网关<br>​        netmask 255.255.255.0</p>
+<p>​    3）</p>
+<p>​    vim /etc/resolv.conf （重启电脑后会失效，解决办法是 vim /etc/resolvconf/resolv.conf.d/base）</p>
+<p>​    编辑内容为：</p>
+<p>​        nameserver 202.112.128.50<br>​        nameserver 202.112.128.51<br>​        route add default gw 202.112.128.50 #添加默认网关</p>
+<p>​    4）重启网络配置</p>
+<p>​    sudo /etc/init.d/networking restart</p>
 
       
     </div>
