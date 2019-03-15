@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/ssd.svg">
 <meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/yolo.svg">
 <meta property="og:image" content="http://yoursite.com/2017/11/12/目标检测方法综述/YOLO.jpg">
-<meta property="og:updated_time" content="2018-04-25T16:49:09.579Z">
+<meta property="og:updated_time" content="2019-03-15T02:34:10.323Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="目标检测方法综述">
 <meta name="twitter:description" content="近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，做一个简单的综述，整理了一些网上的资料，以后若需要再深入研究。">
@@ -364,7 +364,7 @@
       
         <p>近几年在深度学习计算机视觉领域广泛应用，在目标检测这一经典问题上也取得了巨大的发展。对于这一方面很有兴趣，虽然导师布置的题目不是这个，我也大致的研究了几个经典的算法，做一个简单的综述，整理了一些网上的资料，以后若需要再深入研究。</p>
 <a id="more"></a>
-<p>目前目标检测领域主要分为两个方向，一种是以RCNN为代表的基于Region Proposal的思路（RCNN，SPP-NET，Fast-RCNN，Faster-RCNN等），识别精度较低；另一种是以YOLO为代表的基于回归的思路（YOLO，SSD等），识别效率高。</p>
+<p>目前目标检测领域主要分为两个方向，一种是以RCNN为代表的基于Region Proposal的双步思路（RCNN，SPP-NET，Fast-RCNN，Faster-RCNN等），识别精度较高，但速度较慢；另一种是以YOLO为代表的基于回归的单步思路（YOLO，SSD等），识别精度稍低，但速度更快。</p>
 <h3 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h3><p>首先是将深度学习与目标检测相结合的先驱者：<a href="https://github.com/rbgirshick/rcnn" target="_blank" rel="external">RCNN</a></p>
 <img src="/2017/11/12/目标检测方法综述/rcnn.svg">
 <p>这是基于卷积神经网络的物体检测的奠基之作，其核心思想是在对每张图片选取多个区域，然后每个区域作为一个样本进入一个卷积神经网络来抽取特征，最后使用分类器来对齐分类，和一个回归器来得到准确的边框。</p>
