@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="记录leetcode的上做过的一些题的解法思路，防止忘掉">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-30T11:23:11.980Z">
+<meta property="og:updated_time" content="2019-03-31T14:53:58.166Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode刷题笔记">
 <meta name="twitter:description" content="记录leetcode的上做过的一些题的解法思路，防止忘掉">
@@ -482,6 +482,103 @@
 <blockquote>
 <p>//<a href="http://www.cnblogs.com/grandyang/p/4028713.html" target="_blank" rel="external">http://www.cnblogs.com/grandyang/p/4028713.html</a><br>    int maxProduct(vector<int>&amp; nums) {<br>        int n=nums.size();<br>        int res=nums[0];<br>        vector<int>dp_max(n,0),dp_min(n,0);<br>        dp_max[0]=res;<br>        dp_min[0]=res;<br>        for(int i=1;i&lt;nums.size();i++){<br>           dp_max[i]=max(nums[i],max(nums[i]<em>dp_max[i-1],nums[i]</em>dp_min[i-1]));<br>           dp_min[i]=min(nums[i],min(nums[i]<em>dp_max[i-1],nums[i]</em>dp_min[i-1]));<br>           res=max(res,dp_max[i]);<br>        }<br>        return res;<br>    }</int></int></p>
 </blockquote>
+<p>179、最大数</p>
+<p>给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。</p>
+<p>如：输入：[10,2]    输出：210</p>
+<p>解法：将数字转换为字符串相加排序进行排序，序高者在前</p>
+<blockquote>
+<p>static bool cmp(int a,int b){<br>        return to_string(a) + to_string(b) &gt; to_string(b) + to_string(a);<br>    }<br>    string largestNumber(vector<int>&amp; nums) {<br>        sort(nums.begin(),nums.end(),cmp);<br>        string res=””;<br>        for(int i=0;i&lt;nums.size();i++){<br>            res+=to_string(nums[i]);<br>        }<br>        return res;</int></p>
+</blockquote>
+<p>200、岛屿的个数</p>
+<p>给定一个由 <code>&#39;1&#39;</code>（陆地）和 <code>&#39;0&#39;</code>（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。你可以假设网格的四个边均被水包围。</p>
+<p><strong>示例 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">输入:</div><div class="line">11110</div><div class="line">11010</div><div class="line">11000</div><div class="line">00000</div><div class="line"></div><div class="line">输出: 1</div></pre></td></tr></table></figure>
+<p>解法：使用深搜，记住不是动态规划</p>
+<blockquote>
+<p>int numIslands(vector<vector<char>&gt;&amp; grid) {<br>          if (grid.empty() || grid[0].empty()) return 0;<br>        int m=grid.size(),n=grid[0].size();<br>        int res=0;<br>       vector<vector<int>&gt;visited(m,vector<int>(n,0));<br>        for(int i=0;i<m;i++){ for(int="" j="0;j<n;j++){" if(grid[i][j]="='1'" &&="" visited[i][j]="=0){" dfs(grid,i,j,visited);="" res++;="" }="" return="" res;="" void="" dfs(vector<vector<char="">&gt;&amp; grid,int x,int y,vector<vector<int>&gt;&amp;visited){<br>        if(x&gt;=grid.size()||y&gt;=grid[0].size()||x&lt;0||y&lt;0){<br>            return ;<br>        }<br>        if(grid[x][y]==’0’||visited[x][y]==1){//不通或者已访问过<br>            return;<br>        }<br>        visited[x][y]=1;<br>        dfs(grid,x+1,y,visited);<br>        dfs(grid,x,y+1,visited);<br>        dfs(grid,x,y-1,visited);<br>        dfs(grid,x-1,y,visited);<br>    }</vector<int></m;i++){></int></vector<int></vector<char></p>
+</blockquote>
+<p>#####重建二叉树</p>
+<p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。</p>
+<p>解法：</p>
+<blockquote>
+<p>TreeNode<em> reConstructBinaryTree(vector<int> pre,vector<int> vin) {<br>           TreeNode </int></int></em>root=reConstructBinaryTree(pre,0,pre.size()-1,vin,0,vin.size()-1);<br>            return root;<br>    }<br>    TreeNode <em> reConstructBinaryTree(vector<int> pre,int start_pre,int end_pre,vector<int> vin,int start_vin,int end_vin){<br>        if(start_pre&gt;end_pre || start_vin&gt;end_vin){<br>            return NULL;<br>        }<br>        TreeNode </int></int></em>root=new TreeNode(pre[start_pre]);<br>        for(int i=start_vin;i&lt;=end_vin;i++)<br>            if(vin[i]==pre[start_pre]){<br>                root-&gt;left=reConstructBinaryTree(pre,start_pre+1,start_pre+i-start_vin,vin,start_vin,i-1);<br>                root-&gt;right=reConstructBinaryTree(pre,i-start_vin+start_pre+1,end_pre,vin,i+1,end_vin);<br>                break;</p>
+<p>​    }</p>
+<p>return root;<br>}</p>
+</blockquote>
+<p>#####用两个栈实现队列的功能(先进先出)</p>
+<p>解法：</p>
+<p>入队：将元素进栈A</p>
+<p>出队：判断栈B是否为空，如果为空，则将栈A中所有元素pop，并push进栈B，栈B出栈；</p>
+<p>如果不为空，栈B直接出栈。</p>
+<blockquote>
+<p> void push(int node) {<br>          stack1.push(node);<br>     }</p>
+</blockquote>
+<pre><code>int pop() {
+      int a;
+    if(stack2.empty()){
+        while(!stack1.empty()){
+            a=stack1.top();
+            stack2.push(a);
+            stack1.pop();
+        }
+    }
+    a=stack2.top();
+    stack2.pop();
+    return a;
+}
+</code></pre><p>private:<br>    stack<int> stack1;<br>    stack<int> stack2;</int></int></p>
+<p>#####矩形覆盖</p>
+<p>我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？</p>
+<p>解法：用动态规划，f(n)=f(n-1)+f(n-2)</p>
+<blockquote>
+<p> int rectCover(int number) {<br>         if(number==0){<br>             return 0;<br>         }<br>         if(number  == 1){<br>             return 1;<br>         }<br>         if(number<em>2 == 2){<br>             return 1;<br>         }else if(number</em>2 == 4){<br>             return 2;<br>         }else{<br>             return rectCover((number-1))+rectCover(number-2);<br>         }<br>     }</p>
+</blockquote>
+<p>#####二进制中1的个数</p>
+<p>输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">-------------可能陷入死循环的解法---------------------</div><div class="line">//可能陷入死循环的方法是因为&gt;&gt;右移是带符号位右移的导致，右移空出来的位子都是1所以进入死循环。如果把n=n&gt;&gt;1改成n=n&gt;&gt;&gt;1就不会进入死循环了。&gt;&gt;&gt;是无视符号的右移</div><div class="line">    /*public static int NumberOf1_CanNotUse(int n) &#123;</div><div class="line">        int count = 0;</div><div class="line">        while (n != 0) &#123;</div><div class="line">            /*</div><div class="line">            * 用1和n进行位与运算，</div><div class="line">            * 结果要是为1则n的2进制形式</div><div class="line">            * 最右边那位肯定是1，否则为0</div><div class="line">            */</div><div class="line">            if((n &amp; 1) == 1) &#123;</div><div class="line">                count++;</div><div class="line">            &#125;</div><div class="line">            //把n的2进制形式往右推一位</div><div class="line">            n = n &gt;&gt; 1;</div><div class="line">        &#125;</div><div class="line">        return count;</div><div class="line">    &#125;*/</div><div class="line">    //---------------正解--------------------------------</div><div class="line">    //思想：用1（1自身左移运算，其实后来就不是1了）和n的每位进行位与，来判断1的个数</div><div class="line">    private static int NumberOf1_low( int n) &#123;</div><div class="line">        int count = 0;</div><div class="line">        int flag = 1;</div><div class="line">        while (flag != 0) &#123;</div><div class="line">            if ((n &amp; flag) != 0) &#123;</div><div class="line">                count++;</div><div class="line">            &#125;</div><div class="line">            flag = flag &lt;&lt; 1;</div><div class="line">        &#125;</div><div class="line">        return` `count;</div><div class="line">    &#125;</div><div class="line">    //--------------------最优解----------------------------</div><div class="line">    public static int NumberOf1(int n) &#123;</div><div class="line">        int count = 0;</div><div class="line">        while (n != 0) &#123;</div><div class="line">            ++count;</div><div class="line">            n = (n - 1) &amp; n;</div><div class="line">        &#125;</div><div class="line">        return count;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>#####调整数组顺序使奇数位于偶数的前面</p>
+<p>输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。</p>
+<p>解法：从左向右遍历，若遇到偶数，则从数组中删除，并将其加到数组末尾</p>
+<blockquote>
+<p>void reOrderArray(vector<int> &amp;array) {<br>      int n=array.size(),i=0;<br>      while(i&lt;n){<br>          if(array[i]%2==0){<br>              int tmp=array[i];<br>              array.erase(array.begin()+i);<br>              array.push_back(tmp);<br>              n–;<br>              i–;<br>          }<br>            i++;<br>      }<br>   }</int></p>
+</blockquote>
+<p>#####链表中倒数第k个结点</p>
+<p>解法：可使用快慢指针，快指针先走k个节点，然后两个节点一起走，当快节点到达末尾时，满节点就到达了倒数第k个节点</p>
+<h5 id="反转链表"><a href="#反转链表" class="headerlink" title="反转链表"></a>反转链表</h5><p> ListNode<em> ReverseList(ListNode</em> pHead) {<br>        if(pHead==NULL || pHead-&gt;next==NULL){<br>            return pHead;<br>        }      </p>
+<pre><code>    ListNode *cur=pHead,*curNext=pHead-&gt;next;
+    cur-&gt;next=NULL;
+    while(curNext){
+       ListNode *tmp=curNext;
+        curNext=curNext-&gt;next;
+        tmp-&gt;next=cur;
+        cur=tmp;
+    }
+    return cur;
+}
+</code></pre><h5 id="树的子结构"><a href="#树的子结构" class="headerlink" title="树的子结构"></a>树的子结构</h5><p>输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）</p>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">bool isSubtree(TreeNode* pRootA, TreeNode* pRootB) &#123;</div><div class="line">        if (pRootB == NULL) return true;</div><div class="line">        if (pRootA == NULL) return false;</div><div class="line">        if (pRootB-&gt;val == pRootA-&gt;val) &#123;</div><div class="line">            return isSubtree(pRootA-&gt;left, pRootB-&gt;left)</div><div class="line">                &amp;&amp; isSubtree(pRootA-&gt;right, pRootB-&gt;right);</div><div class="line">        &#125; else return false;</div><div class="line">    &#125;</div><div class="line">bool HasSubtree(TreeNode* pRootA, TreeNode* pRootB)</div><div class="line">    &#123;</div><div class="line">        if (pRootA == NULL || pRootB == NULL) return false;</div><div class="line">        	return isSubtree(pRootA, pRootB) ||</div><div class="line">            HasSubtree(pRootA-&gt;left, pRootB) ||</div><div class="line">            HasSubtree(pRootA-&gt;right, pRootB);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="栈的压入、弹出序列"><a href="#栈的压入、弹出序列" class="headerlink" title="栈的压入、弹出序列"></a>栈的压入、弹出序列</h5><p>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）</p>
+<p>解法：顺序遍历压入序列，将其压入栈，当栈顶元素和弹出序列头部相等时，栈弹出。最终若栈为空，则返回true</p>
+<blockquote>
+<p> bool IsPopOrder(vector<int> pushV,vector<int> popV) {<br>         stack<int>st;<br>         int t=0;<br>         for(int i=0;i&lt;pushV.size();i++){<br>             st.push(pushV[i]);<br>             while(t&lt;popV.size()  &amp;&amp; st.top()==popV[t]){<br>                 st.pop();<br>                 t++;<br>             }<br>         }<br>         if(st.size()==0){<br>             return true;<br>         }else{<br>             return false;<br>         }<br>     }</int></int></int></p>
+</blockquote>
+<h5 id="二叉树中和为某一值的路径"><a href="#二叉树中和为某一值的路径" class="headerlink" title="二叉树中和为某一值的路径"></a>二叉树中和为某一值的路径</h5><p>输入一颗二叉树的跟节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，数组长度大的数组靠前)</p>
+<p>解法：使用深搜</p>
+<blockquote>
+<p>vector<vector<int> &gt;allRes;<br>    vector<int> tmp;<br>    void dfsFind(TreeNode <em> node , int left){<br>        tmp.push_back(node-&gt;val);<br>        if(left-node-&gt;val == 0 &amp;&amp; !node-&gt;left &amp;&amp; !node-&gt;right)<br>            allRes.push_back(tmp);<br>        else {<br>            if(node-&gt;left) dfsFind(node-&gt;left, left-node-&gt;val);<br>            if(node-&gt;right) dfsFind(node-&gt;right, left-node-&gt;val);<br>        }<br>        tmp.pop_back();<br>    }<br>    vector<vector<int> &gt; FindPath(TreeNode</vector<int></em> root,int expectNumber) {<br>         if(root) dfsFind(root, expectNumber);<br>        return allRes;<br>    }</int></vector<int></p>
+</blockquote>
+<h5 id="对称的二叉树"><a href="#对称的二叉树" class="headerlink" title="对称的二叉树"></a>对称的二叉树</h5><p>请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。</p>
+<p>解法：递归</p>
+<blockquote>
+<p>bool isSymmetrical(TreeNode<em> pRoot)<br>    {<br>        if(pRoot == NULL){<br>                return true;<br>            }<br>            return comRoot(pRoot-&gt;left, pRoot-&gt;right);<br>      }<br>      bool comRoot(TreeNode </em>left, TreeNode *right) {<br>            // TODO Auto-generated method stub<br>            if(left == NULL) return right==NULL;<br>            if(right == NULL) return false;<br>            if(left-&gt;val != right-&gt;val) return false;<br>            return comRoot(left-&gt;right,right-&gt;left) &amp;&amp; comRoot(left-&gt;left,right-&gt;right);<br>        }</p>
+</blockquote>
+<h5 id="机器人的运动范围"><a href="#机器人的运动范围" class="headerlink" title="机器人的运动范围"></a>机器人的运动范围</h5><p>地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？</p>
+<p>解法：使用深搜，用visited数组记录是否访问过</p>
+<blockquote>
+<p> int movingCount(int threshold, int rows, int cols)<br>   {<br>      int visited[rows<em>cols];<br>       memset(visited, 0, sizeof(visited));<br>       return dfs(threshold,1,1,rows,cols,visited);<br>   }<br> int func(int n){<br>       int res=0;<br>       while(n&gt;0){<br>           res+=n%10;<br>           n=n/10;<br>       }<br>       return res;<br>   }<br>   int dfs(int threshold,int x,int y,int row,int col,int visited[]){<br>       cout&lt;&lt;”heihei x=”&lt;<x<<"y="<<y<<endl; 因为是从(0,0开始的，所以要func(x-1)="" func(y-1)="" if(x<1="" ||="" y<1="" x="">row || y&gt;col || visited[(x-1)</x<<"y="<<y<<endl;></em>col+(y-1)]==1 || func(x-1)+func(y-1)&gt;threshold){<br>           return 0;<br>       }<br>       cout&lt;&lt;”x:”&lt;&lt;x&lt;&lt;”y”&lt;&lt;y&lt;&lt;endl;<br>       visited[(x-1)*col+(y-1)]=1;<br>       return dfs(threshold,x,y+1,row,col,visited)+<br>       dfs(threshold,x,y-1,row,col,visited)+<br>       dfs(threshold,x-1,y,row,col,visited)+<br>       dfs(threshold,x+1,y,row,col,visited)+1;<br>   }</p>
+</blockquote>
 
       
     </div>
@@ -566,8 +663,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -633,6 +739,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#反转链表"><span class="nav-number">1.</span> <span class="nav-text">反转链表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#树的子结构"><span class="nav-number">2.</span> <span class="nav-text">树的子结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#栈的压入、弹出序列"><span class="nav-number">3.</span> <span class="nav-text">栈的压入、弹出序列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二叉树中和为某一值的路径"><span class="nav-number">4.</span> <span class="nav-text">二叉树中和为某一值的路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对称的二叉树"><span class="nav-number">5.</span> <span class="nav-text">对称的二叉树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#机器人的运动范围"><span class="nav-number">6.</span> <span class="nav-text">机器人的运动范围</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
