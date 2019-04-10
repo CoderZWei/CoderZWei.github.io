@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="记录leetcode的上做过的一些题的解法思路，防止忘掉">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-04-07T14:18:21.315Z">
+<meta property="og:updated_time" content="2019-04-10T16:22:57.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode刷题笔记">
 <meta name="twitter:description" content="记录leetcode的上做过的一些题的解法思路，防止忘掉">
@@ -331,13 +331,13 @@
       
         <p>记录leetcode的上做过的一些题的解法思路，防止忘掉</p>
 <a id="more"></a>
-<p>#####113_Path Sum II</p>
+<p>#####Path Sum II_113</p>
 <p>给定一个二叉树和一个目标和，找到所有从根节点到叶子节点路径总和等于给定目标和的路径。</p>
 <p>解法：用深搜</p>
 <blockquote>
 <p>void dfs(TreeNode *root, vector<vector<int>&gt;&amp; res,vector<int>&amp;path,int tmp,int sum){<br>     if(root==NULL){<br>         return;<br>     }<br>     tmp+=root-&gt;val;<br>     path.push_back(root-&gt;val);<br>     if(root-&gt;left==NULL &amp;&amp; root-&gt;right==NULL &amp;&amp; tmp==sum){<br>         res.push_back(path);<br>     }<br>     dfs(root-&gt;left,res,path,tmp,sum);<br>     dfs(root-&gt;right,res,path,tmp,sum);<br>     path.pop_back();<br> }</int></vector<int></p>
 </blockquote>
-<p>#####5_最长回文字符串</p>
+<p>#####最长回文字符串_5</p>
 <p>给定一个字符串 <code>s</code>，找到 <code>s</code> 中最长的回文子串。</p>
 <p>解法：用动态规划</p>
 <blockquote>
@@ -348,26 +348,26 @@
 <blockquote>
 <p>}</p>
 </blockquote>
-<p>#####16_最接近的三数之和</p>
+<p>#####最接近的三数之和_16</p>
 <p>给定一个包括 <em>n</em> 个整数的数组 <code>nums</code> 和 一个目标值 <code>target</code>。找出 <code>nums</code> 中的三个整数，使得它们的和与 <code>target</code> 最接近。返回这三个数的和。假定每组输入只存在唯一答案。</p>
 <p>解法：</p>
 <blockquote>
 <p>int threeSumClosest(vector<int>&amp; nums, int target) {<br>     int minDiff=abs(nums[0]+nums[1]+nums[2]-target);<br>     int res=nums[0]+nums[1]+nums[2];<br>     sort(nums.begin(),nums.end());<br>     for(int i=0;i&lt;nums.size()-2;i++){<br>         //int tmp=abs(target-nums[i]);<br>         int left=i+1,right=nums.size()-1;<br>         while(left&lt;right){<br>             int sum=nums[i]+nums[left]+nums[right];<br>             if(abs(sum-target)&lt;minDiff){<br>                 minDiff=abs(sum-target);<br>                 res=sum;<br>             }<br>             if(sum&lt;target){<br>                 left++;<br>             }else{<br>                 right–;<br>             }<br>         }<br>     }<br>     return res;</int></p>
 </blockquote>
-<p>#####11_盛最多水的容器</p>
+<p>#####盛最多水的容器_11</p>
 <p>给定 <em>n</em> 个非负整数 <em>a</em>1，<em>a</em>2，…，<em>a</em>n，每个数代表坐标中的一个点 (<em>i</em>, <em>ai</em>) 。在坐标内画 <em>n</em>条垂直线，垂直线 <em>i</em> 的两个端点分别为 (<em>i</em>, <em>ai</em>) 和 (<em>i</em>, 0)。找出其中的两条线，使得它们与 <em>x</em> 轴共同构成的容器可以容纳最多的水。</p>
 <p>解法：</p>
 <blockquote>
 <p>int maxArea(vector<int>&amp; height) {<br>     int left=0,right=height.size()-1;<br>     int res=0;<br>     while(left<right){ if(="" (right-left)*(="" min(height[right],height[left])="" )="">res){<br>             res=(right-left)*( min(height[right],height[left]) );<br>         }<br>         if(height[left]&lt;height[right]){<br>             left++;<br>         }else{<br>             right–;<br>         }<br>     }<br>     return res;<br> }</right){></int></p>
 </blockquote>
-<p>#####22_括号生成</p>
+<p>#####括号生成_22</p>
 <p>给出 <em>n</em> 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且<strong>有效的</strong>括号组合。</p>
 <p>解法：用递归</p>
 <blockquote>
 <p>vector<string> generateParenthesis(int n) {<br>     vector<string>res;<br>     generate(n,n,””,res);<br>     return res;<br> }<br> void generate(int left,int right,string tmp,vector<string>&amp;res){<br>     if(left&gt;right){<br>         return;<br>     }<br>     else if(left==0 &amp;&amp; right==0){<br>         res.push_back(tmp);<br>     }else{<br>         if(left&gt;0){<br>             generate(left-1,right,tmp+’(‘,res);<br>         }<br>         if(right&gt;0){<br>             generate(left,right-1,tmp+’)’,res);<br>         }<br>     }</string></string></string></p>
 <p>}</p>
 </blockquote>
-<p>#####46_全排列</p>
+<p>#####全排列_46</p>
 <p>给定一个<strong>没有重复</strong>数字的序列，返回其所有可能的全排列。</p>
 <p><strong>示例:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">输入: [1,2,3]</div><div class="line">输出:</div><div class="line">[</div><div class="line">  [1,2,3],</div><div class="line">  [1,3,2],</div><div class="line">  [2,1,3],</div><div class="line">  [2,3,1],</div><div class="line">  [3,1,2],</div><div class="line">  [3,2,1]</div><div class="line">]</div></pre></td></tr></table></figure>
@@ -375,7 +375,7 @@
 <blockquote>
 <p>vector<vector<int>&gt; permute(vector<int>&amp; nums) {<br>     sort(nums.begin(),nums.end());<br>     vector<vector<int>&gt;res;<br>     vector<int>tmp;<br>     vector<int> visited(nums.size(),0);<br>     dfs(res,tmp,0,nums,visited);<br>     return res;<br> }<br> void dfs(vector<vector<int>&gt;&amp;res,vector<int>tmp,int level,vector<int>nums,vector<int>visited){<br>     if(level==nums.size()){<br>         res.push_back(tmp);<br>         return;<br>     }<br>     for(int i=0;i&lt;nums.size();i++){<br>         if(visited[i]==1){<br>             continue;<br>         }<br>         visited[i]=1;<br>         tmp.push_back(nums[i]);<br>         dfs(res,tmp,i+1,nums,visited);<br>         tmp.pop_back();<br>         visited[i]=0;<br>     }<br>     return;<br> }</int></int></int></vector<int></int></int></vector<int></int></vector<int></p>
 </blockquote>
-<p>#####47_全排列II</p>
+<p>#####全排列II_47</p>
 <p>给定一个可包含重复数字的序列，返回所有不重复的全排列。</p>
 <p><strong>示例:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">输入: [1,1,2]</div><div class="line">输出:</div><div class="line">[</div><div class="line">  [1,1,2],</div><div class="line">  [1,2,1],</div><div class="line">  [2,1,1]</div><div class="line">]</div></pre></td></tr></table></figure>
@@ -383,7 +383,7 @@
 <blockquote>
 <p>vector<vector<int>&gt; permuteUnique(vector<int>&amp; nums) {<br>     sort(nums.begin(),nums.end());<br>     vector<vector<int>&gt;res;<br>     vector<int>tmp;<br>     vector<int>visited(nums.size(),0);<br>     if(nums.empty()){<br>         return res;<br>     }<br>     dfs(res,tmp,nums,visited,0);<br>     return res;<br> }<br> void dfs(vector<vector<int>&gt;&amp;res,vector<int>&amp;tmp,vector<int>nums,vector<int>&amp;visited,int level){<br>     if(level==nums.size()){<br>         res.push_back(tmp);<br>         return ;<br>     }<br>     for(int i=0;i<nums.size();i++){ if(visited[i]="=1){" continue;="" }="" if(i="">0 &amp;&amp; nums[i]==nums[i-1] &amp;&amp; visited[i-1]==0){<br>             continue;<br>         }<br>         tmp.push_back(nums[i]);<br>         visited[i]=1;<br>         dfs(res,tmp,nums,visited,level+1);<br>         tmp.pop_back();<br>         visited[i]=0;<br>     }<br>     return;<br> }</nums.size();i++){></int></int></int></vector<int></int></int></vector<int></int></vector<int></p>
 </blockquote>
-<p>#####78_子集</p>
+<p>#####子集_78</p>
 <p>给定一组<strong>不含重复元素</strong>的整数数组 <em>nums</em>，返回该数组所有可能的子集（幂集）。</p>
 <p><strong>说明：</strong>解集不能包含重复的子集。</p>
 <p><strong>示例:</strong></p>
@@ -398,13 +398,13 @@
 <blockquote>
 <p>}</p>
 </blockquote>
-<p>#####90_子集||</p>
+<p>#####子集||_90</p>
 <p>给定一个可能包含重复元素的整数数组 <strong><em>nums</em></strong>，返回该数组所有可能的子集（幂集）。</p>
 <p>解法：用深搜加条件判断</p>
 <blockquote>
 <p>vector<vector<int>&gt; subsetsWithDup(vector<int>&amp; nums) {<br>        sort(nums.begin(),nums.end());<br>        vector<vector<int>&gt;res;<br>        vector<int>tmp;<br>       vector<int>visited(nums.size(),0);<br>        dfs(res,tmp,nums,0,visited);<br>        return res;<br>    }<br>    void dfs(vector<vector<int>&gt;&amp;res,vector<int>tmp,vector<int>&amp; nums,int level,vector<int>&amp;visited){<br>        res.push_back(tmp);<br>        for(int i=level;i<nums.size();i++){ if(visited[i]="=1){" continue;="" }="" if(i="">0 &amp;&amp; nums[i]==nums[i-1] &amp;&amp; visited[i-1]==0){<br>                continue;<br>            }<br>            visited[i]=1;<br>            tmp.push_back(nums[i]);<br>            dfs(res,tmp,nums,i+1,visited);<br>            tmp.pop_back();<br>            visited[i]=0;<br>        }<br>    }</nums.size();i++){></int></int></int></vector<int></int></int></vector<int></int></vector<int></p>
 </blockquote>
-<p>#####9_回文数</p>
+<p>#####回文数_9</p>
 <p>判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。</p>
 <p><strong>示例 1:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">输入: 121</div><div class="line">输出: true</div></pre></td></tr></table></figure>
@@ -412,26 +412,26 @@
 <blockquote>
 <p>bool isPalindrome(int x) {<br>        if(x<0){ return="" false;="" }="" list<int="">tmp;<br>        while(x&gt;0){<br>            tmp.push_back(x%10);<br>            x=x/10;<br>        }<br>        while(tmp.size()&gt;1){<br>            int top=tmp.front();<br>            tmp.pop_front();<br>            int back=tmp.back();<br>            tmp.pop_back();<br>            if(top!=back){<br>                return false;<br>            }<br>        }<br>        return true;<br>    }</0){></p>
 </blockquote>
-<p>#####34_在排序数组中查找元素的第一个和最后一个位置</p>
+<p>#####在排序数组中查找元素的第一个和最后一个位置_34</p>
 <p>给定一个按照升序排列的整数数组 <code>nums</code>，和一个目标值 <code>target</code>。找出给定目标值在数组中的开始位置和结束位置。</p>
 <p>解法：先用二分查找找出位置，再分别向前向后查找</p>
 <blockquote>
 <p>vector<int> searchRange(vector<int>&amp; nums, int target) {<br>        vector<int>res;<br>        int pos=midSearch(nums,target,0,nums.size()-1);<br>        if(pos==-1){<br>            res.push_back(-1);<br>            res.push_back(-1);<br>            return res;<br>        }<br>        int left=pos,right=pos;<br>        while(left&gt;=0 &amp;&amp; nums[left]==target){<br>            left–;<br>        }<br>        while(right<nums.size() &&="" nums[right]="=target){" right++;="" }="" left++;="" right--;="" res.push_back(left);="" res.push_back(right);="" return="" res;="" int="" midsearch(vector<int="">&amp;nums,int target,int start,int end){<br>        if(start&gt;end){<br>            return -1;<br>        }<br>        int mid=start+(end-start)/2;<br>        if(nums[mid]==target){<br>            return mid;<br>        }else if(nums[mid]&lt;target){<br>            return midSearch(nums,target,mid+1,end);<br>        }else{<br>            return midSearch(nums,target,start,mid-1);<br>        }</nums.size()></int></int></int></p>
 <p>}</p>
 </blockquote>
-<p>#####53_最大子序和</p>
+<p>#####最大子序和_53</p>
 <p>给定一个整数数组 <code>nums</code> ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和</p>
 <p>解法：用动态规划</p>
 <blockquote>
 <p>int maxSubArray(vector<int>&amp; nums) {<br>       int dp[nums.size()];<br>        dp[0]=nums[0];<br>        int res=nums[0];<br>        for(int i=1;i&lt;nums.size();i++){<br>            dp[i]=max(nums[i],dp[i-1]+nums[i]);<br>            res=max(res,dp[i]);<br>        }<br>        return res;<br>    }</int></p>
 </blockquote>
-<p>#####70_爬楼梯</p>
+<p>#####爬楼梯_70</p>
 <p>假设你正在爬楼梯。需要 <em>n</em> 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？</p>
 <p>解法：用动态规划</p>
 <blockquote>
 <p>int climbStairs(int n) {<br>        //第一步爬1阶(f(n-1)) or 第一步爬2阶(f(n-2))<br>        int map[n+1];<br>        map[1]=1;<br>        if(n&gt;=2){<br>            map[2]=2;<br>        }<br>        if(n&lt;=2){<br>            return map[n];<br>        }<br>        for(int i=3;i&lt;=n;i++){<br>            map[i]=map[i-2]+map[i-1];<br>        }<br>        return map[n];<br>    }</p>
 </blockquote>
-<p>#####64_最小路径和</p>
+<p>#####最小路径和_64</p>
 <p>给定一个包含非负整数的 <em>m</em> x <em>n</em> 网格，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。</p>
 <p>说明：每次只能向下或者向右移动一步。</p>
 <p>解法：用动态规划，而不是深搜</p>
@@ -439,58 +439,58 @@
 <p>int minPathSum(vector<vector<int>&gt;&amp; grid) {<br>        //int res=INT_MAX;<br>        //dfs(grid,0,0,grid[0][0],&amp;res);<br>        //return res;<br>          int m = grid.size(), n = grid[0].size();<br>        int dp[m][n];<br>        dp[0][0] = grid[0][0];<br>        for (int i = 1; i &lt; m; ++i) dp[i][0] = grid[i][0] + dp[i - 1][0];<br>        for (int i = 1; i &lt; n; ++i) dp[0][i] = grid[0][i] + dp[0][i - 1];<br>        for (int i = 1; i &lt; m; ++i) {<br>            for (int j = 1; j &lt; n; ++j) {<br>                dp[i][j] = grid[i][j] + min(dp[i - 1][j], dp[i][j - 1]);<br>            }<br>        }<br>        return dp[m - 1][n - 1];<br>    }<br>    /<em><br>    void dfs(vector<vector<int>&gt;&amp; grid,int x,int y,int len,int </vector<int></em>res){<br>        if(x==grid.size()-1 &amp;&amp; y==grid[0].size()-1){<br>            if(len&lt;<em>res){
                </em>res=len;<br>            }<br>            return;<br>        }<br>        if(x&lt;grid.size()-1){<br>            dfs(grid,x+1,y,len+grid[x+1][y],res);<br>        }<br>         if(y&lt;grid[0].size()-1){<br>            dfs(grid,x,y+1,len+grid[x][y+1],res);<br>        }<br>    }<br>    */</vector<int></p>
 </blockquote>
-<p>#####92_反转链表II</p>
+<p>#####反转链表II_92</p>
 <p>反转从位置 <em>m</em> 到 <em>n</em> 的链表。请使用一趟扫描完成反转</p>
 <p>解法：指针的操作，记得设一个指针指向头指针，防止反转的起点头指针</p>
 <blockquote>
 <p>ListNode<em> reverseBetween(ListNode</em> head, int m, int n) {<br>        //用快慢指针<br>       ListNode <em>dummy=new ListNode(-1),</em>pre=dummy;<br>        pre-&gt;next=head;<br>        for(int i=0;i<m-1;i++){ pre="pre-">next;</m-1;i++){></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    &#125;</div><div class="line">   ListNode *cur=pre-&gt;next;</div><div class="line">    for(int i=m;i&lt;n;i++)&#123;</div><div class="line">        ListNode *t=cur-&gt;next;</div><div class="line">        cur-&gt;next=t-&gt;next;</div><div class="line">        t-&gt;next=pre-&gt;next;</div><div class="line">        pre-&gt;next=t;</div><div class="line">       </div><div class="line">    &#125;</div><div class="line">    return dummy-&gt;next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>#####63_不同路径II(三星研究院的题目，当时用的是深搜)</p>
+<p>#####不同路径II(三星研究院的题目，当时用的是深搜)_63</p>
 <p>一个机器人位于一个 <em>m x n</em> 网格的左上角 （起始点在下图中标记为“Start” ）。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？</p>
 <p>解法：</p>
 <p>用动态规划，dp[i][j] = dp[i-1][j] + dp[i][j-1]</p>
 <blockquote>
 <p>int uniquePathsWithObstacles(vector<vector<int>&gt;&amp; obstacleGrid) {<br>        if (obstacleGrid.empty() || obstacleGrid[0].empty() || obstacleGrid[0][0] == 1) return 0;<br>        int m = obstacleGrid.size(), n = obstacleGrid[0].size();<br>        vector<vector<long>&gt; dp(m + 1, vector<long>(n + 1, 0));<br>        dp[0][1] = 1;<br>        for (int i = 1; i &lt;= m; ++i) {<br>            for (int j = 1; j &lt;= n; ++j) {<br>                if (obstacleGrid[i - 1][j - 1] != 0) continue;<br>                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];<br>            }<br>        }<br>        return dp[m][n];<br>    }</long></vector<long></vector<int></p>
 </blockquote>
-<p>#####56_合并区间</p>
+<p>#####合并区间_56</p>
 <p>给出一个区间的集合，请合并所有重叠的区间。</p>
 <blockquote>
 <p> vector<interval> merge(vector<interval>&amp; intervals) {<br>        if (intervals.empty()) return {};<br>        sort(intervals.begin(), intervals.end(), <a href="Interval &amp;a, Interval &amp;b"></a> {return a.start &lt; b.start;});<br>        vector<interval> res{intervals[0]};<br>        for (int i = 1; i &lt; intervals.size(); ++i) {<br>            if (res.back().end &lt; intervals[i].start) {<br>                res.push_back(intervals[i]);<br>            } else {<br>                res.back().end = max(res.back().end, intervals[i].end);<br>            }<br>        }<br>        return res;<br>    }</interval></interval></interval></p>
 </blockquote>
-<p>#####80_删除排序数组中的重复项||</p>
+<p>#####删除排序数组中的重复项||_80</p>
 <p>给定一个排序数组，你需要在<strong>原地</strong>删除重复出现的元素，使得每个元素最多出现两次，返回移除后数组的新长度。不要使用额外的数组空间，你必须在<strong>原地修改输入数组</strong>并在使用 O(1) 额外空间的条件下完成。</p>
 <p>解法：做一个标记(flag)，记录那些出现过但是次数没有达到2次的元素</p>
 <blockquote>
 <p>int removeDuplicates(vector<int>&amp; nums) {<br>        if(nums.size()&lt;2){<br>            return nums.size();<br>        }<br>        int tmp=nums[0];<br>        int  flag=0;//标记<br>        for(int i=1;i&lt;nums.size();i++){<br>            if(nums[i]==tmp){//相等的时候<br>                if(flag==0){<br>                    flag=1;<br>                }else{<br>                    nums.erase(nums.begin()+i);<br>                    i–;<br>                }<br>            }else{<br>                tmp=nums[i];<br>                flag=0;<br>            }</int></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">    &#125;</div><div class="line">    return nums.size();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>#####101_对称二叉树</p>
+<p>#####对称二叉树_101</p>
 <p>给定一个二叉树，检查它是否是镜像对称的。</p>
 <p>解法：递归判断 root-&gt;left-&gt;left和root-&gt;right-&gt;right对应</p>
 <blockquote>
 <p>bool isSymmetric(TreeNode<em> root) {<br>     if (!root) return true;<br>        return isSymmetric(root-&gt;left, root-&gt;right);<br>    }<br>bool isSymmetric(TreeNode </em>left, TreeNode *right) {<br>        if (!left &amp;&amp; !right) return true;<br>        if (left &amp;&amp; !right || !left &amp;&amp; right || left-&gt;val != right-&gt;val) return false;<br>        return isSymmetric(left-&gt;left, right-&gt;right) &amp;&amp; isSymmetric(left-&gt;right, right-&gt;left);<br>    }</p>
 </blockquote>
-<p>#####137_只出现一次的数字II</p>
+<p>#####只出现一次的数字II_137</p>
 <p>给定一个<strong>非空</strong>整数数组，除了某个元素只出现一次以外，其余每个元素均出现了三次。找出那个只出现了一次的元素。</p>
 <p>解法：建立一个32位的数字(int型)，来统计每一位上1出现的个数。如果某一位上为1的话，那么如果该整数出现了3次，对3去余则为0，若出现4次则为1，我们把每个数的对应位都加起来对3取余，最终剩下来的那个数就是单独的数字</p>
 <blockquote>
 <p>int singleNumber(vector<int>&amp; nums) {<br>      int res = 0;<br>        for (int i = 0; i &lt; 32; ++i) {<br>            int sum = 0;<br>            for (int j = 0; j &lt; nums.size(); ++j) {<br>                sum += (nums[j] &gt;&gt; i) &amp; 1;<br>            }<br>            res |= (sum % 3) &lt;&lt; i;<br>        }<br>        return res;<br>    }</int></p>
 </blockquote>
-<p>#####152_乘积最大子序列</p>
+<p>#####乘积最大子序列_152</p>
 <p>给定一个整数数组 <code>nums</code> (包含负数、0)，找出一个序列中乘积最大的连续子序列（该序列至少包含一个数）。</p>
 <p>解法：使用动态规划，因为很小的负数乘一个负数会成一个很大的正数，因此建立两个数组，一个记录连乘最小的数，一个记录连乘最大的数。</p>
 <blockquote>
 <p>//<a href="http://www.cnblogs.com/grandyang/p/4028713.html" target="_blank" rel="external">http://www.cnblogs.com/grandyang/p/4028713.html</a><br>    int maxProduct(vector<int>&amp; nums) {<br>        int n=nums.size();<br>        int res=nums[0];<br>        vector<int>dp_max(n,0),dp_min(n,0);<br>        dp_max[0]=res;<br>        dp_min[0]=res;<br>        for(int i=1;i&lt;nums.size();i++){<br>           dp_max[i]=max(nums[i],max(nums[i]<em>dp_max[i-1],nums[i]</em>dp_min[i-1]));<br>           dp_min[i]=min(nums[i],min(nums[i]<em>dp_max[i-1],nums[i]</em>dp_min[i-1]));<br>           res=max(res,dp_max[i]);<br>        }<br>        return res;<br>    }</int></int></p>
 </blockquote>
-<p>#####179_最大数</p>
+<p>#####最大数_179</p>
 <p>给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。</p>
 <p>如：输入：[10,2]    输出：210</p>
 <p>解法：将数字转换为字符串相加排序进行排序，序高者在前</p>
 <blockquote>
 <p>static bool cmp(int a,int b){<br>        return to_string(a) + to_string(b) &gt; to_string(b) + to_string(a);<br>    }<br>    string largestNumber(vector<int>&amp; nums) {<br>        sort(nums.begin(),nums.end(),cmp);<br>        string res=””;<br>        for(int i=0;i&lt;nums.size();i++){<br>            res+=to_string(nums[i]);<br>        }<br>        return res;</int></p>
 </blockquote>
-<p>#####200_岛屿的个数</p>
+<p>#####岛屿的个数_200</p>
 <p>给定一个由 <code>&#39;1&#39;</code>（陆地）和 <code>&#39;0&#39;</code>（水）组成的的二维网格，计算岛屿的数量。一个岛被水包围，并且它是通过水平方向或垂直方向上相邻的陆地连接而成的。你可以假设网格的四个边均被水包围。</p>
 <p><strong>示例 1:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">输入:</div><div class="line">11110</div><div class="line">11010</div><div class="line">11000</div><div class="line">00000</div><div class="line"></div><div class="line">输出: 1</div></pre></td></tr></table></figure>
@@ -580,7 +580,7 @@
 <blockquote>
 <p> int movingCount(int threshold, int rows, int cols)<br>   {<br>      int visited[rows<em>cols];<br>       memset(visited, 0, sizeof(visited));<br>       return dfs(threshold,1,1,rows,cols,visited);<br>   }<br> int func(int n){<br>       int res=0;<br>       while(n&gt;0){<br>           res+=n%10;<br>           n=n/10;<br>       }<br>       return res;<br>   }<br>   int dfs(int threshold,int x,int y,int row,int col,int visited[]){<br>       cout&lt;&lt;”heihei x=”&lt;<x<<"y="<<y<<endl; 因为是从(0,0开始的，所以要func(x-1)="" func(y-1)="" if(x<1="" ||="" y<1="" x="">row || y&gt;col || visited[(x-1)</x<<"y="<<y<<endl;></em>col+(y-1)]==1 || func(x-1)+func(y-1)&gt;threshold){<br>           return 0;<br>       }<br>       cout&lt;&lt;”x:”&lt;&lt;x&lt;&lt;”y”&lt;&lt;y&lt;&lt;endl;<br>       visited[(x-1)*col+(y-1)]=1;<br>       return dfs(threshold,x,y+1,row,col,visited)+<br>       dfs(threshold,x,y-1,row,col,visited)+<br>       dfs(threshold,x-1,y,row,col,visited)+<br>       dfs(threshold,x+1,y,row,col,visited)+1;<br>   }</p>
 </blockquote>
-<h5 id="221、最大正方形"><a href="#221、最大正方形" class="headerlink" title="221、最大正方形"></a>221、最大正方形</h5><p>在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。</p>
+<h5 id="最大正方形-221"><a href="#最大正方形-221" class="headerlink" title="最大正方形_221"></a>最大正方形_221</h5><p>在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。</p>
 <p><strong>示例:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">输入: </div><div class="line"></div><div class="line">1 0 1 0 0</div><div class="line">1 0 1 1 1</div><div class="line">1 1 1 1 1</div><div class="line">1 0 0 1 0</div><div class="line"></div><div class="line">输出: 4</div></pre></td></tr></table></figure>
 <p>解法：使用动态规划，注意递归式为：dp[i][j]=min(dp[i][j-1],dp[i-1][j-1],dp[i-1][j])</p>
@@ -588,7 +588,7 @@
 <blockquote>
 <p>int maximalSquare(vector<vector<char>&gt;&amp; matrix) {<br>     if(matrix.empty() || matrix[0].empty()){<br>         return 0;<br>     }<br>     int m=matrix.size(),n=matrix[0].size();<br>     vector<vector<int>&gt;mp(m,vector<int>(n,0));<br>     int res=0;<br>     for(int i=0;i&lt;m;i++){<br>         if(matrix[i][0]==’1’){<br>             mp[i][0]=1;<br>             res=1;<br>         }<br>     }<br>      for(int i=0;i&lt;n;i++){<br>         if(matrix[0][i]==’1’){<br>             mp[0][i]=1;<br>             res=1;<br>         }<br>     }<br>     for(int i=1;i&lt;m;i++){<br>         for(int j=1;j&lt;n;j++){<br>             if(matrix[i][j]==’1’){<br>             //if(matrix[i][j]==’1’ &amp;&amp; matrix[i-1][j]==’1’ &amp;&amp; matrix[i][j-1]==’1’ &amp;&amp; matrix[i-1][j-1]==’1’){<br>                // mp[i][j]=mp[i-1][j-1]+1;<br>                 mp[i][j]=min(mp[i-1][j-1],(min(mp[i-1][j],mp[i][j-1])))+1;<br>                 res=max(res,mp[i][j]);<br>             }<br>         }<br>     }<br>     return res*res;<br> }</int></vector<int></vector<char></p>
 </blockquote>
-<h5 id="206-反转链表"><a href="#206-反转链表" class="headerlink" title="206_反转链表"></a>206_反转链表</h5><blockquote>
+<h5 id="反转链表-206"><a href="#反转链表-206" class="headerlink" title="反转链表_206"></a>反转链表_206</h5><blockquote>
 <p>ListNode<em> reverseList(ListNode</em> head) {<br>        ListNode <em>newHead=NULL;<br>        while(head){<br>            ListNode </em>node=head-&gt;next;<br>            head-&gt;next=newHead;<br>            newHead=head;<br>            head=node;<br>        }<br>        return newHead;<br>    }</p>
 </blockquote>
 <h5 id="构造回文"><a href="#构造回文" class="headerlink" title="构造回文"></a>构造回文</h5><p>给定一个字符串s，你可以从中删除一些字符，使得剩下的串是一个回文串。如何删除才能使得回文串最长呢？输出需要删除的字符个数。</p>
@@ -621,7 +621,7 @@ return MaxLen[length1][length2]
 <p>int main(){<br>    string s;<br>    while (cin &gt;&gt; s){<br>        int length = s.size();<br>        if (length == 1){<br>            cout &lt;&lt; 1 &lt;&lt; endl;<br>            continue;<br>        }<br>        //利用回文串的特点<br>        string s2 = s;<br>        reverse(s2.begin(),s2.end());<br>        int max_length = maxLen(s, s2);<br>        cout &lt;&lt; length - max_length &lt;&lt; endl;<br>    }<br>    return 0;</p>
 <p>}</p>
 </blockquote>
-<p>#####139、单词拆分</p>
+<p>#####单词拆分_139</p>
 <p>给定一个<strong>非空</strong>字符串 <em>s</em> 和一个包含<strong>非空</strong>单词列表的字典 <em>wordDict</em>，判定 <em>s</em> 是否可以被空格拆分为一个或多个在字典中出现的单词。</p>
 <p><strong>说明：</strong></p>
 <ul>
@@ -634,7 +634,7 @@ return MaxLen[length1][length2]
 <blockquote>
 <p> bool wordBreak(string s, vector<string>&amp; wordDict) {<br>         unordered_set<string> wordSet(wordDict.begin(), wordDict.end());<br>         vector<bool> dp(s.size() + 1);<br>         dp[0] = true;<br>         for (int i = 0; i &lt; dp.size(); ++i) {<br>             for (int j = 0; j &lt; i; ++j) {<br>                 if (dp[j] &amp;&amp; wordSet.count(s.substr(j, i - j))) {<br>                     dp[i] = true;<br>                     break;<br>                 }<br>             }<br>         }<br>         return dp.back();<br>     }</bool></string></string></p>
 </blockquote>
-<p>#####103、二叉树的锯齿层次遍历</p>
+<p>#####二叉树的锯齿层次遍历_103</p>
 <p>给定一个二叉树，返回其节点值的锯齿形层次遍历。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。</p>
 <p>例如：给定二叉树 <code>[3,9,20,null,null,15,7]</code>,</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  3</div><div class="line"> / \</div><div class="line">9  20</div><div class="line">  /  \</div><div class="line"> 15   7</div></pre></td></tr></table></figure>
@@ -644,7 +644,7 @@ return MaxLen[length1][length2]
 <blockquote>
 <p>vector<vector<int>&gt; zigzagLevelOrder(TreeNode<em> root) {<br>         vector<vector<int> &gt;res;<br>        if (!root) return res;<br>        stack&lt;TreeNode</vector<int></em>&gt; s1;<br>        stack<treenode*> s2;<br>        s1.push(root);<br>        vector<int> out;<br>        while (!s1.empty() || !s2.empty()) {<br>            while (!s1.empty()) {<br>                TreeNode <em>cur = s1.top();<br>                s1.pop();<br>                out.push_back(cur-&gt;val);<br>                if (cur-&gt;left) s2.push(cur-&gt;left);<br>                if (cur-&gt;right) s2.push(cur-&gt;right);<br>            }<br>            if (!out.empty()) res.push_back(out);<br>            out.clear();<br>            while (!s2.empty()) {<br>                TreeNode </em>cur = s2.top();<br>                s2.pop();<br>                out.push_back(cur-&gt;val);<br>                if (cur-&gt;right) s1.push(cur-&gt;right);<br>                if (cur-&gt;left) s1.push(cur-&gt;left);<br>            }<br>            if (!out.empty()) res.push_back(out);<br>            out.clear();<br>        }<br>        return res;<br>    }</int></treenode*></vector<int></p>
 </blockquote>
-<p>#####127、单词接龙</p>
+<p>#####单词接龙_127</p>
 <p>给定两个单词（<em>beginWord</em> 和 <em>endWord</em>）和一个字典，找到从 <em>beginWord</em> 到 <em>endWord</em> 的最短转换序列的长度。转换需遵循如下规则：</p>
 <ol>
 <li><p>每次转换只能改变一个字母。</p>
@@ -679,13 +679,13 @@ return 0;
 </blockquote>
 </li>
 </ol>
-<h5 id="129、求根到叶子节点数字之和"><a href="#129、求根到叶子节点数字之和" class="headerlink" title="129、求根到叶子节点数字之和"></a>129、求根到叶子节点数字之和</h5><p>给定一个二叉树，它的每个结点都存放一个 <code>0-9</code> 的数字，每条从根到叶子节点的路径都代表一个数字。</p>
+<h5 id="求根到叶子节点数字之和-129"><a href="#求根到叶子节点数字之和-129" class="headerlink" title="求根到叶子节点数字之和_129"></a>求根到叶子节点数字之和_129</h5><p>给定一个二叉树，它的每个结点都存放一个 <code>0-9</code> 的数字，每条从根到叶子节点的路径都代表一个数字。</p>
 <p>例如，从根到叶子节点路径 <code>1-&gt;2-&gt;3</code> 代表数字 <code>123</code>。计算从根到叶子节点生成的所有数字之和。</p>
 <p>解法：使用广搜，新节点加入时数字变为 父节点值*10+子节点值</p>
 <blockquote>
 <p>int sumNumbers(TreeNode<em> root) {<br>       if(root==NULL){<br>           return 0;<br>       }<br>       queue&lt;TreeNode</em>&gt;qu;<br>       qu.push(root);<br>       int res=0;<br>       while(!qu.empty()){<br>           TreeNode <em>tmp=qu.front();qu.pop();<br>           if(tmp-&gt;left==NULL &amp;&amp; tmp-&gt;right==NULL){<br>               res+=tmp-&gt;val;<br>           }else{<br>               if(tmp-&gt;left){<br>                   tmp-&gt;left-&gt;val+=tmp-&gt;val</em>10;<br>                   qu.push(tmp-&gt;left);<br>               }<br>               if(tmp-&gt;right){<br>                   tmp-&gt;right-&gt;val+=tmp-&gt;val*10;<br>                   qu.push(tmp-&gt;right);<br>               }<br>           }<br>       }<br>       return res;<br>   }</p>
 </blockquote>
-<h5 id="130、被围绕的去余"><a href="#130、被围绕的去余" class="headerlink" title="130、被围绕的去余"></a>130、被围绕的去余</h5><p>给定一个二维的矩阵，包含 <code>&#39;X&#39;</code> 和 <code>&#39;O&#39;</code>（<strong>字母 O</strong>）。</p>
+<h5 id="被围绕的去余-130"><a href="#被围绕的去余-130" class="headerlink" title="被围绕的去余_130"></a>被围绕的去余_130</h5><p>给定一个二维的矩阵，包含 <code>&#39;X&#39;</code> 和 <code>&#39;O&#39;</code>（<strong>字母 O</strong>）。</p>
 <p>找到所有被 <code>&#39;X&#39;</code> 围绕的区域，并将这些区域里所有的 <code>&#39;O&#39;</code> 用 <code>&#39;X&#39;</code> 填充。</p>
 <p><strong>示例:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">X X X X</div><div class="line">X O O X</div><div class="line">X X O X</div><div class="line">X O X X</div></pre></td></tr></table></figure>
@@ -695,21 +695,21 @@ return 0;
 <blockquote>
 <p>void solve(vector<vector<char>&gt;&amp; board) {<br>        for (int i = 0; i &lt; board.size(); ++i) {<br>           for (int j = 0; j &lt; board[i].size(); ++j) {<br>               if ((i == 0 || i == board.size() - 1 || j == 0 || j == board[i].size() - 1) &amp;&amp; board[i][j] == ‘O’)<br>                   solveDFS(board, i, j);<br>           }<br>       }<br>       for (int i = 0; i &lt; board.size(); ++i) {<br>           for (int j = 0; j &lt; board[i].size(); ++j) {<br>               if (board[i][j] == ‘O’) board[i][j] = ‘X’;<br>               if (board[i][j] == ‘\$’) board[i][j] = ‘O’;<br>           }<br>       }<br>   }<br>   void solveDFS(vector<vector<char> &gt; &amp;board, int i, int j) {<br>       if (board[i][j] == ‘O’) {<br>           board[i][j] = ‘​$’;<br>           if (i &gt; 0 &amp;&amp; board[i - 1][j] == ‘O’)<br>               solveDFS(board, i - 1, j);<br>           if (j &lt; board[i].size() - 1 &amp;&amp; board[i][j + 1] == ‘O’)<br>               solveDFS(board, i, j + 1);<br>           if (i &lt; board.size() - 1 &amp;&amp; board[i + 1][j] == ‘O’)<br>               solveDFS(board, i + 1, j);<br>           if (j &gt; 1 &amp;&amp; board[i][j - 1] == ‘O’)<br>               solveDFS(board, i, j - 1);<br>       }<br>   } </vector<char></vector<char></p>
 </blockquote>
-<h5 id="151、反转字符串里的的单词"><a href="#151、反转字符串里的的单词" class="headerlink" title="151、反转字符串里的的单词"></a>151、反转字符串里的的单词</h5><p>给定一个字符串，逐个翻转字符串中的每个单词。</p>
+<h5 id="反转字符串里的的单词-151"><a href="#反转字符串里的的单词-151" class="headerlink" title="反转字符串里的的单词_151"></a>反转字符串里的的单词_151</h5><p>给定一个字符串，逐个翻转字符串中的每个单词。</p>
 <p><strong>示例 2：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">输入: &quot;  hello world!  &quot;</div><div class="line">输出: &quot;world! hello&quot;</div><div class="line">解释: 输入字符串可以在前面或者后面包含多余的空格，但是反转后的字符不能包括。</div></pre></td></tr></table></figure>
 <p>解法：storeIndex表示当前存储到的位置。先给整个字符串反转一下，然后我们开始循环，遇到空格直接跳过，如果是非空格字符，我们此时看storeIndex是否为0，为0的话表示第一个单词，不用增加空格；如果不为0，说明不是第一个单词，需要在单词中间加一个空格，然后我们要找到下一个单词的结束位置我们用一个while循环来找下一个为空格的位置，在此过程中继续覆盖原字符串，找到结束位置了，下面就来翻转这个单词，然后更新i为结尾位置，最后遍历结束，我们剪裁原字符串到storeIndex位置，就可以得到我们需要的结果</p>
 <blockquote>
 <p>string reverseWords(string s) {<br>          int storeIndex=0,len=s.size();<br>        reverse(s.begin(),s.end());<br>        for(int i=0;i&lt;len;i++){<br>              if (s[i] != ‘ ‘) {<br>                if (storeIndex != 0) s[storeIndex++] = ‘ ‘;<br>                int j = i;<br>                while (j &lt; len &amp;&amp; s[j] != ‘ ‘) s[storeIndex++] = s[j++];<br>                reverse(s.begin() + storeIndex - (j - i), s.begin() + storeIndex);<br>                i = j;<br>            }<br>        }<br>        s.resize(storeIndex);<br>        return s;<br>    }</p>
 </blockquote>
-<h5 id="209、长度最小的子数组"><a href="#209、长度最小的子数组" class="headerlink" title="209、长度最小的子数组"></a>209、长度最小的子数组</h5><p>给定一个含有 <strong>n</strong> 个正整数的数组和一个正整数 <strong>s ，</strong>找出该数组中满足其和 <strong>≥ s</strong> 的长度最小的连续子数组<strong>。</strong>如果不存在符合条件的连续子数组，返回 0。</p>
+<h5 id="长度最小的子数组-209"><a href="#长度最小的子数组-209" class="headerlink" title="长度最小的子数组_209"></a>长度最小的子数组_209</h5><p>给定一个含有 <strong>n</strong> 个正整数的数组和一个正整数 <strong>s ，</strong>找出该数组中满足其和 <strong>≥ s</strong> 的长度最小的连续子数组<strong>。</strong>如果不存在符合条件的连续子数组，返回 0。</p>
 <p><strong>示例:</strong> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">输入: s = 7, nums = [2,3,1,2,4,3]</div><div class="line">输出: 2</div><div class="line">解释: 子数组 [4,3] 是该条件下的长度最小的连续子数组。</div></pre></td></tr></table></figure>
 <p>解法：</p>
 <blockquote>
 <p>  int minSubArrayLen(int s, vector<int>&amp; nums) {<br>         int left=0,sum=0,res=INT_MAX;<br>          for(int i=0;i<nums.size();i++) {="" sum+="nums[i];" while(left<="i" &&="" sum="">=s){<br>                  res=min(res,i-left+1);<br>                  sum-=nums[left];<br>                  left++;<br>              }<br>          }<br>          return res==INT_MAX?0:res;<br>      }</nums.size();i++)></int></p>
 </blockquote>
-<p>#####287、寻找重复数</p>
+<p>#####寻找重复数_287</p>
 <p>给定一个包含 <em>n</em> + 1 个整数的数组 <em>nums</em>，其数字都在 1 到 <em>n</em> 之间（包括 1 和 <em>n</em>），可知至少存在一个重复的整数。假设只有一个重复的整数，找出这个重复的数。</p>
 <p><strong>示例 1:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">输入: [1,3,4,2,2]</div><div class="line">输出: 2</div></pre></td></tr></table></figure>
@@ -720,6 +720,18 @@ return 0;
 <h5 id="n个人n个座位，求不能坐在自己座位上种数"><a href="#n个人n个座位，求不能坐在自己座位上种数" class="headerlink" title="n个人n个座位，求不能坐在自己座位上种数"></a>n个人n个座位，求不能坐在自己座位上种数</h5><p>解法：如果一共有i个人，则第i个人的位置对于其他i-1个人都是合法的，则这i-1个人都可能坐在i的位置上。如果第i个人坐在坐他位置的人的位置上，则将这两个人与其他的i-2个人分开了，有f[i-2]种；如果第i个人不坐在坐他位置的人的位置上，则剩下i-1个人不能坐自己的位置，则有f[i-1]种。所以递推式为：f[i]=(i-1)*(f[i-1]+f[i-2])</p>
 <blockquote>
 <p>void main()<br>{<br>int t;<br>int n;<br>int i;<br>f[1] = 0;<br>f[2] = 1;<br>for(i = 3; i &lt;= 100; ++i)<br>{<br>   f[i] = (i - 1) * (f[i - 1] + f[i -2]);<br>   f[i] %= (__int64)(1e9+7);<br>}<br>scanf(“%d”, &amp;t);<br>while(t–)<br>{<br>   scanf(“%d”, &amp;n);<br>   printf(“%lld\n”, f[n]);<br>}<br>}</p>
+</blockquote>
+<h5 id="搜索二维矩阵II-240"><a href="#搜索二维矩阵II-240" class="headerlink" title="搜索二维矩阵II_240"></a>搜索二维矩阵II_240</h5><p>编写一个高效的算法来搜索 <em>m</em> x <em>n</em> 矩阵 matrix 中的一个目标值 target。该矩阵具有以下特性：</p>
+<ul>
+<li>每行的元素从左到右升序排列。</li>
+<li>每列的元素从上到下升序排列。</li>
+</ul>
+<p><strong>示例:</strong></p>
+<p>现有矩阵 matrix 如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">[</div><div class="line">  [1,   4,  7, 11, 15],</div><div class="line">  [2,   5,  8, 12, 19],</div><div class="line">  [3,   6,  9, 16, 22],</div><div class="line">  [10, 13, 14, 17, 24],</div><div class="line">  [18, 21, 23, 26, 30]</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>解法：注释里的解法会超时；从左下角进行遍历，若target大于当前值，则向右走，小于则向上走</p>
+<blockquote>
+<p>bool searchMatrix(vector<vector<int>&gt;&amp; matrix, int target) {<br>        if (matrix.empty() || matrix[0].empty()) return false;<br>         if (target &lt; matrix[0][0] || target &gt; matrix.back().back()) return false;<br>        int x=matrix.size()-1,y=0;<br>        while(true){<br>            if(target&gt;matrix[x][y]){<br>                y++;<br>            }else if(target<matrix[x][y]){ x--;="" }else{="" return="" true;="" }="" if(x<0="" ||="" y="">=matrix[0].size()){<br>                return false;<br>            }<br>        }<br>    }<br>   /<em> bool searchMatrix(vector<vector<int>&gt;&amp; matrix, int target) {<br>       if (matrix.empty() || matrix[0].empty()) return false;<br>        for(int i =matrix.size()-1;i&gt;=0;i–){<br>            if(target&gt;=matrix[i][0]){<br>                bool res=midSearch(matrix[i],target);<br>                if(res==true){<br>                    return true;<br>                }<br>            }<br>        }<br>        return false;<br>    }<br>    bool midSearch(vector<int>num,int target){<br>        int left=0,right=num.size()-1;<br>        while(left&lt;=right){<br>            int mid=(left+right)/2;<br>            if(target==num[mid]){<br>                return true;<br>            }else{<br>                if(target&gt;num[mid]){<br>                    left=mid+1;<br>                }else{<br>                    right=mid-1;<br>                }<br>            }<br>        }<br>        return false;<br>    }</int></vector<int></em>/</matrix[x][y]){></vector<int></p>
 </blockquote>
 
       
@@ -891,7 +903,7 @@ return 0;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#反转链表"><span class="nav-number">1.</span> <span class="nav-text">反转链表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#树的子结构"><span class="nav-number">2.</span> <span class="nav-text">树的子结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#栈的压入、弹出序列"><span class="nav-number">3.</span> <span class="nav-text">栈的压入、弹出序列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二叉树中和为某一值的路径"><span class="nav-number">4.</span> <span class="nav-text">二叉树中和为某一值的路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对称的二叉树"><span class="nav-number">5.</span> <span class="nav-text">对称的二叉树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#机器人的运动范围"><span class="nav-number">6.</span> <span class="nav-text">机器人的运动范围</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#221、最大正方形"><span class="nav-number">7.</span> <span class="nav-text">221、最大正方形</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#206-反转链表"><span class="nav-number">8.</span> <span class="nav-text">206_反转链表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#构造回文"><span class="nav-number">9.</span> <span class="nav-text">构造回文</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#129、求根到叶子节点数字之和"><span class="nav-number">10.</span> <span class="nav-text">129、求根到叶子节点数字之和</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#130、被围绕的去余"><span class="nav-number">11.</span> <span class="nav-text">130、被围绕的去余</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#151、反转字符串里的的单词"><span class="nav-number">12.</span> <span class="nav-text">151、反转字符串里的的单词</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#209、长度最小的子数组"><span class="nav-number">13.</span> <span class="nav-text">209、长度最小的子数组</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#n个人n个座位，求不能坐在自己座位上种数"><span class="nav-number">14.</span> <span class="nav-text">n个人n个座位，求不能坐在自己座位上种数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#反转链表"><span class="nav-number">1.</span> <span class="nav-text">反转链表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#树的子结构"><span class="nav-number">2.</span> <span class="nav-text">树的子结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#栈的压入、弹出序列"><span class="nav-number">3.</span> <span class="nav-text">栈的压入、弹出序列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#二叉树中和为某一值的路径"><span class="nav-number">4.</span> <span class="nav-text">二叉树中和为某一值的路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对称的二叉树"><span class="nav-number">5.</span> <span class="nav-text">对称的二叉树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#机器人的运动范围"><span class="nav-number">6.</span> <span class="nav-text">机器人的运动范围</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最大正方形-221"><span class="nav-number">7.</span> <span class="nav-text">最大正方形_221</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反转链表-206"><span class="nav-number">8.</span> <span class="nav-text">反转链表_206</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#构造回文"><span class="nav-number">9.</span> <span class="nav-text">构造回文</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#求根到叶子节点数字之和-129"><span class="nav-number">10.</span> <span class="nav-text">求根到叶子节点数字之和_129</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#被围绕的去余-130"><span class="nav-number">11.</span> <span class="nav-text">被围绕的去余_130</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#反转字符串里的的单词-151"><span class="nav-number">12.</span> <span class="nav-text">反转字符串里的的单词_151</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#长度最小的子数组-209"><span class="nav-number">13.</span> <span class="nav-text">长度最小的子数组_209</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#n个人n个座位，求不能坐在自己座位上种数"><span class="nav-number">14.</span> <span class="nav-text">n个人n个座位，求不能坐在自己座位上种数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#搜索二维矩阵II-240"><span class="nav-number">15.</span> <span class="nav-text">搜索二维矩阵II_240</span></a></li></ol></div>
             
 
           </div>
