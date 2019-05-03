@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记录Android开发中遇到的一些知识点总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android知识点">
+<meta property="og:url" content="http://yoursite.com/2019/04/28/Android知识点/index.html">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="记录Android开发中遇到的一些知识点总结">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-05-03T16:17:41.474Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android知识点">
+<meta name="twitter:description" content="记录Android开发中遇到的一些知识点总结">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/04/28/Android知识点/"/>
+
+
+
+
+
+  <title>Android知识点 | CoderZWei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CoderZWei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/28/Android知识点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android知识点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-28T20:55:46+08:00">
+                2019-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录Android开发中遇到的一些知识点总结</p>
+<a id="more"></a>
+<h5 id="1、Message"><a href="#1、Message" class="headerlink" title="1、Message"></a>1、Message</h5><p>Message message=Message.obtain();</p>
+<p>Message本质是Parcelable， (public final class Message implements Parcelable)</p>
+<h5 id="2、SurfaceView、SurfaceHolder、Surface的关系"><a href="#2、SurfaceView、SurfaceHolder、Surface的关系" class="headerlink" title="2、SurfaceView、SurfaceHolder、Surface的关系"></a>2、SurfaceView、SurfaceHolder、Surface的关系</h5><blockquote>
+<p>SurfaceView是拥有独立绘图层的特殊View</p>
+<p>Surface就是指SurfaceView所拥有的那个绘图层，其实它就是内存中的一段绘图缓冲区</p>
+<p>SurfaceView中拥有两个surface，也就是我们所说的双缓冲机制</p>
+<p>SurfaceHolder是Surface的持有者，Surfaview就是通过SurfaceHolder来对Surface进行管理控制的，并且SurfaceView.getHolder方法可以获取SurfaceView相应的SurfaceHolder。 </p>
+<p>Surface是在SurfaceView所在的Window可见的时候创建的。我们可以使用SurfaceHolder.addCallback方法来监听Surface的创建与销毁的事件</p>
+</blockquote>
+<h5 id="3、TextureView、SurfaceTexture、Surface"><a href="#3、TextureView、SurfaceTexture、Surface" class="headerlink" title="3、TextureView、SurfaceTexture、Surface"></a>3、TextureView、SurfaceTexture、Surface</h5><p>TextureView是用来绘制纹理的view，只能用于GPU硬件加速渲染</p>
+<p>TextureView在使用的时候涉及到SurfaceTexture和Surface。</p>
+<p>Surface就是SurfaceView中使用的Surface，就是内存中的一段绘图缓冲区。</p>
+<p>SurfaceTexture用来捕获视频流中的图像帧的，视频流可以是相机预览或者视频解码数据。</p>
+<p>TextureView可以通过<code>getSurfaceTexture()</code>方法来获取TextureView相应的SurfaceTexture。</p>
+<h5 id="4、HandlerThread"><a href="#4、HandlerThread" class="headerlink" title="4、HandlerThread"></a>4、HandlerThread</h5><p>HandlerThread用于Handler消息处理中执行耗时操作，因为HandlerThread继承于Thread，且在线程的run()方法中执行 Looper.prepare(); 和 Looper.loop();</p>
+<h5 id="5、IntentService"><a href="#5、IntentService" class="headerlink" title="5、IntentService"></a>5、IntentService</h5><p>IntentService继承自Service，Service是运行于主线程的，因此耗时操作需要开辟一个新线程。而IntentService内部采用了HandlerThread实现，作用类似于后台线程。与后台线程相比，IntentService是一种后台服务，优势在于优先级高(不容易被系统杀死)，从而保证任务的执行。</p>
+<p>Service需要主动调用stopSelf()来结束服务，而IntentService不需要(在所有的intent被处理完后，系统会自动关闭服务)。</p>
+<p>IntentService用于任务需要按顺序、在后台执行的使用场景，比如下载任务。</p>
+<h5 id="6、Android中的视图结构"><a href="#6、Android中的视图结构" class="headerlink" title="6、Android中的视图结构"></a>6、Android中的视图结构</h5><p>Activity并不负责视图控制，它只是控制生命周期和处理事件。真正控制视图的是Window。一个Activity包含了一个Window，WIndow才是真正代表一个窗口。</p>
+<p>Window是视图的承载器，内部持有一个DecorView，DecorView是view的根布局。Window是一个抽象类，实际在Activity中持有的是其子类PhoneWindow。PhoneWindow中有个内部类DecorView，通过创建DecorView来加载Activity中设置的布局 R.layout.activity_main 。Window 通过WindowManager将DecorView加载其中，并将DecorView交给ViewRoot，进行视图绘制以及其他交互。</p>
+<h5 id="7、Java创建线程的三种方式"><a href="#7、Java创建线程的三种方式" class="headerlink" title="7、Java创建线程的三种方式"></a>7、Java创建线程的三种方式</h5><blockquote>
+<p>1）继承Thread</p>
+<p>2）通过Runnable接口创建线程类</p>
+<p>3）通过Callable和Future创建线程</p>
+</blockquote>
+<h5 id="8、Android进程间通信的方式"><a href="#8、Android进程间通信的方式" class="headerlink" title="8、Android进程间通信的方式"></a>8、Android进程间通信的方式</h5><blockquote>
+<p>1）Intent：Intent中通过Bundle(实现了Parceable接口)实现进程间通信</p>
+<p>2）文件共享：但是不推荐使用SharedPreferences</p>
+<p>3）Messenger：Messenger是轻量级的IPC方案，底层实现是AIDL，可以在不同进程中<br>传递 Message 对象，它一次只处理一个请求，在服务端不需要考虑线程同步的问<br>题，服务端不存在并发执行的情形。</p>
+<p>4）AIDL：AIDL可以解决并发和跨进程调用方法的问题。</p>
+<p>5、ContentProvider</p>
+<p>6、socket</p>
+</blockquote>
+<h5 id="9、自定义view"><a href="#9、自定义view" class="headerlink" title="9、自定义view"></a>9、自定义view</h5><p>实现方式分为以下几种：</p>
+<p>1）自定义组合控件：将多个空间组合成为一个新的空间，便于多处复用</p>
+<p>2）继承系统定义的view控件(如Button)</p>
+<p>3）继承View：不复用系统控件逻辑，继承View之后进行功能自定义(需要自己支持wrap_content，并且padding也需要自己处理)</p>
+<p>4）继承系统定义ViewGroup类(如LinearLayout)：继承自LinearLayout等系统控件，在系统控件的基础功能上进行扩展(不需要自己处理测量和布局过程)</p>
+<p>5）继承ViewGroup：不复用系统控件逻辑，继承ViewGroup进行功能自定义(需要合适地处理ViewGroup的测量、布局两个过程，并同时处理子元素的测量和布局过程)</p>
+<p>其中继承VIew或ViewGroup时的实现步骤如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">1)  自定义属性； //在attrs.xml中通过declare-styleable标签</div><div class="line">2)  选择和设置构造方法；</div><div class="line">3)  重写onMeasure()方法；</div><div class="line">4)  重写onDraw()方法；</div><div class="line">5)  重写onLayout()方法；</div><div class="line">6)  重写其他事件的方法（滑动监听、点击冲突等）</div></pre></td></tr></table></figure>
+<p>自定义属性的文件可如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;declare-styleable name=&quot;CircleProgress&quot;&gt;</div><div class="line">    &lt;attr name=&quot;foreground_color&quot; format=&quot;color&quot;/&gt;</div><div class="line">    &lt;attr name=&quot;background_color&quot; format=&quot;color&quot;/&gt;</div><div class="line">    &lt;attr name=&quot;text_color&quot; format=&quot;color&quot;/&gt;</div><div class="line">    &lt;attr name=&quot;stroke_width&quot; format=&quot;dimension&quot;/&gt;</div><div class="line">    &lt;attr name=&quot;enum_attr&quot; format=&quot;enum&quot;&gt;</div><div class="line">        &lt;enum name=&quot;attr_1&quot; value=&quot;0&quot;/&gt;</div><div class="line">        &lt;enum name=&quot;attr_2&quot; value=&quot;1&quot;/&gt;</div><div class="line">    &lt;/attr&gt;</div><div class="line">&lt;/declare-styleable&gt;</div></pre></td></tr></table></figure>
+<p>MeasureSpec的mode类型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">1)  EXACTLY：当宽高值设置为具体值时使用，如100DIP、match_parent等，此时取出的size是精确的尺寸；</div><div class="line">2)  AT_MOST：当宽高值设置为wrap_content时使用，此时取出的size是控件最大可获得的空间；</div><div class="line">3)  UNSPECIFIED：当没有指定宽高值时使用（很少见）。</div></pre></td></tr></table></figure>
+<p>在Measure过程中，如果只是一个原始的View，那么通过measure(onMeaure)方法就完成了其测量过程；如果是一个VIewGroup，除了完成自己的测量过程外，还会遍历调用所有子元素的measure方法，各个子元素再递归地去执行这个过程。</p>
+<p>VIew的measure得到的是测量后的大小，最终的大小实在layout阶段确定的，不过几乎所有情况下View的测量大小都等于最终大小。</p>
+<p>View的onMeasure重写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">    super.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">    int widthSpecMode=MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">    int heightSpecMode=MeasureSpec.getMode(heightMeasureSpec);</div><div class="line">    int widthSpecSize=MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">    int heightSpecSize=MeasureSpec.getSize(heightMeasureSpec);</div><div class="line">    //AT_MOST：</div><div class="line">    if(widthSpecMode==MeasureSpec.AT_MOST &amp;&amp; heightSpecMode==MeasureSpec.AT_MOST)&#123;</div><div class="line">        setMeasuredDimension((int)getResources().getDimension(R.dimen.circle_progress_default_width),</div><div class="line">                (int)getResources().getDimension(R.dimen.circle_progress_default_height));</div><div class="line">    &#125;else if(widthMeasureSpec==MeasureSpec.AT_MOST)&#123;</div><div class="line">        setMeasuredDimension((int)getResources().getDimension(R.dimen.circle_progress_default_width),heightSpecSize);</div><div class="line">    &#125;else if(heightMeasureSpec==MeasureSpec.AT_MOST)&#123;</div><div class="line">        setMeasuredDimension(widthSpecSize,(int)getResources().getDimension(R.dimen.circle_progress_default_height));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在自定义ViewGroup的方式中，除了要对自身的大小和位置进行测量之外，还需要对子View的测量参数负责</p>
+<p>在ViewGroup方式中，layout方法确定View本身的位置，而onLayout方法则会确定所有子元素的位置</p>
+<h5 id="10、集合类"><a href="#10、集合类" class="headerlink" title="10、集合类"></a>10、集合类</h5><p>分类Set、List、Queue、Map</p>
+<p>继承于两个接口：Collection(Set、List、Queue)和Map(Map)。</p>
+<p>泛型初始化：List<integer>list=new List<integer>();</integer></integer></p>
+<p>1、ArrayList：以数组实现，节约空间，但数组有容量限制。超出限制后会增加50%容量，用System.arraycopyy()复制到新的数组</p>
+<p>2、LinkedList：以双向链表实现。链表无容量限制，但双向链表本身使用了更多空间，也需要额外的链表指针操作。</p>
+<p>3、HashMap：允许null值、非同步、不保证有序(比如插入的顺序)、也不保证序不随时间变化</p>
+<p>HashMap中有两个很重要的参数，容量(Capacity)和负载因子(Load factor)</p>
+<blockquote>
+<p>Capacity就是bucket的大小，Load factor就是bucket填满程度的最大比<br>例(默认0.75)。如果对迭代性能要求很高的话，不要把 capacity 设置过大，也不要把 load factor 设置过小。当bucket中的entries的数目大于 capacity*load factor 时就需要调整bucket的大小为当前的2倍。</p>
+</blockquote>
+<p>put函数大致的思路为：</p>
+<ol>
+<li>对key的hashCode()做hash，然后再计算index;</li>
+<li>如果没碰撞直接放到bucket里；</li>
+<li>如果碰撞了，以链表的形式存在buckets后；</li>
+<li>如果碰撞导致链表过长(大于等于 TREEIFY_THRESHOLD )，就把链表转换成红<br>黑树；</li>
+<li>如果节点已经存在就替换old value(保证key的唯一性)</li>
+<li>如果bucket满了(超过 load factor*current capacity )，就要resize。</li>
+</ol>
+<p>当put时，如果发现目前的bucket占用程度已经超过了Load Factor所希望的比例，那么就会发生resize。在resize的过程，简单的说就是把bucket扩充为2倍，之后重新计算index，把节点再放到新的bucket中。当超过限制的时候会resize，然而又因为我们使用的是2次幂的扩展(指长度扩为原来2倍)，所以，元素的位置要么是在原位置，要么是在原位置再移动2次幂的位置。</p>
+<p>get的原理：通过对key的hashCode()进行hashing，并计算下标( (n-1) &amp; hash )，从而获得buckets的位置。如果产生碰撞，则利用key.equals()方法去链表或树中去查找对应的节点</p>
+<p>hashcode方法：高16bit不变，低16bit和高16bit做了一个异或</p>
+<p>4、LinkedHashMap：继承自HashMap，保证数据可以保持插入顺序，通过Hash表和双向链表(保证插入顺序)实现</p>
+<p>5、TreeMap：保持key的大小顺序(通过红黑树实现，二叉排序树)。有序就相当于树的中序遍历</p>
+<h5 id="11、语法糖"><a href="#11、语法糖" class="headerlink" title="11、语法糖"></a>11、语法糖</h5><p>java语法糖主要有泛型、边长参数、条件编译、自动拆装箱(int、Integer互转)、内部类等。</p>
+<p>解语法糖：虚拟机不支持语法糖语法，它们在编译阶段就被还原回了最简单的基础语法结构</p>
+<p>语法糖好处：使程序更加简洁，有更高的可读性</p>
+<h5 id="12、反射机制"><a href="#12、反射机制" class="headerlink" title="12、反射机制"></a>12、反射机制</h5><p>在运行状态中，对于任意一个类，都能知道这个类中的所有属性和方法，还可以调用</p>
+<p>功能：</p>
+<p>1.在运行时判断任意一个对象所属的类。<br>2.在运行时构造任意一个类的对象。<br>3.在运行时判断任意一个类所具有的成员变量和方法。<br>4.在运行时调用任意一个对象的方法。<br>5.生成动态代理。</p>
+<p>Java 反射机制的应用场景：<br>1.逆向代码 ，例如反编译<br>2.与注解相结合的框架 例如Retrofit<br>3.单纯的反射机制应用框架 例如EventBus<br>4.动态生成类框架 例如Gson</p>
+<p>每个类被加载之后，系统就会为该类生成一个对应的Class对象。通过该Class对象就可以访问到JVM中的这个类。</p>
+<p>在Java程序中获得Class对象通常有如下三种方式：<br>1.使用Class类的forName(String clazzName)静态方法。该方法需要传入字符串参数，该字符串参数的值是某个类的全限定名（必须添加完整包名）。<br>2.调用某个类的class属性来获取该类对应的Class对象。<br>Java反射(一)<br>3.调用某个对象的getClass()方法。该方法是java.lang.Object类中的一个方法。</p>
+<blockquote>
+<p>//第一种方式 通过Class类的静态方法——forName()来实现<br>class1 = Class.forName(“com.lvr.reflection.Person”);<br>//第二种方式 通过类的class属性<br>class1 = Person.class;<br>//第三种方式 通过对象getClass方法<br>Person person = new Person();<br>Class class1 = person.getClass();</p>
+</blockquote>
+<p>类加载的过程：</p>
+<p>加载：查询并加载类的二进制数据.class<br>连接：1）、验证：确保被加载的类的正确性；<br>        2）、准备：为类的静态变量分配内存，并将其初始化为默认值；<br>            3）、解析：把类中的符号引用转化为直接引用<br>初始化：为类的静态变量赋予正确的初始值</p>
+<p>类加载的几种方式：</p>
+<blockquote>
+<p>1、由new关键字创建一个类的实例<br>    在由运行时刻用 new 方法载入<br>    例：Person person = new Person();<br>2、使用Class.forName()<br>    通过反射加载类型，并创建对象实例<br>    例：Class clazz ＝ Class.forName(“Person”);<br>        Object person ＝clazz.newInstance();<br>3、使用某个ClassLoader实例的loadClass()方法<br>    通过该 ClassLoader 实例的 loadClass() 方法载入。应用程序可以通过继承 ClassLoader 实现自己的类装载器。<br>    例：Class clazz ＝ classLoader.loadClass(“Person”);</p>
+<p>​          Object person ＝clazz.newInstance();</p>
+<p>注：1和2使用的类加载器是相同的，都是当前类加载器（即：this.getClass.getClassLoader）。<br>    3由用户指定类加载器。如果需要在当前类路径以外寻找类，则只能采用第3种方式。即第3种方式加载的类与当前类分属不同的命名空间。</p>
+<p>​    1是静态加载，2、3是动态加载</p>
+</blockquote>
+<p>反射调用方法：</p>
+<blockquote>
+<p>class1 = Class.forName(“com.lvr.reflection.Person”);</p>
+<p>// 生成新的对象：用newInstance()方法<br>Object obj = class1.newInstance();<br>//首先需要获得与该方法对应的Method对象<br>Method method = class1.getDeclaredMethod(“setAge”, int.class);<br>//调用指定的函数并传递参数<br>method.invoke(obj, 28);</p>
+<p>//获取age成员变量<br>Field field = class1.getField(“age”);<br>//将obj对象的age的值设置为10<br>field.setInt(obj, 10);<br>//获取obj对象的age的值<br>field.getInt(obj);</p>
+</blockquote>
+<h5 id="13、IO流"><a href="#13、IO流" class="headerlink" title="13、IO流"></a>13、IO流</h5><p>Java再用Unicode编码，2个字节表示一个字符；C语言采用ASCII编码，一个字节表示一个字符。</p>
+<p>IO流可以分为字节流和字符流，区别在于字节流和字符流所操作的数据单元不同：</p>
+<p>（1）读写单位不同：字节流以字节（8bit）为单位，字符流以字符为单位，根据码表映射字符，一次可能读多个字节。<br>（2）处理对象不同：字节流能处理所有类型的数据（如图片、avi等），而字符流只能处理字符类型的数据。</p>
+<p>只要是处理纯文本数据，就优先考虑使用字符流。 除此之外都使用字节流。</p>
+<p>IO流可以分为四种类型，每种类型对应一种抽象基类：</p>
+<p>1）Reader：字符流</p>
+<p>2）Writer：字符流</p>
+<p>3）InputStream：字节流</p>
+<p>4）OutputStream：字节流</p>
+<p>注：输出流记得调用flush()方法将输出流中缓冲的数据全部写出到目的地</p>
+<h5 id="14、NIO"><a href="#14、NIO" class="headerlink" title="14、NIO"></a>14、NIO</h5><p>java NIO(new IO)是新的IO api(java1.4)。标准的IO基于字节流和字符流进行操作的，而NIO是基于通道(Channel)和缓冲区(Buffer)进行操作，数据总是从通道读取到缓冲区中，或者从缓冲区写入通道也类似。</p>
+<p>Java NIO 由以下几个核心部分组成：Buffer；Channel；Selector。</p>
+<p>传统的IO操作面向数据流，意味着每次从流中读一个或多个字节，直至完成，数据没有被缓存在任何地方。NIO操作面向缓冲区，数据从Channel读取到Buffer缓冲区，随后在Buffer中处理数据。</p>
+<blockquote>
+<p>ByteBuffer buf = ByteBuffer.allocate(1024);</p>
+<p>容量（Capacity）：作为一块内存，buffer有一个固定的大小，叫做capacity容量。也就是最多只能写入容量值得字节，整形等数据。一旦buffer写满了就需要清空已读数据以便下次继续写入新的数据。<br>位置（Position）：当写入数据到Buffer的时候需要中一个确定的位置开始，默认初始化时这个位置<br>position为0，一旦写入了数据比如一个字节，整形数据，那么position的值就会指<br>向数据之后的一个单元，position最大可以到capacity-1。</p>
+<p>上限（Limit）：在写模式，limit的含义是我们所能写入的最大数据量。它等同于buffer的容量。<br>一旦切换到读模式，limit则代表我们所能读取的最大数据量，他的值等同于写模式下position的位置。数据读取的上限时buffer中已有的数据，也就是limit的位置（原position所指的位<br>置）。</p>
+</blockquote>
+<h5 id="15、Error和Exception"><a href="#15、Error和Exception" class="headerlink" title="15、Error和Exception"></a>15、Error和Exception</h5><p>Throwable是Java中所有错误或异常的基类，包含两个子类：Error和Exception。</p>
+<p>Exception及其子类是 Throwable 的一种形式，它指出了合理的应用程序想要捕获的条件。</p>
+<p>和Exception一样，Error也是Throwable的子类。它用于指示合理的应用程序不应该试图捕获的严重问题，大多数这样的错误都是异常条件。</p>
+<p>按照Java惯例，我们是不应该是实现任何新的Error子类的</p>
+<h5 id="16、abstract和interface"><a href="#16、abstract和interface" class="headerlink" title="16、abstract和interface"></a>16、abstract和interface</h5><p>抽象类：</p>
+<blockquote>
+<p>abstract class Demo ｛<br>   abstract void method1();<br>   abstract void method2();<br>…<br>｝</p>
+</blockquote>
+<p>接口：</p>
+<blockquote>
+<p>interface Demo {<br>   void method1();<br>   void method2();<br>…<br>}</p>
+</blockquote>
+<p>在abstract class方式中，Demo可以有自己的数据成员，也可以有非abstarct的成员方法，而在interface方式的实现中，Demo只能够有静态的不能被修改的数据成员（也就是必须是static final的，不过在interface中一般不定义数据成员），所有的成员方法都是abstract的。从某种意义上说，interface是一种特殊形式的abstract class。</p>
+<p>在abstract class的定义中，我们可以赋予方法的默认行为。</p>
+<p>但是在interface的定义中，方法却不能拥有默认行为，不过在JDK1.8中可以使<br>用 default 关键字实现默认方法。</p>
+<blockquote>
+<p>interface InterfaceA {<br>    default void foo() {<br>    System.out.println(“InterfaceA foo”);<br>    }<br>}</p>
+</blockquote>
+<ol>
+<li>抽象类和接口都不能直接实例化，如果要实例化，抽象类变量必须指向实现所<br>有抽象方法的子类对象，接口变量必须指向实现所有接口方法的类对象。</li>
+<li>抽象类要被子类继承，接口要被类实现。</li>
+<li>接口里定义的变量只能是公共的静态的常量，抽象类中的变量是普通变量。</li>
+<li>抽象类里可以没有抽象方法。</li>
+<li>接口可以被类多实现（被其他接口多继承），抽象类只能被单继承。</li>
+<li>接口中没有 this 指针，没有构造函数，不能拥有实例字段（实例变量）或<br>实例方法。</li>
+<li>抽象类不能在Java 8 的 lambda 表达式中使用。</li>
+</ol>
+<h5 id="16、对象拷贝"><a href="#16、对象拷贝" class="headerlink" title="16、对象拷贝"></a>16、对象拷贝</h5><p>Java有三种类型的对象拷贝：浅拷贝(Shallow Copy)、深拷贝(Deep Copy)、延迟拷贝(Lazy Copy)。</p>
+<p>1）浅拷贝：浅拷贝是按位拷贝对象，它会创建一个新对象，这个对象有着原始对象属性值的一<br>份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值；如果属性是内存地址（引用类型），拷贝的就是内存地址 ，因此如果其中一个对象改变了这个地址，就会影响到另一个对象。</p>
+<p>​    实现方法：实现Clonable接并重写Object类的clone()方法，然后在方法内部调用super.clone()方法。口</p>
+<p>2）深拷贝：深拷贝会拷贝所有的属性,并拷贝属性指向的动态分配的内存。当对象和它所引用的<br>对象一起拷贝时即发生深拷贝。深拷贝相比于浅拷贝速度较慢并且花销较大。</p>
+<p>​    实现方法：</p>
+<p>​        （1）实现Clonable接并重写Object类的clone()方法，新建一个相同值的引用对象</p>
+<p>​        （2）通过序列化实现深拷贝</p>
+<p>3）延迟拷贝：延迟拷贝是浅拷贝和深拷贝的一个组合，实际上很少会使用。 当最开始拷贝一个对<br>象时，会使用速度较快的浅拷贝，还会使用一个计数器来记录有多少对象共享这个数据。当程序想要修改原始的对象时，它会决定数据是否被共享（通过检查计数器）并根据需要进行深拷贝。</p>
+<p>​    延迟拷贝从外面看起来就是深拷贝，但是只要有可能它就会利用浅拷贝的速度。当原始对象中的引用不经常改变的时候可以使用延迟拷贝。由于存在计数器，效率下降很高，但只是常量级的开销。而且, 在某些情况下, 循环引用会导致一些问题。    </p>
+<p>注：如果对象的属性全是基本类型的，那么可以使用浅拷贝，但是如果对象有引用属性，那就要基于具体的需求来选择浅拷贝还是深拷贝。</p>
+<h5 id="17、Java-8新特性"><a href="#17、Java-8新特性" class="headerlink" title="17、Java 8新特性"></a>17、Java 8新特性</h5><p>1）lambda表达式</p>
+<p>2）接口的默认方法和静态方法</p>
+<p>默认方法和抽象方法的区别在于抽象方法需要实现，而默认方法不需要。接口提供的默认方法会被接口的实现类继承或者覆写。</p>
+<blockquote>
+<p>//默认方法</p>
+<p>private interface Defaulable {<br>   // Interfaces now allow default methods, the implementer may<br>   //or<br>   // may not implement (override) them.<br>   default String notRequired() {<br>       return “Default implementation”;<br>   }<br>}</p>
+<p>private static class DefaultableImpl implements Defaulable {</p>
+<p>}</p>
+<p>private static class OverridableImpl implements Defaulable {<br>   @Override<br>   public String notRequired() {<br>       return “Overridden implementation”;<br>   }<br>}</p>
+<p>//静态方法</p>
+<p>private interface DefaulableFactory {<br>// Interfaces now allow static methods<br>   static Defaulable create( Supplier&lt; Defaulable &gt; supplier )<br>   {<br>       return supplier.get();<br>   }<br>}</p>
+<p>public static void main( String[] args ) {<br>   Defaulable defaulable = DefaulableFactory.create( DefaultableImpl::new );<br>   System.out.println( defaulable.notRequired() );<br>   defaulable = DefaulableFactory.create( OverridableImpl::new);<br>   System.out.println( defaulable.notRequired() );<br>}</p>
+</blockquote>
+<p>3）方法引用</p>
+<p>4）重复注解</p>
+<h5 id="18、线程池"><a href="#18、线程池" class="headerlink" title="18、线程池"></a>18、线程池</h5><blockquote>
+<p>线程池的优势<br>①降低系统资源消耗，通过重用已存在的线程，降低线程创建和销毁造成的消耗；<br>②提高系统响应速度，当有任务到达时，无需等待新线程的创建便能立即执行；<br>③方便线程并发数的管控，线程若是无限制的创建，不仅会额外消耗大量系统资<br>源，更是占用过多资源而阻塞系统或oom等状况，从而降低系统的稳定性。线程池<br>能有效管控线程，统一分配、调优，提供资源使用率；<br>④更强大的功能，线程池提供了定时、定期以及可控线程数等功能的线程池，使用<br>方便简单。</p>
+</blockquote>
+<p>创建方式：ThreadPoolExecutor</p>
+<blockquote>
+<p>ExecutorService service = new ThreadPoolExecutor(….);</p>
+<p>public ThreadPoolExecutor(int corePoolSize,<br>    int maximumPoolSize,<br>    long keepAliveTime,<br>    TimeUnit unit,<br>    BlockingQueue workQueue,<br>    ThreadFactory threadFactory,<br>    RejectedExecutionHandler handler)</p>
+</blockquote>
+<p>执行方式：</p>
+<p>1）execute：当我们使用execute来提交任务时，由于execute方法没有返回值，所以说<br>我们也就无法判定任务是否被线程池执行成功。</p>
+<blockquote>
+<p>service.execute(new Runnable() {<br>   public void run() {<br>   System.out.println(“execute方式”);<br>   }<br>});</p>
+</blockquote>
+<p>2）submit：当我们使用submit来提交任务时,它会返回一个future,我们就可以通过这个future来<br>判断任务是否执行成功，还可以通过future的get方法来获取返回值。如果子线程任务没有完成，get方法会阻塞住直到任务完成，而使用get(long timeout, TimeUnit unit)方法则会阻塞一段时间后立即返回，这时候有可能任务并没有执行完。</p>
+<blockquote>
+<p>Future future = service.submit(new Callable()<br>{<br>   @Override<br>   public Integer call() throws Exception {<br>       System.out.println(“submit方式”);<br>       return 2;<br>   }<br>});<br>try {<br>   Integer number = future.get();<br>} catch (ExecutionException e) {<br>   // TODO Auto-generated catch block<br>   e.printStackTrace();<br>}</p>
+</blockquote>
+<p>关闭方式：</p>
+<p>1）shutdown：将线程池状态设置成SHUTDOWN状态，然后中断所有没有正在执行任务的线程。</p>
+<p>2）shutdownNow原理：将线程池的状态设置成STOP状态，然后中断所有任务(包括正在执行的)的线程，并返回等待执行任务的列表。</p>
+<p>执行流程：</p>
+<blockquote>
+<p>①如果在线程池中的线程数量没有达到核心的线程数量，这时候就回启动一个核心<br>线程来执行任务。<br>②如果线程池中的线程数量已经超过核心线程数，这时候任务就会被插入到任务队<br>列中排队等待执行。<br>③由于任务队列已满，无法将任务插入到任务队列中。这个时候如果线程池中的线<br>程数量没有达到线程池所设定的最大值，那么这时候就会立即启动一个非核心线程<br>来执行任务。<br>④如果线程池中的数量达到了所规定的最大值，那么就会拒绝执行此任务，这时候<br>就会调用RejectedExecutionHandler中的rejectedExecution方法来通知调用者。</p>
+</blockquote>
+<p>四种线程池类：</p>
+<p>newFixedThreadPool、newCachedThreadPool、newScheduledThreadPool、newSingleThreadExecutor</p>
+<p>使用技巧：</p>
+<p>1）CPU密集型任务：线程池中线程个数应尽量少，如配置N+1个线程的线程池。</p>
+<p>2）IO密集型任务：由于IO操作速度远低于CPU速度，那么在运行这类任务时，CPU绝大多数时间处于空闲状态，那么线程池可以配置尽量多些的线程，以提高CPU利用率，如2*N。</p>
+<p>3）混合型任务：可以拆分为CPU密集型任务和IO密集型任务，当这两类任务执行时间相差无几时，通过拆分再执行的吞吐率高于串行执行的吞吐率，但若这两类任务执行时间有数据级的差距，那么没有拆分的意义。</p>
+<h5 id="19、锁"><a href="#19、锁" class="headerlink" title="19、锁"></a>19、锁</h5><p>死锁产生的条件：</p>
+<ol>
+<li>互斥条件：一个资源每次只能被一个线程使用。</li>
+<li>请求与保持条件：一个线程因请求资源而阻塞时，对已获得的资源保持不放。</li>
+<li>不剥夺条件：线程已获得的资源，在未使用完之前，不能强行剥夺。</li>
+<li>循环等待条件：若干线程之间形成一种头尾相接的循环等待资源关系。</li>
+</ol>
+<p>锁的类别：synchronized和ReentrantLock(Lock)</p>
+<p>ReentrantLock：一个可重入的互斥锁，它具有与使用synchronized方法和语句所访问的隐式监视器锁相同的一些基本行为和语义，但功能更强大。</p>
+<blockquote>
+<p>ReentrantLock lock = new ReentrantLock(); //参数默认false，不公平锁<br>   lock.lock(); //如果被其它资源锁定，会在此等待锁释放，达到暂停的效果<br>   try {<br>       //操作<br>   } finally {<br>       lock.unlock(); //释放锁<br>}</p>
+</blockquote>
+<p>重入锁：当一个线程得到一个对象后，再次请求该对象锁时是可以再次得到该对象的锁的。</p>
+<p>Java里面内置锁(synchronized)和Lock(ReentrantLock)都是可重入的。</p>
+<p>CPU在调度线程的时候是在等待队列里随机挑选一个线程，由于这种随机性所以是无法保证线程先到先得的（synchronized控制的锁就是这种非公平锁）。但这样就会产生饥饿现象，即有些线程（优先级较低的线程）可能永远也无法获取CPU的执行权，优先级高的线程会不断的强制它的资源。那么如何解决饥饿问题呢，这就需要公平锁了。公平锁可以保证线程按照时间的先后顺序执行，避免饥饿现象的产生。但公平锁的效率比较低，因为要实现顺序执行，需要维护一个有序队列。</p>
+<p>ReentrantLock便是一种公平锁，通过在构造方法中传入true就是公平锁，传入false，就是非公平锁。</p>
+<p>synchronized和ReentrantLock区别：</p>
+<p>1）Lock是一个接口，而synchronized是Java中的关键字，synchronized是内置的语言实现；</p>
+<p>2）synchronized在发生异常时，会自动释放线程占有的锁，因此不会导致死锁现象发生；而Lock在发生异常时，如果没有主动通过unLock()去释放锁，则很可能造成死锁现象，因此使用Lock时需要在finally块中释放锁；</p>
+<p>3）Lock可以让等待锁的线程响应中断，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断；</p>
+<p>4）通过Lock可以知道有没有成功获取锁，而synchronized却无法办到。</p>
+<p>5）Lock可以提高多个线程进行读操作的效率</p>
+<p>总结：ReentrantLock相比synchronized，增加了一些高级的功能。但也有一定缺陷。</p>
+<p>概念上的区别：</p>
+<p>1)可中断锁<br>    顾名思义，就是可以响应中断的锁。<br>    在Java中，synchronized就不是可中断锁，而Lock是可中断锁。如果某一线程A正在执行锁中的代码，另一线程B正在等待获取该锁，可能由于等待时间过长，线程B不想等待了，想先处理其他事情，我们可以让它中断自己或者在别的线程中中断它，这种就是可中断锁。<br>lockInterruptibly() 的用法体现了Lock的可中断性。<br>2)公平锁<br>    公平锁即尽量以请求锁的顺序来获取锁。比如同是有多个线程在等待一个锁，当这个锁被释放时，等待时间最久的线程（最先请求的线程）会获得该锁（并不是绝对的，大体上是这种顺序），这种就是公平锁。非公平锁即无法保证锁的获取是按照请求锁的顺序进行的。这样就可能导致某个或者一些线程永远获取不到锁。</p>
+<p>在Java中，synchronized就是非公平锁，它无法保证等待的线程获取锁的顺序。ReentrantLock可以设置成公平锁。<br>3)读写锁<br>读写锁将对一个资源（比如文件）的访问分成了2个锁，一个读锁和一个写锁。正因为有了读写锁，才使得多个线程之间的读操作可以并发进行，不需要同步，而写操作需要同步进行，提高了效率。</p>
+<p>ReadWriteLock就是读写锁，它是一个接口，ReentrantReadWriteLock实现了这个接口。<br>可以通过readLock()获取读锁，通过writeLock()获取写锁。</p>
+<p>4）绑定多个条件</p>
+<p>​    一个ReentrantLock对象可以同时绑定多个Condition对象，而在synchronized中，锁对象的wait()和notify()或notifyAll()方法可以实现一个隐含的条件，如果要和多余一个条件关联的时候，就不得不额外地添加一个锁，而ReentrantLock则无须这么做，只需要多次调用new Condition()方法即可。</p>
+<p>​    synchronized相当于整个ReentrantLock对象只有一个单一的Condition对象情况。而一个ReentrantLock却可以拥有多个Condition对象，来实现通知部分线程。    </p>
+<p>​    假设有两个Condition对象：ConditionA和ConditionB。那么由ConditionA.await()方法进入等待状态的线程，由ConditionA.signalAll()通知唤醒；由ConditionB.await()方法进入等待状态的线程，由ConditionB.signalAll()通知唤醒。    </p>
+<h5 id="20、Java内存模型"><a href="#20、Java内存模型" class="headerlink" title="20、Java内存模型"></a>20、Java内存模型</h5><p>​    Java内存模型规定了所有的变量都存储在主内存中。每条线程中还有自己的工作内存，线程的工作内存中保存了被该线程所使用到的变量（这些变量是从主内存中拷贝而来）。线程对变量的所有操作（读取，赋值）都必须在工作内存中进行。不同线程之间也无法直接访问对方工作内存中的变量，线程间变量值的传递均需要通过主内存来完成。    </p>
+<p>​    基于此种内存模型，便产生了多线程编程中的数据“脏读”等问题。</p>
+<p>​    并发编程的三大概念：原子性、有序性、可见性</p>
+<p>​    当一个共享变量被volatile修饰时，它会保证修改的值会立即被更新到主存，当有其他线程需要读取时，它会去内存中读取新值另外，通过synchronized和Lock也能够保证可见性，synchronized和Lock能保证同一时刻只有一个线程获取锁然后执行同步代码，并且在释放锁之前会将对变量的修<br>改刷新到主存当中。因此可以保证可见性。</p>
+<p>​    在Java内存模型中，允许编译器和处理器对指令进行重排序，但是重排序过程不会影响到单线程程序的执行，却会影响到多线程并发执行的正确性。    </p>
+<p>​    在Java里面，可以通过volatile关键字来保证一定的“有序性”。另外可以通过synchronized和Lock来保证有序性，很显然，synchronized和Lock保证每个时刻是有一个线程执行同步代码，相当于是让线程顺序执行同步代码，自然就保证了有序性。    </p>
+<blockquote>
+<p>一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义：<br>1）保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。<br>2）禁止进行指令重排序。</p>
+<p>通常来说，使用volatile必须具备以下2个条件：<br>1）对变量的写操作不依赖于当前值<br>2）该变量没有包含在具有其他变量的不变式中</p>
+</blockquote>
+<h5 id="21、内存泄漏"><a href="#21、内存泄漏" class="headerlink" title="21、内存泄漏"></a>21、内存泄漏</h5><p>内存泄露的根本原因：长生命周期的对象持有短生命周期的对象。短周期对象就无法及时释放。</p>
+<p>1）静态内部类非静态内部类的区别(Handler 引起的内存泄漏。)</p>
+<p>2）静态集合类引起内存泄露</p>
+<p>3）单例模式引起的内存泄漏。</p>
+<p>4）Context问题</p>
+<p>解决：Context是ApplicationContext，由于ApplicationContext的生命周期是和app一致的，不会导致内存泄漏</p>
+<p> 5）注册/反注册未成对使用引起的内存泄漏。</p>
+<p> 6）集合对象没有及时清理引起的内存泄漏。通常会把一些对象装入到集合中，当不使用的时候一定要记得及时清理集合，让相关对象不再被引用。</p>
+<h4 id="小点："><a href="#小点：" class="headerlink" title="小点："></a>小点：</h4><p>1、内部类又称为嵌套类，可以把内部类理解为外部类的一个普通成员。内部类之所以也是语法糖，是因为它仅仅是一个编译时的概念。</p>
+<p><code>outer.java</code>里面定义了一个内部类<code>inner</code>，一旦编译成功，就会生成两个完全不同的<code>.class</code>文件了，分别是<code>outer.class</code>和<code>outer$inner.class</code>。所以内部类的名字完全可以和它的外部类名字相同。</p>
+<p>2、被transient关键字修饰的变量不再能被序列化，一个静态变量不管是否被transient修饰，均不能被序列化。</p>
+<p>3、</p>
+<p>一个GLSurfaceView类 , 具有以下特点 :</p>
+<p>1.管理一个平面, 这个平面是一个特殊的内存块 , 它可以和 android 视图系统混合 .</p>
+<p>2.管理一个EGL 显示 , 它能够让 OpenGL 渲染到一个平面 .</p>
+<p>3.接受一个用户提供的实际显示的Renderer 对象 .</p>
+<p>4.使用一个专用线程去渲染从而和UI 线程解耦 .</p>
+<p>5.支持on-demand  和连续的渲染.</p>
+<p>6.可选的包, 追踪 和 / 或者错误检查这个渲染器的 OpenGL 调用 .</p>
+<p>4、</p>
+<p>设置Activity的android:screenOrientation=”portrait”属性时,无法切换横竖屏，因此不但不会重新调用各个生命周期方法，而且onConfigurationChanged()方法也不会执行</p>
+<p>5、</p>
+<p>未设置Activity的android:configChanges属性，切换屏幕横纵方向时会重新调用onCreate()方法</p>
+<p>6、</p>
+<p>launchMode为singleTask的时候，通过Intent启到一个Activity, 如果系统已经存在一个实例，系统就会将请求发送到这个实例上， 但这个时候，系统就不会再调用通常情况下我们处理请求数据的onCreate方法，而是调用onNewIntent方法</p>
+<p>7、Android系统对下列哪些对象提供了资源池：（AC）</p>
+<p>A、Message        B、Thread        C、AsyncTask        D、Looper </p>
+<p>A.Message提供了消息池，有静态方法Obtain从消息池中取对象；</p>
+<p>B.Thread默认不提供资源池，除非使用线程池ThreadPool管理；</p>
+<p>C.AsynTask是线程池改造的，池里 默认提供（核数+1）个线程进行并发操作，最大支持（核数  * 2 + 1）个线程，超过后会丢弃其他任务；</p>
+<p>D.Looper，每个Looper创建时创建一个消息队列和线程对象，也不是资源池；</p>
+<p>8、singleTop：若栈顶活动为要创建的活动，则不会执行onCreate-&gt;onStart，而是直接执行onPause-&gt;onNewIntent-&gt;onResume</p>
+<p>singleTask：栈内复用，应用场景：应用的主页面</p>
+<p>singleInstance：单独一个栈，若task中存在实例，则执行onNewIntant。应用场景：闹钟、浏览器、电话</p>
+<p>9、</p>
+<p>onSaveInstanceState()在onPause()和onStop()之间执行，在这个方法中进行状态保存</p>
+<p>重新创建activity之后会在onCreate()后调用onRestoreInstanceState()（onStart和onResume之间）,也可以在onCreate中通过savedInstanceState(Bundle类型)进行状态恢复</p>
+<p>保存View状态需要有两个前提：View的子类必须实现了onSaveInstance，必须要设定Id，这个id作为Bundle的key</p>
+<p>10、</p>
+<p>fragment的滑动实现：ViewPager+FragmentPagerAdapter+List\<fragment></fragment></p>
+<p>11、fragment之间的数据传递</p>
+<p>1）bundle</p>
+<p>2）接口回调</p>
+<p>3）开源框架EventBus</p>
+<p>11、</p>
+<p>广播分类：</p>
+<p>1）标准广播、有序广播、粘性广播</p>
+<p>2）静态广播、动态广播</p>
+<p>3）全局广播、本地广播</p>
+<p>12、</p>
+<p>AlertDialog,popupWindow,Activity区别</p>
+<p>（1）Popupwindow在显示之前一定要设置宽高，Dialog无此限制。 </p>
+<p>（2）Popupwindow默认不会响应物理键盘的back，除非显示设置了popup.setFocusable(true);而在点击back的时候，Dialog会消失。 </p>
+<p>（3）Popupwindow不会给页面其他的部分添加蒙层，而Dialog会。 </p>
+<p>（4）Popupwindow没有标题，Dialog默认有标题，可以通过dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);取消标题 </p>
+<p>（5）二者显示的时候都要设置Gravity。如果不设置，Dialog默认是Gravity.CENTER。 </p>
+<p>（6）二者都有默认的背景，都可以通过setBackgroundDrawable(new ColorDrawable(android.R.color.transparent));去掉。</p>
+<p>（7）Popupwindow弹出后，取得了用户操作的响应处理权限，使得其他UI控件不被触发。而AlertDialog弹出后，点击背景，AlertDialog会消失。</p>
+<p>13、</p>
+<p>Application 和 Activity 的 Context 对象的区别</p>
+<p>1）Application Context是伴随应用生命周期；不可以showDialog, startActivity, LayoutInflation</p>
+<p> 可以startService\BindService\sendBroadcast\registerBroadcast\load Resource values</p>
+<p> 2）Activity Context指生命周期只与当前Activity有关，而Activity Context这些操作都可以，即凡是跟UI相关的，都得用Activity做为Context来处理。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/30/leetcode刷题笔记/" rel="next" title="leetcode刷题笔记">
+                <i class="fa fa-chevron-left"></i> leetcode刷题笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/panpan.jpg"
+                alt="CoderZWei" />
+            
+              <p class="site-author-name" itemprop="name">CoderZWei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、Message"><span class="nav-number">1.</span> <span class="nav-text">1、Message</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、SurfaceView、SurfaceHolder、Surface的关系"><span class="nav-number">2.</span> <span class="nav-text">2、SurfaceView、SurfaceHolder、Surface的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、TextureView、SurfaceTexture、Surface"><span class="nav-number">3.</span> <span class="nav-text">3、TextureView、SurfaceTexture、Surface</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、HandlerThread"><span class="nav-number">4.</span> <span class="nav-text">4、HandlerThread</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、IntentService"><span class="nav-number">5.</span> <span class="nav-text">5、IntentService</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、Android中的视图结构"><span class="nav-number">6.</span> <span class="nav-text">6、Android中的视图结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7、Java创建线程的三种方式"><span class="nav-number">7.</span> <span class="nav-text">7、Java创建线程的三种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8、Android进程间通信的方式"><span class="nav-number">8.</span> <span class="nav-text">8、Android进程间通信的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9、自定义view"><span class="nav-number">9.</span> <span class="nav-text">9、自定义view</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10、集合类"><span class="nav-number">10.</span> <span class="nav-text">10、集合类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11、语法糖"><span class="nav-number">11.</span> <span class="nav-text">11、语法糖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12、反射机制"><span class="nav-number">12.</span> <span class="nav-text">12、反射机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13、IO流"><span class="nav-number">13.</span> <span class="nav-text">13、IO流</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14、NIO"><span class="nav-number">14.</span> <span class="nav-text">14、NIO</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#15、Error和Exception"><span class="nav-number">15.</span> <span class="nav-text">15、Error和Exception</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#16、abstract和interface"><span class="nav-number">16.</span> <span class="nav-text">16、abstract和interface</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#16、对象拷贝"><span class="nav-number">17.</span> <span class="nav-text">16、对象拷贝</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17、Java-8新特性"><span class="nav-number">18.</span> <span class="nav-text">17、Java 8新特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#18、线程池"><span class="nav-number">19.</span> <span class="nav-text">18、线程池</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#19、锁"><span class="nav-number">20.</span> <span class="nav-text">19、锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#20、Java内存模型"><span class="nav-number">21.</span> <span class="nav-text">20、Java内存模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#21、内存泄漏"><span class="nav-number">22.</span> <span class="nav-text">21、内存泄漏</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小点："><span class="nav-number"></span> <span class="nav-text">小点：</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CoderZWei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
