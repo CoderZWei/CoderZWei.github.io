@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="记录Android开发中遇到的一些知识点总结">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-03T16:17:41.474Z">
+<meta property="og:updated_time" content="2019-05-08T16:02:32.067Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android知识点">
 <meta name="twitter:description" content="记录Android开发中遇到的一些知识点总结">
@@ -332,7 +332,7 @@
         <p>记录Android开发中遇到的一些知识点总结</p>
 <a id="more"></a>
 <h5 id="1、Message"><a href="#1、Message" class="headerlink" title="1、Message"></a>1、Message</h5><p>Message message=Message.obtain();</p>
-<p>Message本质是Parcelable， (public final class Message implements Parcelable)</p>
+<p>Message实现了Parcelable接口， (public final class Message implements Parcelable)</p>
 <h5 id="2、SurfaceView、SurfaceHolder、Surface的关系"><a href="#2、SurfaceView、SurfaceHolder、Surface的关系" class="headerlink" title="2、SurfaceView、SurfaceHolder、Surface的关系"></a>2、SurfaceView、SurfaceHolder、Surface的关系</h5><blockquote>
 <p>SurfaceView是拥有独立绘图层的特殊View</p>
 <p>Surface就是指SurfaceView所拥有的那个绘图层，其实它就是内存中的一段绘图缓冲区</p>
@@ -346,9 +346,34 @@
 <p>SurfaceTexture用来捕获视频流中的图像帧的，视频流可以是相机预览或者视频解码数据。</p>
 <p>TextureView可以通过<code>getSurfaceTexture()</code>方法来获取TextureView相应的SurfaceTexture。</p>
 <h5 id="4、HandlerThread"><a href="#4、HandlerThread" class="headerlink" title="4、HandlerThread"></a>4、HandlerThread</h5><p>HandlerThread用于Handler消息处理中执行耗时操作，因为HandlerThread继承于Thread，且在线程的run()方法中执行 Looper.prepare(); 和 Looper.loop();</p>
+<p>子线程耗时操作后通过handler发送message，然后在Handlerthread中进行处理</p>
+<blockquote>
+<p>Handler mHandler==new Handler(handlerThread.getLooper()){</p>
+<p>​            @Override</p>
+<p>​            public void handleMessage(Message msg) {</p>
+<p>​             ‘’’</p>
+<p>​            }</p>
+<p>​        };</p>
+<p>new Thread(new Runnable() {</p>
+<p>​            @Override</p>
+<p>​            public void run() {</p>
+<p>​        ‘’’</p>
+<p>​        mHandler.sendMessage();</p>
+<p>​            }</p>
+<p>​        }).start();</p>
+</blockquote>
 <h5 id="5、IntentService"><a href="#5、IntentService" class="headerlink" title="5、IntentService"></a>5、IntentService</h5><p>IntentService继承自Service，Service是运行于主线程的，因此耗时操作需要开辟一个新线程。而IntentService内部采用了HandlerThread实现，作用类似于后台线程。与后台线程相比，IntentService是一种后台服务，优势在于优先级高(不容易被系统杀死)，从而保证任务的执行。</p>
+<p>IntentService是在Service里开启线程去做任务处理。每一个耗时操作会以队列的方式在IntentService的onHandlerIntent回调方法中执行，并且，每一次只会执行一个工作线程，执行完第一个再执行第二个。</p>
 <p>Service需要主动调用stopSelf()来结束服务，而IntentService不需要(在所有的intent被处理完后，系统会自动关闭服务)。</p>
 <p>IntentService用于任务需要按顺序、在后台执行的使用场景，比如下载任务。</p>
+<p>如果有一个任务，可以分成很多子任务，且需要按照顺序来完成，如果需要放到一个服务中完成(后台)，那么就可以使用IntentService。</p>
+<p>IntentService的优点：</p>
+<p>（1）它创建一个独立的工作线程来处理所有一个一个intent。</p>
+<p>（2）创建了一个工作队列，来逐个发送intent给onHandleIntent()</p>
+<p>（3）不需要主动调用stopSelf()来结束服务，因为源码里面自己实现了自动关闭。</p>
+<p>（4）默认实现了onBind()返回的null。</p>
+<p>（5）默认实现的onStartCommand()的目的是将intent插入到工作队列。</p>
+<p>总结：使用IntentService的好处有哪些。首先，省去了手动开线程的麻烦；第二，不用手动停止service；第三，由于设计了工作队列，可以启动多次startService(),但是只有一个service实例和一个工作线程。一个一个顺序执行。</p>
 <h5 id="6、Android中的视图结构"><a href="#6、Android中的视图结构" class="headerlink" title="6、Android中的视图结构"></a>6、Android中的视图结构</h5><p>Activity并不负责视图控制，它只是控制生命周期和处理事件。真正控制视图的是Window。一个Activity包含了一个Window，WIndow才是真正代表一个窗口。</p>
 <p>Window是视图的承载器，内部持有一个DecorView，DecorView是view的根布局。Window是一个抽象类，实际在Activity中持有的是其子类PhoneWindow。PhoneWindow中有个内部类DecorView，通过创建DecorView来加载Activity中设置的布局 R.layout.activity_main 。Window 通过WindowManager将DecorView加载其中，并将DecorView交给ViewRoot，进行视图绘制以及其他交互。</p>
 <h5 id="7、Java创建线程的三种方式"><a href="#7、Java创建线程的三种方式" class="headerlink" title="7、Java创建线程的三种方式"></a>7、Java创建线程的三种方式</h5><blockquote>
@@ -363,6 +388,7 @@
 <p>4）AIDL：AIDL可以解决并发和跨进程调用方法的问题。</p>
 <p>5、ContentProvider</p>
 <p>6、socket</p>
+<p>7、广播</p>
 </blockquote>
 <h5 id="9、自定义view"><a href="#9、自定义view" class="headerlink" title="9、自定义view"></a>9、自定义view</h5><p>实现方式分为以下几种：</p>
 <p>1）自定义组合控件：将多个空间组合成为一个新的空间，便于多处复用</p>
@@ -379,12 +405,12 @@
 <p>在Measure过程中，如果只是一个原始的View，那么通过measure(onMeaure)方法就完成了其测量过程；如果是一个VIewGroup，除了完成自己的测量过程外，还会遍历调用所有子元素的measure方法，各个子元素再递归地去执行这个过程。</p>
 <p>VIew的measure得到的是测量后的大小，最终的大小实在layout阶段确定的，不过几乎所有情况下View的测量大小都等于最终大小。</p>
 <p>View的onMeasure重写：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">    super.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">    int widthSpecMode=MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">    int heightSpecMode=MeasureSpec.getMode(heightMeasureSpec);</div><div class="line">    int widthSpecSize=MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">    int heightSpecSize=MeasureSpec.getSize(heightMeasureSpec);</div><div class="line">    //AT_MOST：</div><div class="line">    if(widthSpecMode==MeasureSpec.AT_MOST &amp;&amp; heightSpecMode==MeasureSpec.AT_MOST)&#123;</div><div class="line">        setMeasuredDimension((int)getResources().getDimension(R.dimen.circle_progress_default_width),</div><div class="line">                (int)getResources().getDimension(R.dimen.circle_progress_default_height));</div><div class="line">    &#125;else if(widthMeasureSpec==MeasureSpec.AT_MOST)&#123;</div><div class="line">        setMeasuredDimension((int)getResources().getDimension(R.dimen.circle_progress_default_width),heightSpecSize);</div><div class="line">    &#125;else if(heightMeasureSpec==MeasureSpec.AT_MOST)&#123;</div><div class="line">        setMeasuredDimension(widthSpecSize,(int)getResources().getDimension(R.dimen.circle_progress_default_height));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">    super.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">    int widthSpecMode=MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">    int heightSpecMode=MeasureSpec.getMode(heightMeasureSpec);</div><div class="line">    int widthSpecSize=MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">    int heightSpecSize=MeasureSpec.getSize(heightMeasureSpec);</div><div class="line">    //AT_MOST：</div><div class="line">    if(widthSpecMode==MeasureSpec.AT_MOST &amp;&amp; heightSpecMode==MeasureSpec.AT_MOST)&#123;</div><div class="line">        setMeasuredDimension((int)getResources().getDimension(R.dimen.circle_progress_default_width),          (int)getResources().getDimension(R.dimen.circle_progress_default_height));</div><div class="line">    </div><div class="line">    &#125;else if(widthMeasureSpec==MeasureSpec.AT_MOST)&#123;    setMeasuredDimension((int)getResources().getDimension(R.dimen.circle_progress_default_width),heightSpecSize);</div><div class="line">    </div><div class="line">    &#125;else if(heightMeasureSpec==MeasureSpec.AT_MOST)&#123;</div><div class="line">        setMeasuredDimension(widthSpecSize,(int)getResources().getDimension(R.dimen.circle_progress_default_height));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>在自定义ViewGroup的方式中，除了要对自身的大小和位置进行测量之外，还需要对子View的测量参数负责</p>
 <p>在ViewGroup方式中，layout方法确定View本身的位置，而onLayout方法则会确定所有子元素的位置</p>
 <h5 id="10、集合类"><a href="#10、集合类" class="headerlink" title="10、集合类"></a>10、集合类</h5><p>分类Set、List、Queue、Map</p>
 <p>继承于两个接口：Collection(Set、List、Queue)和Map(Map)。</p>
-<p>泛型初始化：List<integer>list=new List<integer>();</integer></integer></p>
+<p>泛型初始化：List\<integer>list=new List\<integer>();</integer></integer></p>
 <p>1、ArrayList：以数组实现，节约空间，但数组有容量限制。超出限制后会增加50%容量，用System.arraycopyy()复制到新的数组</p>
 <p>2、LinkedList：以双向链表实现。链表无容量限制，但双向链表本身使用了更多空间，也需要额外的链表指针操作。</p>
 <p>3、HashMap：允许null值、非同步、不保证有序(比如插入的顺序)、也不保证序不随时间变化</p>
@@ -392,6 +418,8 @@
 <blockquote>
 <p>Capacity就是bucket的大小，Load factor就是bucket填满程度的最大比<br>例(默认0.75)。如果对迭代性能要求很高的话，不要把 capacity 设置过大，也不要把 load factor 设置过小。当bucket中的entries的数目大于 capacity*load factor 时就需要调整bucket的大小为当前的2倍。</p>
 </blockquote>
+<p>Java8 对 HashMap 进行了一些修改，最大的不同就是利用了红黑树，所以其由 数组+链表+红黑树 组成。根据 Java7 HashMap 的介绍，我们知道，查找的时候，根据 hash 值我们能够快速定位到数组的具体下标，但是之后的话，需要顺着链表一个个比较下去才能找到我们需要的，时间复杂度取决于链表的长度，为 O(n)。</p>
+<p>为了降低这部分的开销，在 Java8 中，当链表中的元素超过了 8 个以后，会将链表转换为红黑树，在这些位置进行查找的时候可以降低时间复杂度为 O(logN)。</p>
 <p>put函数大致的思路为：</p>
 <ol>
 <li>对key的hashCode()做hash，然后再计算index;</li>
@@ -404,8 +432,20 @@
 <p>当put时，如果发现目前的bucket占用程度已经超过了Load Factor所希望的比例，那么就会发生resize。在resize的过程，简单的说就是把bucket扩充为2倍，之后重新计算index，把节点再放到新的bucket中。当超过限制的时候会resize，然而又因为我们使用的是2次幂的扩展(指长度扩为原来2倍)，所以，元素的位置要么是在原位置，要么是在原位置再移动2次幂的位置。</p>
 <p>get的原理：通过对key的hashCode()进行hashing，并计算下标( (n-1) &amp; hash )，从而获得buckets的位置。如果产生碰撞，则利用key.equals()方法去链表或树中去查找对应的节点</p>
 <p>hashcode方法：高16bit不变，低16bit和高16bit做了一个异或</p>
+<blockquote>
+<p>HashMap和Hashtable区别</p>
+<p>1）HashMap是非同步的，HashTable是同步的</p>
+<p>2）HashMap可以插入为null的key和value，HashTable不行</p>
+<p>3）HashMap的迭代器(Iterator)是fail-fast迭代器，而Hashtable的enumerator迭代器不是fail-fast的。</p>
+<p>4）HashTable在单线程环境下比HashMap要慢，因为是synchronized的</p>
+<p>5）HashMap不能保证随着时间的推移Mao中的元素次序是不变的</p>
+</blockquote>
 <p>4、LinkedHashMap：继承自HashMap，保证数据可以保持插入顺序，通过Hash表和双向链表(保证插入顺序)实现</p>
-<p>5、TreeMap：保持key的大小顺序(通过红黑树实现，二叉排序树)。有序就相当于树的中序遍历</p>
+<p>5、TreeMap：保持key的大小顺序(通过红黑树实现，二叉排序树)。有序就相当于树的中序遍历，非同步的</p>
+<p>6、ConcurrentHashMap</p>
+<p>​    ConcurrentHashMap 是一个 Segment 数组，Segment 通过继承 ReentrantLock 来进行加锁，所以每次需要加锁的操作锁住的是一个 segment，这样只要保证每个 Segment 是线程安全的，也就实现了全局的线程安全。</p>
+<p>​    Segment 数默认是16，就是说 ConcurrentHashMap 有 16 个 Segments，所以理论上，这个时候，最多可以同时支持 16 个线程并发写，只要它们的操作分别分布在不同的 Segment 上。这个值可以在初始化的时候设置为其他值，但是一旦初始化以后，它是不可以扩容的。</p>
+<p>​    Java7 中实现的 ConcurrentHashMap 说实话还是比较复杂的，Java8 对 ConcurrentHashMap 进行了比较大的改动。建议读者可以参考 Java8 中 HashMap 相对于 Java7 HashMap 的改动，对于 ConcurrentHashMap，Java8 也引入了红黑树，并且支持了扩容。</p>
 <h5 id="11、语法糖"><a href="#11、语法糖" class="headerlink" title="11、语法糖"></a>11、语法糖</h5><p>java语法糖主要有泛型、边长参数、条件编译、自动拆装箱(int、Integer互转)、内部类等。</p>
 <p>解语法糖：虚拟机不支持语法糖语法，它们在编译阶段就被还原回了最简单的基础语法结构</p>
 <p>语法糖好处：使程序更加简洁，有更高的可读性</p>
@@ -526,6 +566,7 @@
 <p>执行流程：</p>
 <blockquote>
 <p>①如果在线程池中的线程数量没有达到核心的线程数量，这时候就回启动一个核心<br>线程来执行任务。<br>②如果线程池中的线程数量已经超过核心线程数，这时候任务就会被插入到任务队<br>列中排队等待执行。<br>③由于任务队列已满，无法将任务插入到任务队列中。这个时候如果线程池中的线<br>程数量没有达到线程池所设定的最大值，那么这时候就会立即启动一个非核心线程<br>来执行任务。<br>④如果线程池中的数量达到了所规定的最大值，那么就会拒绝执行此任务，这时候<br>就会调用RejectedExecutionHandler中的rejectedExecution方法来通知调用者。</p>
+<p>看这个：<a href="https://blog.csdn.net/mylzc/article/details/6784415" target="_blank" rel="external">https://blog.csdn.net/mylzc/article/details/6784415</a></p>
 </blockquote>
 <p>四种线程池类：</p>
 <p>newFixedThreadPool、newCachedThreadPool、newScheduledThreadPool、newSingleThreadExecutor</p>
@@ -578,10 +619,17 @@
 <p>1）静态内部类非静态内部类的区别(Handler 引起的内存泄漏。)</p>
 <p>2）静态集合类引起内存泄露</p>
 <p>3）单例模式引起的内存泄漏。</p>
+<p>​    创建实例的时候经常会用到Context</p>
 <p>4）Context问题</p>
-<p>解决：Context是ApplicationContext，由于ApplicationContext的生命周期是和app一致的，不会导致内存泄漏</p>
-<p> 5）注册/反注册未成对使用引起的内存泄漏。</p>
+<blockquote>
+<p>解决：</p>
+<p>1)Context是ApplicationContext，由于ApplicationContext的生命周期是和app一致的，不会导致内存泄漏</p>
+<p>2)将Context设为弱引用</p>
+<p>强引用&gt;软引用&gt;弱引用&gt;虚引用</p>
+</blockquote>
+<p>5）注册/反注册未成对使用引起的内存泄漏。</p>
 <p> 6）集合对象没有及时清理引起的内存泄漏。通常会把一些对象装入到集合中，当不使用的时候一定要记得及时清理集合，让相关对象不再被引用。</p>
+<h5 id="22、混合开发"><a href="#22、混合开发" class="headerlink" title="22、混合开发"></a>22、混合开发</h5><p>知道哪些混合开发的方式？说出它们的优缺点和各自使用场景？（解答：比如:RN，weex，4.H5，小程序，WPA等。做Android的了解一些前端js等还是很有好处的)；</p>
 <h4 id="小点："><a href="#小点：" class="headerlink" title="小点："></a>小点：</h4><p>1、内部类又称为嵌套类，可以把内部类理解为外部类的一个普通成员。内部类之所以也是语法糖，是因为它仅仅是一个编译时的概念。</p>
 <p><code>outer.java</code>里面定义了一个内部类<code>inner</code>，一旦编译成功，就会生成两个完全不同的<code>.class</code>文件了，分别是<code>outer.class</code>和<code>outer$inner.class</code>。所以内部类的名字完全可以和它的外部类名字相同。</p>
 <p>2、被transient关键字修饰的变量不再能被序列化，一个静态变量不管是否被transient修饰，均不能被序列化。</p>
@@ -605,7 +653,8 @@
 <p>B.Thread默认不提供资源池，除非使用线程池ThreadPool管理；</p>
 <p>C.AsynTask是线程池改造的，池里 默认提供（核数+1）个线程进行并发操作，最大支持（核数  * 2 + 1）个线程，超过后会丢弃其他任务；</p>
 <p>D.Looper，每个Looper创建时创建一个消息队列和线程对象，也不是资源池；</p>
-<p>8、singleTop：若栈顶活动为要创建的活动，则不会执行onCreate-&gt;onStart，而是直接执行onPause-&gt;onNewIntent-&gt;onResume</p>
+<p>8、</p>
+<p>singleTop：若栈顶活动为要创建的活动，则不会执行onCreate-&gt;onStart，而是直接执行onPause-&gt;onNewIntent-&gt;onResume  应用场景：浏览器的书签；通讯消息聊天界面</p>
 <p>singleTask：栈内复用，应用场景：应用的主页面</p>
 <p>singleInstance：单独一个栈，若task中存在实例，则执行onNewIntant。应用场景：闹钟、浏览器、电话</p>
 <p>9、</p>
@@ -621,8 +670,8 @@
 <p>11、</p>
 <p>广播分类：</p>
 <p>1）标准广播、有序广播、粘性广播</p>
-<p>2）静态广播、动态广播</p>
-<p>3）全局广播、本地广播</p>
+<p>2）静态广播、动态广播  </p>
+<p>3）全局广播、本地广播   本地广播只能动态注册(LocalBroadcastManager)</p>
 <p>12、</p>
 <p>AlertDialog,popupWindow,Activity区别</p>
 <p>（1）Popupwindow在显示之前一定要设置宽高，Dialog无此限制。 </p>
@@ -637,6 +686,423 @@
 <p>1）Application Context是伴随应用生命周期；不可以showDialog, startActivity, LayoutInflation</p>
 <p> 可以startService\BindService\sendBroadcast\registerBroadcast\load Resource values</p>
 <p> 2）Activity Context指生命周期只与当前Activity有关，而Activity Context这些操作都可以，即凡是跟UI相关的，都得用Activity做为Context来处理。</p>
+<p>14、</p>
+<p>Activity剪窗花的人（控制的）；Window窗户（承载的一个模型）；View窗花（要显示的视图View）；LayoutInflater剪刀—将布局（图纸）剪成窗花。</p>
+<p>15、</p>
+<p>Java 进行GC的时候会从GC root进行可达性判断，常见的GC Root有：</p>
+<ul>
+<li><strong>Class</strong> - 由系统类加载器(system class loader)加载的对象，这些类不可以被回收，他们可以以静态字段的方式持有其它对象。我们需要注意的一点就是，通过用户自定义的类加载器加载的类，除非相应的java.lang.Class实例以其它的某种（或多种）方式成为roots，否则它们并不是roots，.</li>
+<li><strong>Thread</strong> - 活着的线程</li>
+<li><strong>Stack Local</strong> - Java方法的local变量或参数（存在于所有Java线程当前活跃的栈帧里，它们会指向堆里的对象）</li>
+<li>【Java类的运行时常量池里的引用类型常量（String或Class类型）】（先不考虑）</li>
+<li>【String常量池（StringTable）里的引用】（先不考虑）</li>
+<li><strong>JNI Local</strong> - JNI方法的local变量或参数</li>
+<li><strong>JNI Global</strong> - 全局JNI引用</li>
+<li><strong>Monitor Used</strong> - Monitor被持有，用于同步互斥的对象</li>
+<li><strong>Held by JVM</strong> - 用于JVM特殊目的由GC保留的对象，但实际上这个与JVM的实现是有关的。可能已知的一些类型是：系统类加载器、一些JVM知道的重要的异常类、一些用于处理异常的预分配对象以及一些自定义的类加载器等。JVM的一些静态数据成员会指向堆里的对象</li>
+</ul>
+<p>GC收集那些不是GC roots且没有被GC roots引用的对象。</p>
+<p>GC算法：</p>
+<p>1）标记回收算法</p>
+<p>从GC root进行遍历，把可达对象都标记，剩下那些不可达的进行回收，这种方式需要中断其他线程，并且可能产生内存碎片</p>
+<p>2）复制算法</p>
+<p>把内存区域分为两块，每次使用一块，GC的时候把一块中的内容移动到另一块中，原始内存中的对象就可以被回收了。</p>
+<p>3）标记压缩算法</p>
+<p>和标记回收差不多，但是在回收的时候会对可达对象进行整理，将其压缩到内存的一段，避免内存碎片</p>
+<p>4）分代算法</p>
+<p>将内存区域分代，对不同的代使用不同的回收算法，通常分为新生代，老年代，和永久带。</p>
+<p>新生代一般包含三个区域，Eden区和两个Survivor区，新生代一般采用复制算法；老年代一般采用标记压缩算法；永久带一般是方法区，JVM规范并没有强制要求说必须要回收这个区域。</p>
+<p>在Dalvik虚拟机中的堆其实是分为了两个，一个是Zygote堆，一个是Active堆，Zygote堆中主要是预加载的各种资源和对象，这个堆很少被写。我们分配的堆内存一般都是在Activie堆进行分配的。</p>
+<p>16、</p>
+<p>在onCreate()直接开启子线程并在子线程里更新UI是可以的，因为校验线程是ViewRootImpl 来做的，但是它的创建流程是在 Activity 的 onResume .(<a href="https://www.jianshu.com/p/33b855dcde5a" target="_blank" rel="external">https://www.jianshu.com/p/33b855dcde5a</a>)</p>
+<p>所以子线程只要在 ViewRootImpl 创建之前更新 UI 就没问题。</p>
+<p>17、</p>
+<p>invalidate：在主线程当中刷新UI（见MyView样例）</p>
+<p>postInvalidate：在子线程当中刷新UI，其实最终调用的就是invalidate，原理依然是通过工作线程向主线程发送消息这一机制（handler）。</p>
+<p>18、LinearLayout、RelativeLayout对比</p>
+<p>LinearLayout性能优于RelativeLayout。</p>
+<p>因为RelativeLayout会测量两次。而默认情况下（没有设置weight）LinearLayout只会测量一次。</p>
+<p>因为RelativeLayout中的子view排列方式是基于彼此依赖的关系，而这个依赖可能和布局中view的顺序无关，在确定每一个子view的位置的时候，就需要先给每一个子view排一下序。又因为RelativeLayout允许横向和纵向相互依赖，所以需要横向纵向分别进行一次排序测量。</p>
+<p>19、</p>
+<p>Handler的使用：</p>
+<p>1）handler.sendMessage()和handlerMessage()</p>
+<p>2）handler.post(Runnable)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">handler.post(new Runnable()&#123;</div><div class="line">	@Override</div><div class="line">	public void run() &#123;</div><div class="line">	//do something</div><div class="line">     	mTextView.setText(&quot;msg&quot;);</div><div class="line">    &#125;&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>post 是立即插入消息列队，当消息列队处理到该消息时,Runnable将在<strong>handle绑定的线程</strong>中运行。也就是说如果在Main Thread里声明了一个handler，这个handler所Post 的 Runnable（Thread）、以及处理的message都是在<strong>当前的main线程</strong>里，<strong>非子线程</strong>，千万不要被“runnable”这个字眼迷惑了。所以<strong>不能</strong>在runable里执行耗时的操作。</p>
+<p>可以在子线程的run()里执行handler.post(Runnable)来更新ui</p>
+</blockquote>
+<p>一个线程里只能有一个Looper，一个Looper对应着一个MessageQueue。所以在一个线程里面，无论你有多少个Handler，最终发送的消息都要在同一个MessageQueue中排队等待被执行。</p>
+<p>20、自定义view的优化</p>
+<p>1）减少在onDraw里面大量计算和对象创建和大量内存分配。</p>
+<p>2）应该尽量少用invalidate()次数。</p>
+<p>3）view里面耗时的操作layout。减少requestLayout（）避免让UI系统重新遍历整棵树。Mearsure。</p>
+<p>4）如果你有一个很复杂的布局，不如将这个复杂的布局直接使用你自己的写的ViewGroup来实现。减少了一个树的层次关系 全部都是自己测量和layout，达到优化的目的。（Facebook就经常这么干）</p>
+<p>21、</p>
+<p>requestLayout方法会导致View的onMeasure、onLayout、onDraw方法被调用；</p>
+<p>invalidate方法则只会导致View的onDraw方法被调用</p>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/a6ea264a07b8" target="_blank" rel="external">https://www.jianshu.com/p/a6ea264a07b8</a></p>
+<p>在View的requestLayout方法中，首先会设置View的标记位，PFLAG_FORCE_LAYOUT表示当前View要进行重新布局，PFLAG_INVALIDATED表示要进行重新绘制。</p>
+<p>requestLayout方法中会一层层向上调用父布局的requestLayout方法，设置PFLAG_FORCE_LAYOUT标记，最终调用的是ViewRootImpl中的requestLayout方法。</p>
+<p>ViewRootImpl中的requestLayout方法中会调用scheduleTraversals方法，scheduleTraversals方法最后会调用performTraversals方法开始执行View的三大流程，会分别调用View的measure、layout、draw方法。(performMeasure、performLayout、performDraw)</p>
+</blockquote>
+<p>22、</p>
+<p>1）ContextImpl：Context实现类</p>
+<p>2）PhoneWindow：Window唯一实现类。Window是一个抽象概念，是添加到WindowManager的根容器。</p>
+<p>3）ViewRootImpl：ViewRootImpl是View的根，它控制了View的测量和绘制，同时持有WindowSession通过Binder与WMS(WindowManagerService)通信，同时持有IWindow作为WMS的回调接口，用于例如touch事件的回调。</p>
+<p>4）WindowManagerImpl：WindowManager和ViewManager的实现类，通过WindowManagerGlobal与WMS通信。</p>
+<p>5）DecorView：继承FrameLayout，是视图树的根布局。DecorView是PhoneWindow类的一个内部类，继承于FrameLayout，由此可知它也是一个ViewGroup。</p>
+<p>​    DecorView是顶级View，内部有titlebar和contentParent两个子元素，contentParent的id是content，而我们设置的main.xml布局则是contentParent里面的一个子元素。</p>
+<p>6）activity启动过程</p>
+<blockquote>
+<p>（1）</p>
+<p>public final class WindowManagerImpl implements WindowManager {<br>private final WindowManagerGlobal mGlobal = WindowManagerGlobal.getInstance();<br>…<br>@Override<br>public void addView(View view, ViewGroup.LayoutParams params) {<br>   mGlobal.addView(view, params, mDisplay, mParentWindow);<br>   }<br>}</p>
+<p>（2）WindowManagerGlobal的addView：</p>
+<p>public void addView(View view, ViewGroup.LayoutParams params,<br>   Display display, Window parentWindow) {<br>   …<br>   ViewRootImpl root;<br>   View panelParentView = null;<br>   synchronized (mLock) {<br>   …<br>       root = new ViewRootImpl(view.getContext(), display); // 1<br>       view.setLayoutParams(wparams);<br>       mViews.add(view);<br>       mRoots.add(root);<br>       mParams.add(wparams);<br>   }<br>// do this last because it fires off messages to start doing things<br>   try {<br>       root.setView(view, wparams, panelParentView); // 2<br>   } catch (RuntimeException e) {<br>       // BadTokenException or InvalidDisplayException, clean up.<br>       synchronized (mLock) {<br>           final int index = findViewLocked(view, false);<br>           if (index &gt;= 0) {<br>               removeViewLocked(index, true);<br>           }<br>       }<br>       throw e;<br>   }<br>}</p>
+<p>（3）</p>
+<p>在ViewRootImpl的setView()方法中，把DecorView作为参数传递进去，在这个方法内部，会通过跨进程的方式向WMS（WindowManagerService）发起一个调用，从而将DecorView最终添加到Window上，在这个过程中，ViewRootImpl、DecorView和WMS会彼此关联。</p>
+<p>（4）</p>
+<p>最后通过WMS调用ViewRootImpl的performTraverals方法开始View的测量、布局、绘制流程</p>
+</blockquote>
+<p>ViewRootImpl的构造方法内创建了WindowSession(Binder)，通过它与WindowManagerService进行通信。</p>
+<p>启动Activity会创建ViewRootImpl和PhoneWindow，建立起与WMS的连接。</p>
+<p>Activity通过PhoneWindow的setContentView方法来设置布局</p>
+<p>23、</p>
+<p>Context：包含上下文信息(外部值) 的一个参数</p>
+<p>Android 中的 Context 分三种,Application Context ,Activity Context ,Service<br>Context.</p>
+<p>它描述的是一个应用程序环境的信息，通过它我们可以获取应用程序的资源和类，也包括一些应用级别操作，例如：启动一个Activity，发送广播，接受Intent信息等</p>
+<p>24、</p>
+<p>UI线程包括：Activity:onCreate(), onResume(), onDestroy(), onKeyDown(), onClick()</p>
+<p> AsyncTask: onPreExecute(), onProgressUpdate(), onPostExecute(), onCancel()</p>
+<p>Mainthread handler: handleMessage(), post(runnable r)</p>
+<p>等等</p>
+<p>25、</p>
+<p>对称加密：加密和解密数据都是使用同一个key，这方面的算法有DES。</p>
+<p>非对称加密：加密和解密是使用不同的key。发送数据之前要先和服务端约定生成公钥和私钥，使用公钥加密的数据可以用私钥解密。</p>
+<p>如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密。</p>
+<p>这方面的算法有RSA。ssh 和 ssl都是典型的非对称加密。</p>
+<p>26、</p>
+<p>在非主线程中不能直接创建Handler，因为其中没有Looper对象。Android中的Looper类，是用来封装消息循环和消息队列的一个类，Looper类用来为一个线程开启一个消息循环。 默认情况下android中新诞生的线程是没有开启消息循环的。（主线程除外，主线程系统会自动为其创建Looper对象，开启消息循环。）Looper对象通过MessageQueue来存放消息和事件。一个线程只能有一个Looper，对应一个MessageQueue。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">private void initThead() &#123;</div><div class="line">        new Thread(new Runnable() &#123;</div><div class="line">            public void run() &#123;</div><div class="line">                Looper.prepare();//启用Looper，创建Looper实例</div><div class="line">                handler1 = new Handler()&#123;</div><div class="line">                    @Override</div><div class="line">                    public void handleMessage(Message msg) &#123;</div><div class="line">                        super.handleMessage(msg);</div><div class="line">                        Log.i(&quot;md&quot;,  &quot;threadName--:&quot; + Thread.currentThread().getName() + &quot;  ,messageWhat-:&quot;+ msg.what );               </div><div class="line">                    &#125;</div><div class="line">                &#125;;          </div><div class="line">                handler1.sendEmptyMessage( 5 ) ;</div><div class="line">                Looper.loop();//让Looper开始工作，从消息队列里取消息，处理消息，让消息处理在该线程中完成。</div><div class="line">                Log.i(&quot;md&quot;,  &quot;threadName--:&quot; + Thread.currentThread().getName());//代码不执行</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>HandlerThread本质上就是一个普通Thread,只不过内部建立了Looper：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class HandlerThread extends Thread &#123;</div><div class="line">...</div><div class="line"> @Override</div><div class="line">    public void run() &#123;</div><div class="line">        mTid = Process.myTid();</div><div class="line">        Looper.prepare();</div><div class="line">        synchronized (this) &#123;</div><div class="line">            mLooper = Looper.myLooper();</div><div class="line">            notifyAll();</div><div class="line">        &#125;</div><div class="line">        Process.setThreadPriority(mPriority);</div><div class="line">        onLooperPrepared();</div><div class="line">        Looper.loop();</div><div class="line">        mTid = -1;</div><div class="line"> ...</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么这个Handler对象就是与HandlerThread这个线程绑定了（这时就不再是与UI线程绑定了，这样它处理耗时操作将不会阻塞UI。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">private void initHandlerThread() &#123;    </div><div class="line">        HandlerThread threadHandlerThread = new HandlerThread(&quot;Handler-thread&quot;);</div><div class="line">        .start();</div><div class="line">         handler3 = new Handler(threadHandlerThread.getLooper())&#123;</div><div class="line">            @Override</div><div class="line">            public void handleMessage(Message msg) &#123;</div><div class="line">                // TODO Auto-generated method stub</div><div class="line">                super.handleMessage(msg);</div><div class="line">                Log.i(&quot;md&quot;,  &quot;threadName--:&quot; + Thread.currentThread().getName() + &quot;  ,messageWhat-:&quot;+ msg.what );</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        handler3.sendEmptyMessage(2);</div><div class="line">        new Thread(new Runnable() &#123;</div><div class="line">            @Override</div><div class="line">            public void run() &#123;</div><div class="line">                handler3.sendEmptyMessage(5);</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"> threadHandlerThread.quit() ; //释放资源</div></pre></td></tr></table></figure>
+<p>HandlerThread适合处理本地IO读写操作（读写数据库或文件），因为本地IO操作耗时不长，对于单线程+异步队列不会产生较大阻塞，而网络操作相对比较耗时，容易阻塞后面的请求，因此HandlerThread不适合加入网络操作。</p>
+<p>27、onTouchEvent和onTouch(<a href="https://blog.csdn.net/weixin_41101173/article/details/80460632" target="_blank" rel="external">https://blog.csdn.net/weixin_41101173/article/details/80460632</a>)</p>
+<p>点击事件（Touch事件）。当用户触摸屏幕时（View 或 ViewGroup派生的控件），将产生点击事件（Touch事件）。常见的点击事件包括：单击、双击、触摸、滑动。</p>
+<p>Touch事件的相关细节（发生触摸的位置、时间等）被封装成MotionEvent对象。</p>
+<p>1）onTouchEvent(MotionEvent event)是View中定义的方法，而且是Public类型，所以Activity、ViewGroup、View均可以调用这个方法，最常见的关于这块的知识点在Android事件分发中，onTouchEvent()是每个事件处理对象都有的方法，用于根据下层的onTouchEvent()返回值类型判断是否调用，最常见的用法是自定义View时写入到view中，从而让该View获取用户对手机屏幕的各种操作，并对不同类型的操作实现不同的反馈，属于一个宏观的屏幕触摸监控方法。</p>
+<p>​    onTouchEvent的返回值是当已经完整地处理了该事件且不希望其他回调方法再次处理时返回true，否则返回false。即view如果通过onTouchEvent()方法处理了事件，不希望也不必要传到ViewGroup中时，即返回true，如果view处理不了事件，需要往上级传时，返回值为false，同理ViewGroup和Activity之间事件的控制也是如此。</p>
+<p>2）onTouch((View v, MotionEvent event)是View.OnTouchListener接口中实现的唯一方法，接收两个参数，第二个参数是之前提过的event事件对象，第一个参数是一个具体的view类型对象，这就意味着onTouch()方法必须和某个控件进行绑定，即某个控件实现了View.OnTouchListener接口，才能调用onTouch()方法。</p>
+<p>​    该方法的返回值类型主要用于控制是否执行onTouchEvent()方法及onTouchEvent()方法内部内置的各种click点击事件是否执行。(利用此特性可以单独拦截某个View的点击(click)事件)</p>
+<blockquote>
+<p>两者的优先级关系</p>
+<p>①如果onTouch()方法返回值是true（事件被消费）时，则onTouchEvent()方法将不会被执行；</p>
+<p>②只有当onTouch()方法返回值是false（事件未被消费，向下传递）时，onTouchEvent方法才被执行。</p>
+<p>由此可见，给View设置监听OnTouchListener时，重写的onTouch()方法，其优先级比onTouchEvent（）要高，假如onTouch方法返回false，会接着触发onTouchEvent，反之onTouchEvent方法不会被调用。内置诸如click事件的实现等等都基于onTouchEvent，假如onTouch返回true，这些事件将不会被触发。</p>
+</blockquote>
+<p>28、AsyncTask</p>
+<p>AsyncTask是一个抽象泛型类，因此使用时需要写一个类继承它。</p>
+<blockquote>
+<p>public abstract class AsyncTask<params，progress，result></params，progress，result></p>
+<p>Params：开始异步任务执行时传入的参数类型</p>
+<p>Progress：异步任务执行过程中，返回下载进度值的类型</p>
+<p>Result：异步任务执行完成后，返回的结构类型</p>
+<p>注：如果AsyncTask确定不需要传递具体参数，那么这三个泛型参数可以用Void来代<br>替。</p>
+</blockquote>
+<p>核心方法：</p>
+<blockquote>
+<p>1）onPreExecute()：在主线程执行，这个方法会在后台任务开始执行之间调用。用于进行一些界面上的初始化操作，比如显示一个进度条对话框等。</p>
+<p>2）doInBackground(Params…)：在子线程中运行，我们应该在这里去处理所有的耗时任务。<br>    任务一旦完成就可以通过return语句来将任务的执行结果进行返回，如果AsyncTask<br>的第三个泛型参数指定的是Void，就可以不返回任务执行结果。注意，在这个方法<br>中是不可以进行UI操作的，如果需要更新UI元素，比如说反馈当前任务的执行进<br>度，可以调用publishProgress(Progress…)方法来完成。</p>
+<p>3）onProgressUpdate(Progress…)：在主线程运行，当在后台任务中调用了publishProgress(Progress…)方法后，这个方法就很快会被调用，方法中携带的参数就是在后台任务中传递过来的。在这个方法中可以对UI进行操作，在主线程中进行，利用参数中的数值就可以对界面元素进行相应的更新。</p>
+<p>4）onPostExecute(Result)：在主线程运行，当doInBackground(Params…)执行完毕并通过return语句进行返回时，这个方法就很快会被调用。返回的数据会作为参数传递到此方法中，可以利用返回的数据来进行一些UI操作，在主线程中进行，比如说提醒任务执行的结果，以及关闭掉进度条<br>对话框等。</p>
+<p>上面几个方法的调用顺序： onPreExecute() –&gt; doInBackground() –&gt;publishProgress() –&gt; onProgressUpdate() –&gt; onPostExecute()</p>
+<p>如果不需要执行更新进度则为onPreExecute() –&gt; doInBackground() –&gt;onPostExecute()</p>
+<p>除了上面四个方法，AsyncTask还提供了onCancelled()方法，它同样在主线程中执<br>行，当异步任务取消时，onCancelled()会被调用，这个时候onPostExecute()则<br>不会被调用，但是要注意的是，AsyncTask中的cancel()方法并不是真正去取消任<br>务，只是设置这个任务为取消状态，我们需要在doInBackground()判断终止任<br>务。就好比想要终止一个线程，调用interrupt()方法，只是进行标记为中断，需要<br>在线程内部进行标记判断然后中断线程。</p>
+<p>启动任务时执行execute()</p>
+</blockquote>
+<p>AsyncTask是对Handler与线程池的封装。使用它的方便之处在于避免直接使用Thread类和Handler来处理操作，适用于需要异步处理数据并将数据更新到界面上的情况。能够更新用户界面，当然这里更新用户界面的操作还是在主线程中完成的，但是由于AsyncTask内部包含一个Handler，所以可以发送消息给主线程让它更新UI。</p>
+<p>​     在Android 1.6之前的版本，AsyncTask是串行的，在1.6至2.3的版本，改成了并行的。在2.3之后的版本又做了修改，可以支持并行和串行，当想要串行执行时，直接执行execute()方法，如果需要并行执行，则要执行executeOnExecutor(Executor)。</p>
+<p>AsyncTask可以在子线程中更新UI？</p>
+<p>AsyncTask的优点在于执行完后台任务后可以很方便的更新UI，并且过程可控</p>
+<p>局限性：</p>
+<p>–内存泄漏问题</p>
+<p>–在Android 4.1版本之前，AsyncTask类必须在主线程中加载，这意味着对AsyncTask类的第一次访问必须发生在主线程中；在Android 4.1以及以上版本则不存在这一限制，因为ActivityThread（代表了主线程）的main方法中会自动加载AsyncTask<br>–AsyncTask对象必须在主线程中创建<br>–AsyncTask对象的execute方法必须在主线程中调用<br>–一个AsyncTask对象只能调用一次execute方法</p>
+<p>使用AsyncTask类，以下是几条必须遵守的准则：</p>
+<ul>
+<li><p>Task的实例必须在UI thread中创建；</p>
+</li>
+<li><p>execute方法必须在UI thread中调用；</p>
+</li>
+<li><p>不要手动的调用onPreExecute(), onPostExecute(Result)，doInBackground(Params…), onProgressUpdate(Progress…)这几个方法；</p>
+</li>
+<li><p>该task只能被执行一次，否则多次调用时将会出现异常；</p>
+</li>
+<li><p>线程池中已经有128个线程，缓冲队列已满，如果此时向线程提交任务，将会抛出RejectedExecutionException。过多的线程会引起大量消耗系统资源和导致应用FC的风险。</p>
+</li>
+<li><p>AsyncTask不会随着Activity的销毁而销毁，直到doInBackground()方法执行完毕。如果我们的Activity销毁之前，没有取消 AsyncTask，这有可能让我们的AsyncTask崩溃(crash)。因为它想要处理的view已经不存在了。所以，我们总是必须确保在销毁活动之前取消任务。如果在doInBackgroud里有一个不可中断的操作，比如BitmapFactory.decodeStream()，调用了cancle() 也未必能真正地取消任务。关于这个问题，在4.4后的AsyncTask中，都有判断是取消的方法isCancelled(),可能参考的这些作者都分析较早的版本，当然，这是笔者落后的原因。</p>
+</li>
+<li><p>如果AsyncTask被声明为Activity的非静态的内部类，那么AsyncTask会保留一个对创建了AsyncTask的Activity的引用。如果Activity已经被销毁，AsyncTask的后台线程还在执行，它将继续在内存里保留这个引用，导致Activity无法被回收，引起内存泄露。</p>
+</li>
+<li><p>屏幕旋转或Activity在后台被系统杀掉等情况会导致Activity的重新创建，之前运行的AsyncTask会持有一个之前Activity的引用，这个引用已经无效，这时调用onPostExecute()再去更新界面将不再生效。</p>
+</li>
+</ul>
+<p>  29、内存泄漏</p>
+<p>  1）非静态内部类、匿名内部类</p>
+<p>  非静态内部类、匿名内部类 都会持有外部类的一个引用，如果有一个静态变量引用了非静态内部类或者匿名内部类，导致非静态内部类或者匿名内部类的生命周期比外部类（Activity）长，就会导致外部类在该被回收的时候，无法被回收掉，引起内存泄露, 除非外部类被卸载。</p>
+<p>  在创建非静态内部类对象时，一定要先创建起相应的外部类对象，因为非静态内部类对象有着指向其外部类对象的引用，而静态内部类没有了指向外部类的引用。除此之外，在任何非静态内部类中，都不能有静态数据，静态方法或者又一个静态内部类（内部类的嵌套可以不只一层）。不过静态内部类中可以拥有者一切。</p>
+<p>  解决办法：将非静态内部类、匿名内部类改成静态内部类，或者直接抽离成一个外部类。 如果在静态内部类中，需要引用外部类对象，那么可以将这个引用封装在一个WeakReference中。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">rivate Handler mHandler = new MyHandler(this);</div><div class="line">    private static class MyHandler extends Handler&#123;</div><div class="line">        private final WeakReference&lt;Activity&gt; mActivity;</div><div class="line">        public MyHandler(Activity activity) &#123;</div><div class="line">            mActivity = new WeakReference&lt;Activity&gt;(activity);</div><div class="line">        &#125;</div><div class="line">        @Override</div><div class="line">        public void handleMessage(Message msg) &#123;</div><div class="line">            System.out.println(msg);</div><div class="line">            if(mActivity.get() == null) &#123;</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    private Runnable mRunable = new Runnable() &#123;</div><div class="line">        @Override</div><div class="line">        public void run() &#123;</div><div class="line">            Intent intent = new Intent(SplishActivity.this,MainActivity.class);</div><div class="line">            startActivity(intent);</div><div class="line">            finish();</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line">mHandler.postDelayed(mRunable,100);</div></pre></td></tr></table></figure>
+<p>  2）静态的View</p>
+<p>  ​    当一个Activity经常启动，但是对应的View读取非常耗时，我们可以通过静态View变量来保持对该Activity的rootView引用。这样就可以不用每次启动Activity都去读取并渲染View了。但View attach到我们的Window上，就会持有一个Context(即Activity)的引用。而我们的View有事一个静态变量，所以导致Activity不被回收。</p>
+<p>  ​    解决办法： 在使用静态View时，需要确保在资源回收时，将静态View detach掉。</p>
+<p>  3）Handler：在Activity中定义Handler对象，那么Handler持有Activty的引用。而每个Message对象是持有Handler的引用的（Message对象的target属性持有Handler引用），从而导致Message间接引用到了Activity。如果在Activty destroy之后，消息队列中还有Message对象，Activty是不会被回收的。</p>
+<p>  ​    解决办法： 将Handler放入单独的类或者将Handler放入到静态内部类中（静态内部类不会持有外部类的引用）。如果想要在handler内部去调用所在的外部类Activity，可以在handler内部使用弱引用的方式指向所在Activity，在onDestory时，调用相应的方法移除回调和删除消息。</p>
+<p>  4）监听器（各种需要注册的Listener，Watcher等）</p>
+<p>  ​    当我们需要使用系统服务时，比如执行某些后台任务、为硬件访问提供接口等等系统服务。我们需要把自己注册到服务的监听器中。然而，这会让服务持有 activity 的引用，如果程序员忘记在 activity 销毁时取消注册，那就会导致 activity 泄漏了。</p>
+<p>  ​    解决办法：在onDestory中移除注册</p>
+<p>  5）</p>
+<p>  ​    资源对象没关闭造成内存泄漏：当我们打开资源时，一般都会使用缓存。比如读写文件资源、打开数据库资源、使用Bitmap资源等等。当我们不再使用时，应该关闭它们，使得缓存内存区域及时回收。</p>
+<p>  ​    解决办法：使用try finally结合，在try块中打开资源，在finally中关闭资源</p>
+<p>  6）</p>
+<p>  ​    属性动画：在使用ValueAnimator或者ObjectAnimator时，如果没有及时做cancel取消动画，就可能造成内存泄露。因为在cancel方法里，最后调用了endAnimation(); ，在endAnimation里，有个AnimationHandler的单例，会持有属性动画对象的引用。</p>
+<p>  ​    解决办法：在onDestory中调用动画的cancel方法</p>
+<p>  7）</p>
+<p>  ​    RxJava：在使用RxJava时，如果在发布了一个订阅后，由于没有及时取消，导致Activity/Fragment无法销毁，导致的内存泄露。</p>
+<p>  ​    解决办法：使用RxLifeCycle</p>
+<p>  30、内部类</p>
+<p>  定义：在类的内部再定义一个类</p>
+<p>  作用：</p>
+<p>  1）实现多重继承，因为java中类的继承只能单继承，使用内部类可达到多重继承</p>
+<p>  2）内部类可以很好的实现隐藏，一般非内部类，不允许有private或protected权限的，但内部类可以</p>
+<p>  3）减少了类文件编译后产生的字节码文件大小</p>
+<p>  内部类在编译完之后也会产生.class文件，但文件名成是：外部类名称\$内部类名称.class</p>
+<p>  分类：</p>
+<p>  1）成员内部类：作为外部类的一个成员存在，与外部类的属性、方法并列，成员内部类持有外部类的引用，成员内部类不能定义static变量和方法。</p>
+<p>  ​    应用场合：每一个外部类都需要一个内部类实例，内部类离不开外部类存在。</p>
+<p>  2）静态内部类：内部类以static声明，其他类可通过外部类.内部类来访问。特点：不会持有外部类的引用，可以访问外部类的静态变量，若要访问成员变量须通过外部类的实例访问。</p>
+<p>  应用场合：内部类不需要外部类的实例，仅为外部类提供或逻辑上属于外部类，逻辑上可单独存在。设计的意义：加强了类的封装性（静态内部类是外部类的子行为或子属性，两者保持着一定关系），提高了代码的可读性（相关联的代码放在一起）。</p>
+<blockquote>
+<p>public class Outer{</p>
+<p>​    private static int num=10;</p>
+<p>​    public static class Inner{</p>
+<p>​        public void func(){</p>
+<p>​            System.out.println(num);</p>
+<p>​        }</p>
+<p>​    }</p>
+<p>​    public static void main(String[] args){</p>
+<p>​        Outer.Inner inner=new Outer.Inner();</p>
+<p>​        inner.func();</p>
+<p>​    }</p>
+<p>}</p>
+</blockquote>
+<p>  3）匿名内部类</p>
+<p>  在整个操作中只使用一次，没有名字，使用new创建，没有具体位置</p>
+<p>  匿名内部类会隐式的继承一个类或者实现一个接口，，或者说，匿名内部类是一个继承了该类或者实现了该接口的子类匿名对象。</p>
+<p>  格式：</p>
+<p>  new 类名/接口/抽象类(){</p>
+<p>  }</p>
+<blockquote>
+<p>public class Outer{</p>
+<p>​    public void method(){</p>
+<p>​        new Inner(){</p>
+<p>​            public void func(){</p>
+<p>​                System.out.println(“hello”);</p>
+<p>​            }</p>
+<p>​        }.func();</p>
+<p>​    }</p>
+<p>}</p>
+<p>interface Inner{</p>
+<p>​    public void func();</p>
+<p>}</p>
+</blockquote>
+<p>  注：匿名内部类编译后除了会生成外部类名称\$内部类名称.class（此处由于Inner是在Outer外面，因此只生成Inner.class）外，还会生成Outer\$1.class</p>
+<p>  4）局部内部类</p>
+<p>31、String、StringBuffer、StringBuilder</p>
+<p>1）String类中使用字符串数组保存字符串，因为有final修饰符，String对象是不可变的，每次对String操作都会生成新的String对象，这样效率低，且浪费内存空间，但是线程安全。</p>
+<p>2）StringBuilder和StringBuffer也是使用字符串数组保存字符，但是这两种对象都是可变的，即对字符串进行append操作时，不对产生新的对象。</p>
+<p>​    StringBuffer：线程安全的，对方法加了同步锁（synchronized）</p>
+<p>​    StringBuilder：线程不安全的</p>
+<blockquote>
+<p>String类用final的原因：</p>
+<p>1）为了实现字符串池</p>
+<p>​    字符串池的实现可以在运行时节约很多heap空间，因为不同的字符串变量都指向池中的同一个字符串。但如果字符串是可变的，那么String interning将不能实现，因为这样的话，如果变量改变了它的值，那么其它指向这个值的变量的值也会一起改变。</p>
+<p>​    如果字符串是可变的，那么会引起很严重的安全问题。譬如，数据库的用户名、密码都是以字符串的形式传入来获得数据库的连接，或者在socket编程中，主机名和端口都是以字符串的形式传入。因为字符串是不可变的，所以它的值是不可改变的，否则黑客们可以钻到空子，改变字符串指向的对象的值，造成安全漏洞。</p>
+<p>2）为了线程安全</p>
+<p>同一个字符串实例可以被多个线程共享。这样便不用因为线程安全问题而使用同步。字符串自己便是线程安全的。</p>
+<p>3）为了实现String可以创建HashCode不可变性</p>
+<p> 因为字符串是不可变的，所以在它创建的时候<strong>HashCode</strong>就被缓存了，不需要重新计算。这就使得字符串很适合作为Map中的键，字符串的处理速度要快过其它的键对象。这就是HashMap中的键往往都使用字符串。</p>
+</blockquote>
+<p>32、抽象类和接口</p>
+<p>1）抽象类在类前面须用abstract关键字修饰，一般至少包含一个抽象方法，抽象方法指只有声明，用关键字abstract修饰，没有具体的实现的方法。因抽象类中含有无具体实现的方法，固不能用抽象类创建对象。当然如果只是用abstract修饰类而无具体实现，也是抽象类。抽象类也可以有成员变量和普通的成员方法。抽象方法必须为public或protected（若为private，不能被子类继承，子类无法实现该方法）。若一个类继承一个抽象类，则必须实现父类中所有的抽象方法，若子类没有实现父类的抽象方法，则也应该定义为抽象类。</p>
+<p>2）接口用关键字interface修饰，接口也可以含有变量和方法，接口中的变量会被隐式指定为public static final变量。方法会被隐式的指定为public abstract，接口中的所有方法均不能有具体的实现，即接口中的方法都必须为抽象方法。若一个非抽象类实现某个接口，必须实现该接口中所有的方法。</p>
+<blockquote>
+<p>区别：</p>
+<p>1）抽象类可以提供成员方法实现的细节，而接口只能存在抽象方法；</p>
+<p>2）抽象类的成员变量可以是各种类型，而接口中成员变量只能是public static final类型；</p>
+<p>3）接口中不能含有静态方法及静态代码块，而抽象类可以有静态方法和静态代码块；</p>
+<p>4）一个类只能继承一个抽象类，用extends来继承，却可以实现多个接口，用implements来实现接口。</p>
+</blockquote>
+<p>抽象类是否可以没有方法和属性？可以</p>
+<p>33、图片控件</p>
+<p>1）图片显示框ImageView</p>
+<p>常用属性：scaleType，用于设置图片的缩放类型</p>
+<blockquote>
+<p>fitCenter：保持纵横比缩放图片，直到该图片能完全显示在ImageView中，缩放完成后将该图片放在ImageView的中央。</p>
+<p>fitXY：对图片横向，纵向独立缩放，使得该图片完全适应于该ImageView，图片的纵横比可能会改变。</p>
+<p>centerCrop：保持纵横比缩放图片，以使得图片能完全覆盖ImageView</p>
+</blockquote>
+<p>2）图片按钮ImageButton</p>
+<p>继承于ImageView（类似于Button继承于TextView）</p>
+<p>src和background属性都可以设置图片，src表示前景，background表示背景。通常来说，前景中的图片会等比例显示在控件的正中央，而背景图片会填充整个区域。</p>
+<p>3）图片切换器ImageSwitcher</p>
+<p>​      ImageSwitcher主要功能是实现图片的切换显示，既然是切换那么肯定是在多个控件直接进行的，ImageSwitcher本质上是一种容器控件，它通过setFactory()方法来创建多个需要切换的控件。该方法需要传递一个ViewFactory()类型的参数，而ViewFactory是ViewSwitcher类的一个内部接口，该接口内包含一个makeView()方法，用于创建一个控件。</p>
+<p>​    使用ImageSwitcher实现图片切换效果时，还可以添加切换动画，包括进入时动画，出来时动画。</p>
+<p>34、泛型中extends和super的区别</p>
+<p>1）&lt;? extends T&gt;限定参数类型的上界，参数类型必须是T或T的子类型，但对于List&lt;? extends T&gt;，不能通过add()来加入元素，因为不知道&lt;? extends T&gt;是T的哪一种子类；</p>
+<p>2） &lt;? super T&gt;限定参数类型的下界，参数类型必须是T或T的父类型，不能能过get()获取元素，因为不知道哪个超类；</p>
+<p>35、</p>
+<p>​    父类的静态方法和属性不能被子类重写，但子类可以继承父类静态方法和属性，如父类和子类都有同名同参同返回值的静态方法show()，声明的实例Father father = new Son(); (Son<br>extends Father)，会调用father对象的静态方法。静态是指在编译时就会分配内存且一直存在，跟对象实例无关。（若为非静态方法，则执行的是子类的方法）</p>
+<p>36、kotlin</p>
+<p>特点：1）代码量少且代码末尾没有分号；2）空类型安全（编译期处理了各种null情况，避免执行时异常）；3）函数式的，可使用lambda表达式；4）可扩展方法（可扩展任意类的的属性）；5）互操作性强，可以在一个项目中使用kotlin和java两种语言混合开发</p>
+<p>37、</p>
+<p>string 转换成 integer的方式及原理（ Integer.parseInt(“444”,16) ）</p>
+<p>1）parseInt(String s)内部调用parseInt(s, 10)默认为10进制 。</p>
+<p>2）正常判断null\进制范围，length等。</p>
+<p>3）判断第一个字符是否是符号位。</p>
+<p>4）循环遍历确定每个字符的十进制值。</p>
+<p>5）通过*=和-=进行计算拼接。</p>
+<p>6）判断是否为负值返回结果。</p>
+<p>38、listview的优化</p>
+<p>  ListView图片加载错乱的原理和解决方案？</p>
+<p>解决方法：通过上面的分析我们知道了出现错乱的原因是异步加载及对象被复用造成的，如果每次getView能给对象一个标识，在异步加载完成时比较标识与当前行item的标识是否一致，一致则显示，否则不做处理即可。</p>
+<p>1）Apapter中的getView方法中的convertView参数（View类型）用于将之前加载好的布局及逆行缓存，以便之后可以进行重用（避免每次加载都需要LayoutInflater.from(context).inflate()进行布局加载），如果convertView为空就去加载，否则复用</p>
+<p>2）借助ViewHolder来避免需要重复获取控件（view.findViewById（））</p>
+<p>​    ViewHolder类需自己根据需求定义</p>
+<blockquote>
+<p>public class FruitAdapter extends ArrayAdapter { ……<br>    @Override<br>    public View getView(int position, View convertView, ViewGroup parent) {<br>        Fruit fruit = getItem(position);<br>        View view;<br>        ViewHolder viewHolder;<br>        if (convertView == null) {<br>            view = LayoutInflater.from(getContext()).inflate(resourceId, null);<br>            viewHolder = new ViewHolder();<br>            viewHolder.fruitImage = (ImageView) view.findViewById(R.id.fruit_image);<br>            viewHolder.fruitName = (TextView) view.findViewById(R.id.fruit_name);<br>            view.setTag(viewHolder); // 将ViewHolder存储在View中<br>        } else {<br>            view = convertView;<br>            viewHolder = (ViewHolder) view.getTag(); // 重新获取ViewHolder<br>        }<br>        viewHolder.fruitImage.setImageResource(fruit.getImageId());<br>        viewHolder.fruitName.setText(fruit.getName());<br>        return view;</p>
+<p>​    class ViewHolder {<br>​        ImageView fruitImage;<br>​        TextView fruitName;<br>​    }<br>}</p>
+</blockquote>
+<p>ListView的缺点：</p>
+<p>1）性能较差</p>
+<p>2）无法实现横向滚动（RecycleView可以）</p>
+<p>RecycleView的adapter用法：</p>
+<p>&gt;<br>&gt;<br>&gt;</p>
+<p>RecycleView实现横向：</p>
+<blockquote>
+<p>RecycleView recycleView=(RecycleView)findViewById(R.id.recycle_view);</p>
+<p>LinearLayoutManager layoutManager=new LinearLayoutManager(this);</p>
+<p>layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);</p>
+<p>recycleView.setLayoutManager(layoutManager);</p>
+</blockquote>
+<p>除了LinearLayoutManager 外，RecycleView还提供了GridLayoutManager和StaggeredGridLayoutManager这两种内置的布局排列模式，分别实现网格布局和瀑布流布局。</p>
+<p>RecycleView没有向ListView一样提供setOnItemClickListener()的点击事件注册监听器方法，需要自己给子项具体的View去注册点击事件。</p>
+<p>ListVIew如何实现子View点击？</p>
+<p>39、Bitmap相关</p>
+<p>​    在Android 2.3.3（API10）之前，Bitmap的像素数据存放在Native内存，而Bitmap对象本身则存放在Dalvik Heap中。Native内存中的像素数据并不会以可预测的方式进行同步回收，有可能会导致内存升高甚至OOM。而在Android3.0之后，Bitmap的像素数据也被放在了Dalvik Heap中。</p>
+<blockquote>
+<p>在Android2.3.3之前推荐使用Bitmap.recycle()方法进行Bitmap的内存回收。</p>
+<p>Android3.0之后，并没有强调Bitmap.recycle()；而是强调Bitmap的复用：如使用LruCache对Bitmap进行缓存</p>
+</blockquote>
+<p>40、finalize</p>
+<p>finalize()是Object的protected方法，子类可以覆盖该方法以实现资源清理工作，GC在回收对象之前调用该方法。</p>
+<p>finalize()与C++中的析构函数不是对应的。C++中的析构函数调用的时机是确定的（对象离开作用域或delete掉），但Java中的finalize的调用具有不确定性</p>
+<p>某个类重载finalize()方法后，该类的实例对象在没被引用而被GC清理时会执行finalize()方法</p>
+<p>41、BItmapFactory</p>
+<p>decodeFile：解析SD卡中的图片</p>
+<p>decodeStream：解析网络上的图片</p>
+<p>decodeResource：解析资源文件中的图片</p>
+<blockquote>
+<p>每一种解析方法都提供了一个可选的BitmapFactory.Options参数，将这个参数的inJustDecodeBounds属性设置为true就可以让解析方法禁止为bitmap分配内存，返回值也不再是一个Bitmap对象，而是null。虽然Bitmap是null了，但是BitmapFactory.Options的outWidth、outHeight和outMimeType属性都会被赋值。这个技巧让我们可以在加载图片之前就获取到图片的长宽值和MIME类型，从而根据情况对图片进行压缩。</p>
+</blockquote>
+<p>内存缓存技术对那些大量占用应用程序宝贵内存的图片提供了快速访问的方法。</p>
+<p>1）LruCache为内存缓存技术</p>
+<p>主要算法原理是把最近使用的对象用强引用存储在 LinkedHashMap 中，并且把最近最少使用的对象在缓存值达到预设定值之前从内存中移除。</p>
+<p>在过去，我们经常会使用一种非常流行的内存缓存技术的实现，即软引用或弱引用 (SoftReference or WeakReference)。但是现在已经不再推荐使用这种方式了，因为从 Android 2.3 (API Level 9)开始，垃圾回收器会更倾向于回收持有软引用或弱引用的对象，这让软引用和弱引用变得不再可靠。另外，Android 3.0 (API Level 11)中，图片的数据会存储在本地的内存当中，因而无法用一种可预见的方式将其释放，这就有潜在的风险造成应用程序的内存溢出并崩溃。</p>
+<blockquote>
+<p>​    int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);</p>
+<p>​    <em>// 使用最大可用内存值的1/8作为缓存的大小。</em></p>
+<p>​    int cacheSize = maxMemory / 8;</p>
+<p>LruCache<string, bitmap=""> mMemoryCache= new LruCache<string, bitmap="">(cacheSize) {</string,></string,></p>
+<p>​        @Override</p>
+<p>​        protected int sizeOf(String key, Bitmap bitmap) {</p>
+<p>​            <em>// 重写此方法来衡量每张图片的大小，默认返回图片数量。</em></p>
+<p>​            return bitmap.getByteCount() / 1024;</p>
+<p>​        }</p>
+<p>​    };</p>
+</blockquote>
+<p>2）DiskLruCache为硬盘缓存技术</p>
+<p>42、线程相关</p>
+<p>线程阻塞的原因</p>
+<p>1）一般线程阻塞</p>
+<p>2）线程执行了Thread.sleep(int millsecond)方法，放弃CPU，睡眠一段时间，一段时间过后恢复执行</p>
+<p>3）线程执行一段同步代码，但无法获得相关的同步锁，只能进入阻塞状态，等到获取到同步锁，才能恢复执行</p>
+<p>4）线程执行了一个对象的wait()方法，直接进入阻塞态，等待其他线程执行notify()/notifyAll()操作</p>
+<p>5）线程执行某些IO操作，因为等待相关资源而进入了阻塞态，如System.in，但没有收到键盘的输入，则进入阻塞态</p>
+<p>6）线程礼让，Thread.yield()方法，暂停当前正在执行的线程对象，把执行机会让给相同或更高优先级的线程，但并不会使线程进入阻塞态，线程仍处于可执行态，随时可能再次分得CPU时间。线程自闭，join()方法，在当前线程调用另一个线程的join()方法，则当前线程进入阻塞态，直到另一个线程运行结束，当前线程再由阻塞转为就绪态。</p>
+<p>7）线程执行suspend()使线程进入阻塞态，必须resume()方法被调用，才能使线程重新进入可执行状态</p>
+<p>线程关闭方法：</p>
+<p>1）使用退出标志，使线程正常退出，也就是当run方法完成后线程终止</p>
+<p>2）使用stop()方法，但该方法就像关掉电脑电源一样，可能会发生预料不到的问题，不推荐使用</p>
+<p>3）使用中断interrupt()</p>
+<p>Java中同步的方法</p>
+<p>1）synchronized修饰同步代码块或方法</p>
+<p>​    由于java的每个对象都有一个内置锁，用此关键字修饰方法时，内置锁会保护整个方法。在调用该方法前，需获得内置锁，否则就处于阴塞状态。</p>
+<p>2）volatile修饰变量</p>
+<p>​    保证变量在线程间的可见性，每次线程要访问volatile修饰的变量时都从内存中读取，而不缓存中，这样每个线程访问到的变量都是一样的。且使用内存屏障。</p>
+<p>3）ReentrantLock重入锁，它常用的方法有ReentrantLock()：创建一个ReentrantLock实例</p>
+<p>​    lock()获得锁 unlock()释放锁</p>
+<p>4）使用局部变量ThreadLocal实现线程同步，每个线程都会保存一份该变量的副本，副本之间相互独立，这样每个线程都可以随意修改自己的副本，而不影响其他线程。常用方法ThreadLocal()创建一个线程本地变量；get()返回此线程局部的当前线程副本变量；initialValue()返回此线程局部变量的当前线程的初始值；set(T value)将此线程变量的当前线程副本中的值设置为value</p>
+<p>5）使用原子变量，如AtomicInteger，常用方法AtomicInteger(int value)创建个有给定初始值的AtomicInteger整数；addAndGet(int data)以原子方式将给定值与当前值相加?</p>
+<p>6）使用阻塞队列实现线程同步LinkedBlockingQueue\<e></e></p>
+<p>43、如何保证线程安全</p>
+<p>线程安全性体现在三方法：</p>
+<p> 1）原子性：提供互斥访问，同一时刻只能有一个线和至数据进行操作。</p>
+<p> JDK中提供了很多atomic类，如AtomicInteger\AtomicBoolean\AtomicLong，它们是通过CAS完成原子性。JDK提供锁分为两种：synchronized依赖JVM实现锁，该关键字作用对象的作用范围内同一时刻只能有一个线程进行操作。另一种是LOCK,是JDK提供的代码层面的锁，依赖CPU指令，代表性是ReentrantLock。</p>
+<p> 2）可见性：一个线程对主内存的修改及时被其他线程看到。</p>
+<p> JVM提供了synchronized和volatile，volatile的可见性是通过内存屏障和禁止重排序实现的，volatile会在写操作时，在写操作后加一条store屏障指令，将本地内存中的共享变量值刷新到主内存；会在读操作时，在读操作前加一条load指令，从内存中读取共享变量。</p>
+<p> 3）有序性：指令没有被编译器重排序。</p>
+<pre><code>可通过volatile、synchronized、Lock保证有序性。
+</code></pre><p>44、</p>
+<p>sleep是Thread类中的方法，sleep方法必须要捕获异常(wait不需要)，一个线程对象调用了sleep方法之后，并不会释放他所持有的所有对象锁，所以也就不会影响其他进程对象的运行。但在sleep的过程中过程中有可能被其他对象调用它的interrupt(),产生InterruptedException异常，如果你的程序不捕获这个异常，线程就会异常终止，进入TERMINATED状态，如果你的程序捕获了这个异常，那么程序就会继续执行catch语句块(可能还有finally语句块)以及以后的代码。</p>
+<p>wait属于Object的成员方法，一旦一个对象调用了wait方法，必须要采用notify()和notifyAll()方法唤醒该进程。如果线程拥有某个或某些对象的同步锁，那么在调用了wait()后，这个线程就会释放它持有的所有同步资源，而不限于这个被调用了wait()方法的对象。wait()方法也同样会在wait的过程中有可能被其他对象调用interrupt()方法而产生。</p>
+<p>wait、notify和notifyAll方法只能在同步方法或者同步代码块中使用，而sleep方法可以在任何地方使用。但是注意sleep是静态方法，也就是说它只对当前对象有效。通过对象名.sleep()想让该对象线程进入休眠是无效的，它只会让当前线程进入休眠。</p>
+<p>sleep用法：Thread.sleep(1000); 任何地方都能用</p>
+<blockquote>
+<p>wait用法</p>
+<p>注意事项</p>
+<p>1.调用wait方法和notify、notifyAll方法前必须获得对象锁，也就是必须写在synchronized(锁对象){……}代码块中。</p>
+<p>2.当线程print1调用了wait方法后就释放了对象锁，否则其他线程无法获得对象锁，也就无法唤醒线程print1。</p>
+<p>3.当this.wait()方法返回后，线程必须再次获得对象锁后才能继续执行。</p>
+<p>4.如果另外两个线程都在wait，则正在执行的线程调用notify方法只能唤醒一个正在wait的线程（公平竞争，由JVM决定）。</p>
+<p>5.当使用notifyAll方法后，所有wait状态的线程都会被唤醒，但是只有一个线程能获得锁对象，必须执行完while(condition){this.wait();}后才能获得对象锁。其余的需要等待该获得对象锁的线程执行完释放对象锁后才能继续执行。</p>
+<p>6.当某个线程调用notifyAll方法后，虽然其他线程被唤醒了，但是该线程依然持有着对象锁，必须等该同步代码块执行完（右大括号结束）后才算正式释放了锁对象，另外两个线程才有机会执行。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">class Printer &#123;</div><div class="line">    private int flag = 1;</div><div class="line">    public void print1() throws Exception &#123;</div><div class="line">        synchronized(this) &#123;</div><div class="line">            while(flag != 1) &#123;</div><div class="line">                this.wait();    </div><div class="line">            &#125;</div><div class="line">            System.out.print(&quot;1&quot;);</div><div class="line">            System.out.print(&quot;2&quot;);</div><div class="line">            System.out.print(&quot;3&quot;);</div><div class="line">            System.out.print(&quot;4&quot;);</div><div class="line">            System.out.println();</div><div class="line">            flag = 2;</div><div class="line">            this.notifyAll();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    public void print2() throws Exception &#123;</div><div class="line">        synchronized(this) &#123;</div><div class="line">            while(flag != 2) &#123;</div><div class="line">                this.wait();</div><div class="line">            &#125;</div><div class="line">            System.out.print(&quot;5&quot;);</div><div class="line">            System.out.print(&quot;6&quot;);</div><div class="line">            System.out.print(&quot;7&quot;);</div><div class="line">            System.out.print(&quot;8&quot;);</div><div class="line">            System.out.println();</div><div class="line">            flag = 3;</div><div class="line">            this.notifyAll();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    public void print3() throws Exception &#123;</div><div class="line">        synchronized(this) &#123;</div><div class="line">            while(flag != 3) &#123;</div><div class="line">                this.wait();</div><div class="line">            &#125;</div><div class="line">            System.out.print(&quot;A&quot;);</div><div class="line">            System.out.print(&quot;B&quot;);</div><div class="line">            System.out.print(&quot;C&quot;);</div><div class="line">            System.out.print(&quot;D&quot;);</div><div class="line">            System.out.println();</div><div class="line">            flag = 1;</div><div class="line">            this.notifyAll();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>45、</p>
+<p>java.util.concurrent包下的新类。LinkedBlockingQueue就是其中之一，是一个阻塞的线程安全的队列，底层采用链表实现。类似的还有ArrayBlockQueue，分别对应于LinkedList和ArrayList。</p>
+<p> LinkedBlockingQueue构造的时候若没有指定大小，则默认大小为Integer.MAX_VALUE，当然也可以在构造函数的参数中指定大小。LinkedBlockingQueue不接受null。</p>
+<p>添加元素的方法有三个：add,put,offer,且这三个元素都是向队列尾部添加元素的意思。</p>
+<blockquote>
+<p>区别：</p>
+<p>add方法在添加元素的时候，若超出了度列的长度会直接抛出异常</p>
+<p>put方法，若向队尾添加元素的时候发现队列已经满了会发生阻塞一直等待空间，以加入元素。</p>
+<p>offer方法在添加元素时，如果发现队列已满无法添加的话，会直接返回false。   </p>
+</blockquote>
+<p> 从队列中取出并移除头元素的方法有：poll，remove，take。</p>
+<blockquote>
+<p>区别：</p>
+<p>remove:若队列为空，抛出NoSuchElementException异常。</p>
+<p>take:若队列为空，发生阻塞，等待有元素。</p>
+<p>poll: 若队列为空，返回null。</p>
+</blockquote>
+<p>46、Android动画</p>
+<p>主要分为：</p>
+<p>1）View Animation： 视图动画在古老的Android版本系统中就已经提供了，只能被用来设置View的动画。</p>
+<p>2）Drawable Animation： 这种动画（也叫Frame动画、帧动画）其实可以划分到视图动画的类别，专门用来一个一个的显示Drawable的resources，就像放幻灯片一样。</p>
+<p>3）Property Animation：属性动画只对Android 3.0（API 11）以上版本的Android系统才有效，这种动画可以设置给任何Object，包括那些还没有渲染到屏幕上的对象。这种动画是可扩展的，可以让你自定义任何类型和属性的动画</p>
 
       
     </div>
@@ -807,7 +1273,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、Message"><span class="nav-number">1.</span> <span class="nav-text">1、Message</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、SurfaceView、SurfaceHolder、Surface的关系"><span class="nav-number">2.</span> <span class="nav-text">2、SurfaceView、SurfaceHolder、Surface的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、TextureView、SurfaceTexture、Surface"><span class="nav-number">3.</span> <span class="nav-text">3、TextureView、SurfaceTexture、Surface</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、HandlerThread"><span class="nav-number">4.</span> <span class="nav-text">4、HandlerThread</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、IntentService"><span class="nav-number">5.</span> <span class="nav-text">5、IntentService</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、Android中的视图结构"><span class="nav-number">6.</span> <span class="nav-text">6、Android中的视图结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7、Java创建线程的三种方式"><span class="nav-number">7.</span> <span class="nav-text">7、Java创建线程的三种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8、Android进程间通信的方式"><span class="nav-number">8.</span> <span class="nav-text">8、Android进程间通信的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9、自定义view"><span class="nav-number">9.</span> <span class="nav-text">9、自定义view</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10、集合类"><span class="nav-number">10.</span> <span class="nav-text">10、集合类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11、语法糖"><span class="nav-number">11.</span> <span class="nav-text">11、语法糖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12、反射机制"><span class="nav-number">12.</span> <span class="nav-text">12、反射机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13、IO流"><span class="nav-number">13.</span> <span class="nav-text">13、IO流</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14、NIO"><span class="nav-number">14.</span> <span class="nav-text">14、NIO</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#15、Error和Exception"><span class="nav-number">15.</span> <span class="nav-text">15、Error和Exception</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#16、abstract和interface"><span class="nav-number">16.</span> <span class="nav-text">16、abstract和interface</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#16、对象拷贝"><span class="nav-number">17.</span> <span class="nav-text">16、对象拷贝</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17、Java-8新特性"><span class="nav-number">18.</span> <span class="nav-text">17、Java 8新特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#18、线程池"><span class="nav-number">19.</span> <span class="nav-text">18、线程池</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#19、锁"><span class="nav-number">20.</span> <span class="nav-text">19、锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#20、Java内存模型"><span class="nav-number">21.</span> <span class="nav-text">20、Java内存模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#21、内存泄漏"><span class="nav-number">22.</span> <span class="nav-text">21、内存泄漏</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小点："><span class="nav-number"></span> <span class="nav-text">小点：</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、Message"><span class="nav-number">1.</span> <span class="nav-text">1、Message</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、SurfaceView、SurfaceHolder、Surface的关系"><span class="nav-number">2.</span> <span class="nav-text">2、SurfaceView、SurfaceHolder、Surface的关系</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、TextureView、SurfaceTexture、Surface"><span class="nav-number">3.</span> <span class="nav-text">3、TextureView、SurfaceTexture、Surface</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4、HandlerThread"><span class="nav-number">4.</span> <span class="nav-text">4、HandlerThread</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5、IntentService"><span class="nav-number">5.</span> <span class="nav-text">5、IntentService</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、Android中的视图结构"><span class="nav-number">6.</span> <span class="nav-text">6、Android中的视图结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7、Java创建线程的三种方式"><span class="nav-number">7.</span> <span class="nav-text">7、Java创建线程的三种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8、Android进程间通信的方式"><span class="nav-number">8.</span> <span class="nav-text">8、Android进程间通信的方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9、自定义view"><span class="nav-number">9.</span> <span class="nav-text">9、自定义view</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#10、集合类"><span class="nav-number">10.</span> <span class="nav-text">10、集合类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#11、语法糖"><span class="nav-number">11.</span> <span class="nav-text">11、语法糖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#12、反射机制"><span class="nav-number">12.</span> <span class="nav-text">12、反射机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#13、IO流"><span class="nav-number">13.</span> <span class="nav-text">13、IO流</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#14、NIO"><span class="nav-number">14.</span> <span class="nav-text">14、NIO</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#15、Error和Exception"><span class="nav-number">15.</span> <span class="nav-text">15、Error和Exception</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#16、abstract和interface"><span class="nav-number">16.</span> <span class="nav-text">16、abstract和interface</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#16、对象拷贝"><span class="nav-number">17.</span> <span class="nav-text">16、对象拷贝</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17、Java-8新特性"><span class="nav-number">18.</span> <span class="nav-text">17、Java 8新特性</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#18、线程池"><span class="nav-number">19.</span> <span class="nav-text">18、线程池</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#19、锁"><span class="nav-number">20.</span> <span class="nav-text">19、锁</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#20、Java内存模型"><span class="nav-number">21.</span> <span class="nav-text">20、Java内存模型</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#21、内存泄漏"><span class="nav-number">22.</span> <span class="nav-text">21、内存泄漏</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#22、混合开发"><span class="nav-number">23.</span> <span class="nav-text">22、混合开发</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小点："><span class="nav-number"></span> <span class="nav-text">小点：</span></a></div>
             
 
           </div>
