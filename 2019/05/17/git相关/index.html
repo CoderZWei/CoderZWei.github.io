@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="HMM(隐马尔科夫模型) 一个HMM模型是一个五元组(π，A，B，S，O)">
+<meta name="description" content="创建分支（dev）：  git branch dev  切换分支：  git checkout dev  在本地创建新的分支并切换到此分支：  git checkout -b dev   //git branch dev + git checkout dev  将代码从仓库提交到远程库（不需要事先在远程库创建分支）：  git push origin dev  查看本地分支：  git bran">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HMM(隐马尔科夫模型)">
-<meta property="og:url" content="http://yoursite.com/2018/09/08/HMM-隐马尔科夫模型/index.html">
+<meta property="og:title" content="git相关">
+<meta property="og:url" content="http://yoursite.com/2019/05/17/git相关/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="HMM(隐马尔科夫模型) 一个HMM模型是一个五元组(π，A，B，S，O)">
+<meta property="og:description" content="创建分支（dev）：  git branch dev  切换分支：  git checkout dev  在本地创建新的分支并切换到此分支：  git checkout -b dev   //git branch dev + git checkout dev  将代码从仓库提交到远程库（不需要事先在远程库创建分支）：  git push origin dev  查看本地分支：  git bran">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-08T06:11:48.805Z">
+<meta property="og:updated_time" content="2019-05-16T16:37:22.812Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HMM(隐马尔科夫模型)">
-<meta name="twitter:description" content="HMM(隐马尔科夫模型) 一个HMM模型是一个五元组(π，A，B，S，O)">
+<meta name="twitter:title" content="git相关">
+<meta name="twitter:description" content="创建分支（dev）：  git branch dev  切换分支：  git checkout dev  在本地创建新的分支并切换到此分支：  git checkout -b dev   //git branch dev + git checkout dev  将代码从仓库提交到远程库（不需要事先在远程库创建分支）：  git push origin dev  查看本地分支：  git bran">
 
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/08/HMM-隐马尔科夫模型/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/05/17/git相关/"/>
 
 
 
 
 
-  <title>HMM(隐马尔科夫模型) | CoderZWei's blog</title>
+  <title>git相关 | CoderZWei's blog</title>
   
 
 
@@ -262,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/08/HMM-隐马尔科夫模型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/17/git相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CoderZWei">
@@ -279,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HMM(隐马尔科夫模型)</h1>
+          <h1 class="post-title" itemprop="name headline">git相关</h1>
         
 
         <div class="post-meta">
@@ -291,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-08T14:10:23+08:00">
-                2018-09-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-17T00:26:34+08:00">
+                2019-05-17
               </time>
             
 
@@ -329,28 +329,40 @@
       
 
       
-        <p>HMM(隐马尔科夫模型)</p>
-<p>一个HMM模型是一个五元组(π，A，B，S，O)</p>
-<a id="more"></a>
+        <a id="more"></a>
+<p>创建分支（dev）：</p>
 <blockquote>
-<p>π：初始的状态概率矩阵</p>
-<p>A：隐状态转移矩阵，表示HMM中各个状态之间的转移概率</p>
-<p>B：观测状态转移概率矩阵(Confusion Matrix ，混淆矩阵)</p>
-<p>​    令N代表隐含状态数目，M代表可观测状态数目，则：</p>
-<p>​    Bij = P( Oi | Sj ), 1≤i≤M,1≤j≤N.</p>
-<p>​    表示在 t 时刻、隐含状态是 Sj 条件下，观察状态为 Oi 的概率。</p>
-<p>S：隐含状态</p>
-<p>O：可观测状态</p>
+<p>git branch dev</p>
 </blockquote>
-<p>在状态转移矩阵及混淆矩阵中的每一个概率都是时间无关的——也就是说，当系统演化时这些矩阵并不随时间改变。实际上，这是马尔科夫模型关于真实世界最不现实的一个假设。 </p>
-<p>HMM常用于传统语音识别中，其中观察到的声学特征序列对应于HMM的观测序列；HMM的隐状态具有发射概率表现为观测状态，观测状态可以组成对应的音素；语音段所代表的音符(音素)对应于HMM的输出序列。</p>
-<p>HMM分为三个基本问题：</p>
-<p>1、评估</p>
-<p>给定一个HMM模型，求一个观测序列的概率（使用前向算法）</p>
-<p>2、解码</p>
-<p>已知一个观测序列，搜索其最有可能生成这个观测序列的隐藏状态序列（使用Viterbi算法）</p>
-<p>3、学习</p>
-<p>给定观测序列，学习生成这个HMM模型的参数（使用前向-后向算法，也称Baum-Welch）</p>
+<p>切换分支：</p>
+<blockquote>
+<p>git checkout dev</p>
+</blockquote>
+<p>在本地创建新的分支并切换到此分支：</p>
+<blockquote>
+<p>git checkout -b dev   //git branch dev + git checkout dev</p>
+</blockquote>
+<p>将代码从仓库提交到远程库（不需要事先在远程库创建分支）：</p>
+<blockquote>
+<p>git push origin dev</p>
+</blockquote>
+<p>查看本地分支：</p>
+<blockquote>
+<p>git branch</p>
+</blockquote>
+<p>创建远程库的dev分支到本地：</p>
+<blockquote>
+<p>git checkout -b dev origin/dev</p>
+</blockquote>
+<p>将dev分支合并到某分支</p>
+<blockquote>
+<p>切换到目标分支，然后</p>
+<p>git merge dev</p>
+</blockquote>
+<p>删除dev分支：</p>
+<blockquote>
+<p>git branch -d dev</p>
+</blockquote>
 
       
     </div>
@@ -375,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/05/语音识别流程/" rel="next" title="语音识别流程">
-                <i class="fa fa-chevron-left"></i> 语音识别流程
+              <a href="/2019/04/28/Android知识点/" rel="next" title="Android知识点">
+                <i class="fa fa-chevron-left"></i> Android知识点
               </a>
             
           </div>
@@ -384,10 +396,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/08/kaldi音频特征提取/" rel="prev" title="kaldi音频特征提取">
-                kaldi音频特征提取 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
