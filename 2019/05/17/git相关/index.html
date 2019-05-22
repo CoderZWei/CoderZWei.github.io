@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="创建分支（dev）：  git branch dev  切换分支：  git checkout dev  在本地创建新的分支并切换到此分支：  git checkout -b dev   //git branch dev + git checkout dev  将代码从仓库提交到远程库（不需要事先在远程库创建分支）：  git push origin dev  查看本地分支：  git bran">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-05-16T16:37:22.812Z">
+<meta property="og:updated_time" content="2019-05-21T05:21:55.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git相关">
 <meta name="twitter:description" content="创建分支（dev）：  git branch dev  切换分支：  git checkout dev  在本地创建新的分支并切换到此分支：  git checkout -b dev   //git branch dev + git checkout dev  将代码从仓库提交到远程库（不需要事先在远程库创建分支）：  git push origin dev  查看本地分支：  git bran">
@@ -362,6 +362,15 @@
 <p>删除dev分支：</p>
 <blockquote>
 <p>git branch -d dev</p>
+</blockquote>
+<p>在远程库创建仓库时有readme等文件时，本地需要和远程库同步</p>
+<blockquote>
+<p>1）在本地git init</p>
+<p>2）git remote add origin git@github.com:XXX/XXX.git 进行连接</p>
+<p>3）git pull origin master 将远程库文件拉下来</p>
+<p>4）git add </p>
+<p>5）git commit</p>
+<p>6）git push -u origin master</p>
 </blockquote>
 
       
