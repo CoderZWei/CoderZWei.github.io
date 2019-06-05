@@ -869,6 +869,24 @@
 <p>5）git commit</p>
 <p>6）git push -u origin master</p>
 </blockquote>
+<p>变基(rebase)操作：</p>
+<blockquote>
+<p>git add XXX</p>
+<p>git commit XXX</p>
+<p>git rebase 分支名</p>
+<p>git push origin XXX</p>
+</blockquote>
+<p>merge和rebase区别：</p>
+<img class=".png">
+<p>处理冲突的方式：</p>
+<ul>
+<li><p>（一股脑）使用<code>merge</code>命令合并分支，解决完冲突，执行<code>git add .</code>和<code>git commit -m&#39;fix conflict&#39;</code>。这个时候会产生一个commit。</p>
+</li>
+<li><p>（交互式）使用<code>rebase</code>命令合并分支，解决完冲突，执行<code>git add .</code>和<code>git rebase --continue</code>，不会产生额外的commit。这样的好处是，‘干净’，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个<code>commit</code>，需要重复处理多次冲突。</p>
+<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><p>1）不要在公共分支使用rebase</p>
+<p>2）本地和远端对应同一条分支,优先使用rebase,而不是merge</p>
+</li>
+</ul>
 
           
         
