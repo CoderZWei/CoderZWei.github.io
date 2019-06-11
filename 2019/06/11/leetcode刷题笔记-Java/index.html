@@ -79,17 +79,14 @@
 
 
 
-<meta name="description" content="kaldi集成了语音识别中的很多工具，最基础的便是音频特征的提取，我目前使用过mfcc和fbank特征，提取过程都大同小异，这里记录一下基本步骤。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="kaldi音频特征提取">
-<meta property="og:url" content="http://yoursite.com/2018/09/08/kaldi音频特征提取/index.html">
+<meta property="og:title" content="leetcode刷题笔记-Java">
+<meta property="og:url" content="http://yoursite.com/2019/06/11/leetcode刷题笔记-Java/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="kaldi集成了语音识别中的很多工具，最基础的便是音频特征的提取，我目前使用过mfcc和fbank特征，提取过程都大同小异，这里记录一下基本步骤。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-08T06:13:01.947Z">
+<meta property="og:updated_time" content="2019-06-11T14:12:07.407Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="kaldi音频特征提取">
-<meta name="twitter:description" content="kaldi集成了语音识别中的很多工具，最基础的便是音频特征的提取，我目前使用过mfcc和fbank特征，提取过程都大同小异，这里记录一下基本步骤。">
+<meta name="twitter:title" content="leetcode刷题笔记-Java">
 
 
 
@@ -119,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/09/08/kaldi音频特征提取/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/06/11/leetcode刷题笔记-Java/"/>
 
 
 
 
 
-  <title>kaldi音频特征提取 | CoderZWei's blog</title>
+  <title>leetcode刷题笔记-Java | CoderZWei's blog</title>
   
 
 
@@ -262,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/08/kaldi音频特征提取/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/11/leetcode刷题笔记-Java/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CoderZWei">
@@ -279,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">kaldi音频特征提取</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-Java</h1>
         
 
         <div class="post-meta">
@@ -291,8 +288,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-08T14:12:21+08:00">
-                2018-09-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-11T22:12:07+08:00">
+                2019-06-11
               </time>
             
 
@@ -329,28 +326,7 @@
       
 
       
-        <p>kaldi集成了语音识别中的很多工具，最基础的便是音频特征的提取，我目前使用过mfcc和fbank特征，提取过程都大同小异，这里记录一下基本步骤。</p>
-<a id="more"></a>
-<p>首先参照kaldi/egs下的实例建立一个基本目录结构：</p>
-<blockquote>
-<p>配置文件放到conf目录下(如何mfcc.conf、fbank.conf)</p>
-<p>数据相关的一些描述文件（wav.scp、spt2utt、utt2spk、segment、text这些）放到data目录下，不是全部需要，例如生成fbank的时候只需要wav.scp就可以了，注意如果音频是多通道的时候在生成wav.scp的时候要通过sox进行通道抽取</p>
-<p>音频文件放到wav文件夹下</p>
-<p>将utils、steps文件夹从wsj实例中复制过来</p>
-</blockquote>
-<p>cmd.sh(run.pl指定程序在本机执行)：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env bash</div><div class="line"># Setting local system jobs (local CPU - no external clusters)</div><div class="line">export train_cmd=run.pl</div><div class="line">export decode_cmd=run.pl</div></pre></td></tr></table></figure>
-<p>path.sh:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env bash</div><div class="line"># Defining Kaldi root directory</div><div class="line">export KALDI_ROOT=`pwd`/../..</div><div class="line"># Setting paths to useful tools</div><div class="line">export PATH=$PWD/utils/:$KALDI_ROOT/src/bin:$KALDI_ROOT/tools/openfst/bin:$KALDI_ROOT/src/fstbin/:$KALDI_ROOT/src/gmmbin/:$KALDI_ROOT/src/featbin/:$KALDI_ROOT/src/lmbin/:$KALDI_ROOT/src/sgmm2bin/:$KALDI_ROOT/src/fgmmbin/:$KALDI_ROOT/src/latbin/:$PWD:$PATH</div><div class="line"># Defining audio data directory (modify it for your installation directory!)</div><div class="line">export DATA_ROOT=&quot;/mnt/data-1/data/wei.zhang/kd/kaldi/egs/speechocean/wav&quot;</div><div class="line"># Enable SRILM</div><div class="line">. $KALDI_ROOT/tools/env.sh</div><div class="line"># Variable needed for proper data sorting</div><div class="line">export LC_ALL=C</div></pre></td></tr></table></figure>
-<p>run.sh:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">. ./path.sh || exit 1</div><div class="line">. ./cmd.sh || exit 1</div><div class="line">nj=4       </div><div class="line"></div><div class="line">. utils/parse_options.sh || exit 1</div><div class="line"></div><div class="line"># spk2gender  [&lt;speaker-id&gt; &lt;gender&gt;]</div><div class="line"># wav.scp     [&lt;uterranceID&gt; &lt;full_path_to_audio_file&gt;]</div><div class="line"># text        [&lt;uterranceID&gt; &lt;text_transcription&gt;]</div><div class="line"># utt2spk     [&lt;uterranceID&gt; &lt;speakerID&gt;]</div><div class="line"># corpus.txt  [&lt;text_transcription&gt;]</div><div class="line"># 根据utt2spk生成spk2utt</div><div class="line">utils/utt2spk_to_spk2utt.pl data/utt2spk &gt; data/spk2utt</div><div class="line"></div><div class="line"># Making feats.scp files</div><div class="line">mfccdir=mfcc</div><div class="line">mfbankdir=fbank</div><div class="line"></div><div class="line">utils/validate_data_dir.sh data     # script for checking prepared data - here: for data/train directory</div><div class="line">utils/fix_data_dir.sh data          # tool for data proper sorting if needed - here: for data/train directory</div><div class="line"></div><div class="line">#write-utt2num-frames可指定是否生成utt2num_frames文件，代表每句话所对应的帧数</div><div class="line">#生成feats.scp特征文件，其中的每一行表示每句话所对应的特征的索引，实际特征存放在$mfccdir目录下的.ark文件中</div><div class="line">#exp/make_fank中存放生成的日志文件</div><div class="line">steps/make_fbank.sh --fbank-config conf/fbank.conf --nj $nj --cmd &quot;$train_cmd&quot; --write-utt2num-frames true data exp/make_fbank $mfbankdir</div><div class="line"></div><div class="line">#steps/make_mfcc.sh --nj $nj --cmd &quot;$train_cmd&quot; --write-utt2num-frames true data exp/make_mfcc $mfccdir</div><div class="line"></div><div class="line">#计算倒谱均值和方差归一化</div><div class="line">steps/compute_cmvn_stats.sh data exp/make_fbank $mfbankdir</div><div class="line"># Making cmvn.scp files</div><div class="line">#steps/compute_cmvn_stats.sh data exp/make_mfcc $mfccdir</div></pre></td></tr></table></figure>
-<p>由于之后要用到mxnet训练模型，而目前生成的特征文件都是二进制的，因此需要转换一下，使mxnet可读</p>
-<p>1、make_mxfeats.sh(将label和音频特征写到一个data集中并转成kaldi可读的格式，以便dataloader加载，注意label.txt中是以帧作标签的)，hr-combine-ali-feats命令需要将hr-combine-ali-feats.cc编译到kaldi中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">mxfeats_dir=mxfeats_fbank_shuffle</div><div class="line">[ -d $mxfeats_dir ] &amp;&amp; rm -rf $mxfeats_dir</div><div class="line">mkdir $mxfeats_dir</div><div class="line"></div><div class="line">hr-combine-ali-feats ark:shuffle_fbank/label.txt scp:shuffle_fbank/feats_fbank.scp ark,t:- ark,t:- 2&gt;mxfeats_log/log |\</div><div class="line"> ./scripts/kaldi2mxfeats.py - 5000 ./$mxfeats_dir/mxfeats</div></pre></td></tr></table></figure>
-<p>2、计算特征的一阶、二阶差并输入到compute-cmvn中，并将计算结果转换成mxnet.ndarray格式</p>
-<p>add-deltas scp:data/train/feats.scp ark:- | compute-cmvn-stats –binary=false ark:- ark,t:- | ./scripts/cmvn2meanvar.py</p>
-<p>模型训练时只需要将第一步和第二步得到的文件加载进即可</p>
-
+        
       
     </div>
     
@@ -374,8 +350,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/08/HMM-隐马尔科夫模型/" rel="next" title="HMM(隐马尔科夫模型)">
-                <i class="fa fa-chevron-left"></i> HMM(隐马尔科夫模型)
+              <a href="/2019/05/30/Android-DialogFragment简单使用/" rel="next" title="Android DialogFragment简单使用">
+                <i class="fa fa-chevron-left"></i> Android DialogFragment简单使用
               </a>
             
           </div>
@@ -383,10 +359,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/08/kaldi查看文件/" rel="prev" title="kaldi查看文件">
-                kaldi查看文件 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
