@@ -333,58 +333,18 @@
             <a id="more"></a>
 <p>自定义布局两种引入方式：</p>
 <h3 id="1、"><a href="#1、" class="headerlink" title="1、"></a>1、</h3><p>1）新建类继承自现有布局并建立此类所对应的xml布局(也可以不写这个)</p>
-<blockquote>
-<p>class MyLayout extends LinearLayout{</p>
-<p>​    public MyLayout(){</p>
-<p>​            LayoutInflater.from(context).inflate(R.layout.mylayout,this)；//加载布局文件</p>
-<p>​        xxx=findViewById()；</p>
-<pre><code>//View view=inflate(getContext(),R.layout.mylayout,this)；
-</code></pre><p>​             //xxx=view.findViewById()；</p>
-<p>​    }</p>
-<p>​    public onFinishInflate(){</p>
-<p>​    }</p>
-<p>}</p>
-</blockquote>
-<p>  mylayout.xml：</p>
-<blockquote>
-<mylayout><br><br></mylayout>
-
-
-
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class MyLayout extends LinearLayout&#123;</div><div class="line"></div><div class="line">	public MyLayout()&#123;</div><div class="line">			//加载布局文件</div><div class="line"></div><div class="line">    		LayoutInflater.from(context).inflate(R.layout.mylayout,this)；</div><div class="line"></div><div class="line">			xxx=findViewById()；</div><div class="line"></div><div class="line">		 	//View view=inflate(getContext(),R.layout.mylayout,this)；</div><div class="line"></div><div class="line">    		 //xxx=view.findViewById()；</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public onFinishInflate()&#123;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">  mylayout.xml：</div><div class="line"></div><div class="line">&lt;MyLayout&gt;</div><div class="line"></div><div class="line">&lt;/MyLayout&gt;</div></pre></td></tr></table></figure>
 <p>2）在要加入的xml布局中引入此类</p>
-<linearlayout><br><br>​      <mylayout id="mLayout"><br><br>      </mylayout><br><br></linearlayout>
-
-
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;LinearLayout&gt;</div><div class="line"></div><div class="line">	  &lt;MyLayout   id=&quot;mLayout&quot;&gt;</div><div class="line"></div><div class="line"> 	 &lt;/MyLayout&gt; </div><div class="line"></div><div class="line">&lt;/LinearLayout&gt;</div></pre></td></tr></table></figure>
 <p>3）在要加入的布局的Java代码中引入此类：</p>
-<blockquote>
-<p>MyLayout myLayout=findViewById(R.id.mLayout)；</p>
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">MyLayout myLayout=findViewById(R.id.mLayout)；</div></pre></td></tr></table></figure>
 <p>###2、</p>
 <p>1）新建类继承自现有布局并建立此类所对应的xml布局(也可以不写这个)</p>
-<blockquote>
-<p>class MyLayout extends LinearLayout{</p>
-<p>​    public MyLayout(){</p>
-<p>​        }</p>
-<pre><code>public onFinishInflate(){       
-
-}
-</code></pre><p>}</p>
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class MyLayout extends LinearLayout&#123;</div><div class="line"></div><div class="line">	public MyLayout()&#123;</div><div class="line"></div><div class="line">		&#125;</div><div class="line"></div><div class="line">     public onFinishInflate()&#123;       </div><div class="line">    </div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>  mylayout.xml：</p>
-<blockquote>
-<mylayout><br><br></mylayout>
-
-
-
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;MyLayout&gt;</div><div class="line"></div><div class="line">&lt;/MyLayout&gt;</div></pre></td></tr></table></figure>
 <p>2）在要加入此布局的父布局Java代码中引入此类，将此类和xml布局建立连接并加入到布局中：</p>
-<blockquote>
-<p>MyLayout myLayout=</p>
-<p>LayoutInflater.from(context).inflate(R.layout.mylayout,root=this,attachRoot=false)；</p>
-<p>addView(myLayout)；</p>
-</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MyLayout myLayout=</div><div class="line">LayoutInflater.from(context).inflate(R.layout.mylayout,root=this,attachRoot=false)；</div><div class="line"></div><div class="line">addView(myLayout)；</div></pre></td></tr></table></figure>
 
           
         
