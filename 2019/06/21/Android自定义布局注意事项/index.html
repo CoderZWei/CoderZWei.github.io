@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="自定义布局两种引入方式： 1、1）新建类继承自现有布局并建立此类所对应的xml布局(也可以不写这个) 1234567891011121314151617181920212223242526class MyLayout extends LinearLayout&amp;#123;	public MyLayout()&amp;#123;			//加载布局文件    		LayoutInflater.from(con">
+<meta name="description" content="自定义布局两种引入方式： 第一种：自定义根布局的xml文件的根为自定义布局类MyLayout 1）直接在 父layout.xml 里include 自定义layout文件，在onFinishInflate()里获取子控件，不能在构造函数中获取 2）在 父layout.xml中不引入任何东西，在 父layout.java里addView（如  View view=(View)View.inflat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android自定义布局注意事项">
 <meta property="og:url" content="http://yoursite.com/2019/06/21/Android自定义布局注意事项/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="自定义布局两种引入方式： 1、1）新建类继承自现有布局并建立此类所对应的xml布局(也可以不写这个) 1234567891011121314151617181920212223242526class MyLayout extends LinearLayout&amp;#123;	public MyLayout()&amp;#123;			//加载布局文件    		LayoutInflater.from(con">
+<meta property="og:description" content="自定义布局两种引入方式： 第一种：自定义根布局的xml文件的根为自定义布局类MyLayout 1）直接在 父layout.xml 里include 自定义layout文件，在onFinishInflate()里获取子控件，不能在构造函数中获取 2）在 父layout.xml中不引入任何东西，在 父layout.java里addView（如  View view=(View)View.inflat">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-26T05:23:50.320Z">
+<meta property="og:updated_time" content="2019-06-29T05:18:34.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android自定义布局注意事项">
-<meta name="twitter:description" content="自定义布局两种引入方式： 1、1）新建类继承自现有布局并建立此类所对应的xml布局(也可以不写这个) 1234567891011121314151617181920212223242526class MyLayout extends LinearLayout&amp;#123;	public MyLayout()&amp;#123;			//加载布局文件    		LayoutInflater.from(con">
+<meta name="twitter:description" content="自定义布局两种引入方式： 第一种：自定义根布局的xml文件的根为自定义布局类MyLayout 1）直接在 父layout.xml 里include 自定义layout文件，在onFinishInflate()里获取子控件，不能在构造函数中获取 2）在 父layout.xml中不引入任何东西，在 父layout.java里addView（如  View view=(View)View.inflat">
 
 
 
@@ -331,6 +331,11 @@
       
         <a id="more"></a>
 <p>自定义布局两种引入方式：</p>
+<p>第一种：自定义根布局的xml文件的根为自定义布局类MyLayout</p>
+<p>1）直接在 父layout.xml 里include 自定义layout文件，在onFinishInflate()里获取子控件，不能在构造函数中获取</p>
+<p>2）在 父layout.xml中不引入任何东西，在 父layout.java里addView（如  View view=(View)View.inflate(this,R.layout.second_layout,root); ），在onFinishInflate()里获取子控件，不能在构造函数中获取</p>
+<p>第二种：自定义根布局的xml文件的根为LinearLayout这些</p>
+<p>在 父layout.xml里引入自定义布局类，然后在 自定义布局类的构造函数中关联layout,如：LayoutInflater.from(context).inflate(R.layout.second_layout,this,true); 可以在构造函数中获取子控件</p>
 <h3 id="1、"><a href="#1、" class="headerlink" title="1、"></a>1、</h3><p>1）新建类继承自现有布局并建立此类所对应的xml布局(也可以不写这个)</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">class MyLayout extends LinearLayout&#123;</div><div class="line"></div><div class="line">	public MyLayout()&#123;</div><div class="line">			//加载布局文件</div><div class="line"></div><div class="line">    		LayoutInflater.from(context).inflate(R.layout.mylayout,this)；</div><div class="line"></div><div class="line">			xxx=findViewById()；</div><div class="line"></div><div class="line">		 	//View view=inflate(getContext(),R.layout.mylayout,this)；</div><div class="line"></div><div class="line">    		 //xxx=view.findViewById()；</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">	public onFinishInflate()&#123;</div><div class="line"></div><div class="line">	&#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">  mylayout.xml：</div><div class="line"></div><div class="line">&lt;MyLayout&gt;</div><div class="line"></div><div class="line">&lt;/MyLayout&gt;</div></pre></td></tr></table></figure>
 <p>2）在要加入的xml布局中引入此类</p>
