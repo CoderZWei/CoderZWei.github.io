@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="记录OpenGL ES的相关知识点">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-06-29T07:55:06.824Z">
+<meta property="og:updated_time" content="2019-06-30T09:32:12.218Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenGL ES相关">
 <meta name="twitter:description" content="记录OpenGL ES的相关知识点">
@@ -352,6 +352,48 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  float vertices[] = &#123;</div><div class="line">               0.0f,   0.5f,</div><div class="line">               -0.5f, -0.5f,</div><div class="line">               0.5f,  -0.5f,</div><div class="line">       &#125;;</div><div class="line">ByteBuffer vbb = ByteBuffer.allocateDirect(vertices.length * 4);//分配本地内存</div><div class="line">//设置字节顺序，告诉字节缓冲区(byte buffer)按照本地字节序(native byte order)组织内容</div><div class="line">vbb.order(ByteOrder.nativeOrder()); </div><div class="line">FloatBuffer vertexBuf = vbb.asFloatBuffer();    //转换为Float型缓冲</div><div class="line">vertexBuf.put(vertices);                        //向缓冲区中放入顶点坐标数据</div><div class="line">vertexBuf.position(0);                          //设置缓冲区起始位置</div></pre></td></tr></table></figure>
 <p>将数据从Java堆复制到本地堆，然后传给OpenGL</p>
 <p>3、</p>
+<h5 id="顶点着色器-vertex-shader-："><a href="#顶点着色器-vertex-shader-：" class="headerlink" title="顶点着色器(vertex shader)："></a>顶点着色器(vertex shader)：</h5><p>​    生成每个顶点的最终位置，针对每个顶点，它都会执行一次；一旦最终位置确定了，OpenGL就可以把这些可见顶点的集合组装成点、直线以及三角形</p>
+<h5 id="片元着色器-fragment-shader-："><a href="#片元着色器-fragment-shader-：" class="headerlink" title="片元着色器(fragment shader)："></a>片元着色器(fragment shader)：</h5><p>​    为组成点、直线或者三角形的每个片段生成最终的颜色，针对每个片段(片元)，它都会执行一次；一个片段是一个小的、单一颜色的长方形区域，类似于计算机屏幕上的一个像素。若一个三角形被映射到10000个片元，片元着色器就会被调用10000次。</p>
+<p>​    片元着色器的主要目的就是告诉GPU每个片段的最终颜色应该是什么。</p>
+<p>一旦最后的颜色生成了，OpenGL就会把它们写到一块称为帧缓冲区(frame buffer)的内存块中，然后Android会把这个帧缓冲区显示到屏幕上。</p>
+<p>过程如下所示：</p>
+<p>4、</p>
+<p>一个uniform会让每个顶点都使用同一个值，除非我们再次改变它。</p>
+<p>varing是一种特殊的变量类型，它将给它的那些值进行混合，并把这些混合后的值发送给片元着色器</p>
+<p>5、</p>
+<p>获取uniform类型的位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">uColor = GLES20.glGetUniformLocation(program, &quot;uColor&quot;);</div></pre></td></tr></table></figure>
+<p>绘制时设置属性uColor的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLES20.glUniform4f(uColor, 0.0f, 1.0f, 0.0f, 1.0f);</div></pre></td></tr></table></figure>
+<p>设置uniform mat4 u_Matrix类型的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int uMatrixLocation = glGetUniformLocation(program,&quot;u_Matrix&quot;);//获取</div><div class="line">GLES20.glUniformMatrix4fv(uMatrixLocation,1,matrix,0);//设置</div></pre></td></tr></table></figure>
+<p>设置uniform sampler2D u_TextureUnit的值：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int uTextureUnitLocation = glGetUniformLocation(program, &quot;u_TextureUnit&quot;);</div><div class="line">glUniform1i(uTextureUnitLocation, 0);</div></pre></td></tr></table></figure>
+<p>获取attribute类型的位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vPosition = GLES20.glGetAttribLocation(program, &quot;vPosition&quot;);</div></pre></td></tr></table></figure>
+<p>关联属性和顶点数据的数组：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">vertexData.position(0);</div><div class="line">GLES20.glVertexAttribPointer(vPosition, 2, GLES20.GL_FLOAT, false, 0, vertexData);</div></pre></td></tr></table></figure>
+<p>将属性和数据关联之后，开始绘制之前，还需要调用glEnableVertexAttribArray()使能这个属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GLES20.glEnableVertexAttribArray(vPosition);</div></pre></td></tr></table></figure>
+<p>6、宽高比适应问题</p>
+<p>假设屏幕尺寸为1280*720</p>
+<p>而OpenGl的坐标系范围为[-1,1]，于是通过归一化设备坐标假设坐标空间是一个正方形，</p>
+<p>1）在竖屏模式下：</p>
+<p>​    将宽度范围限定在[-1,1]，将高度范围调整为[ -1280/720 , 1280/720 ]</p>
+<p>2）在横屏模式下：</p>
+<p>​    将高度范围限定在[-1,1]，将宽度范围调整为[ -1280/720 , 1280/720 ]</p>
+<p>通过正交投影实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Matrix.orthM(float[]m,int mOffset,float left,float right,float bottom,float top,float near,float far);</div><div class="line">参数说明：</div><div class="line">m：目标数据，这个数组的长度至少有16个元素，这样它才能存储正交投影矩阵</div><div class="line">mOffset：结果矩阵起始的偏移值</div><div class="line">left：x轴的最小范围</div><div class="line">right：x轴的最大范围</div><div class="line">bottom：y轴的最小范围</div><div class="line">top：y轴的最大范围</div><div class="line">near：z轴的最小范围</div><div class="line">far：z轴的最大范围​</div></pre></td></tr></table></figure>
+<p>7、</p>
+<p>Android的透视投影：Matrix类中的frustumM()和perspectiveM()</p>
+<p>8、</p>
+<p>纹理加载使用流程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">1）生成纹理</div><div class="line">int[] textureIds=new int[1];</div><div class="line">GLES20.glGenBuffers(1, textureIds, 0);</div><div class="line">2）纹理绑定</div><div class="line">GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureIds[0]);</div><div class="line">3）设备纹理过滤方式</div><div class="line">GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_REPEAT);</div><div class="line">...</div><div class="line">4）加载图片</div><div class="line">Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), src);</div><div class="line">5）加载纹理到OpenGL并返回其ID</div><div class="line">GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmap, 0);</div><div class="line">6)解除纹理绑定</div><div class="line">GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);</div><div class="line"></div><div class="line">return textureIds[0]</div></pre></td></tr></table></figure>
+<p>9、</p>
+<p>正交矩阵：调整宽高比</p>
+<p>透视矩阵：获得三维投影</p>
+<p>模型矩阵：来回移动物体，用于把物体放到世界空间坐标系</p>
+<p>视图矩阵：模型矩阵的扩展，和模型矩阵目的相同，只不过它平等地应用于场景中的每一个物体，类似于相机的功能</p>
 
       
     </div>
@@ -436,8 +478,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -503,6 +554,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#顶点着色器-vertex-shader-："><span class="nav-number">1.</span> <span class="nav-text">顶点着色器(vertex shader)：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#片元着色器-fragment-shader-："><span class="nav-number">2.</span> <span class="nav-text">片元着色器(fragment shader)：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
