@@ -259,6 +259,125 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/09/FFmpeg示例程序注解-视频编码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/09/FFmpeg示例程序注解-视频编码/" itemprop="url">FFmpeg示例程序注解-视频编码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-09T16:45:29+08:00">
+                2019-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/07/FFmpeg示例程序注解-音频编码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1381,186 +1500,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/17/git相关/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="CoderZWei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/panpan.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CoderZWei's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/17/git相关/" itemprop="url">git相关</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-17T00:26:34+08:00">
-                2019-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<p>创建分支（dev）：</p>
-<blockquote>
-<p>git branch dev</p>
-</blockquote>
-<p>切换分支：</p>
-<blockquote>
-<p>git checkout dev</p>
-</blockquote>
-<p>在本地创建新的分支并切换到此分支：</p>
-<blockquote>
-<p>git checkout -b dev   //git branch dev + git checkout dev</p>
-</blockquote>
-<p>将代码从仓库提交到远程库（不需要事先在远程库创建分支）：</p>
-<blockquote>
-<p>git push origin dev</p>
-</blockquote>
-<p>查看本地分支：</p>
-<blockquote>
-<p>git branch</p>
-</blockquote>
-<p>创建远程库的dev分支到本地：</p>
-<blockquote>
-<p>git checkout -b dev origin/dev</p>
-</blockquote>
-<p>将dev分支合并到某分支</p>
-<blockquote>
-<p>切换到目标分支，然后</p>
-<p>git merge dev</p>
-</blockquote>
-<p>删除dev分支：</p>
-<blockquote>
-<p>git branch -d dev</p>
-</blockquote>
-<p>在远程库创建仓库时有readme等文件时，本地需要和远程库同步</p>
-<blockquote>
-<p>1）在本地git init</p>
-<p>2）git remote add origin git@github.com:XXX/XXX.git 进行连接</p>
-<p>3）git pull origin master 将远程库文件拉下来</p>
-<p>4）git add </p>
-<p>5）git commit</p>
-<p>6）git push -u origin master</p>
-</blockquote>
-<p>变基(rebase)操作：</p>
-<blockquote>
-<p>git add XXX</p>
-<p>git commit XXX</p>
-<p>git rebase 分支名</p>
-<p>git push origin XXX</p>
-</blockquote>
-<p>merge和rebase区别：</p>
-<img class=".png">
-<p>处理冲突的方式：</p>
-<ul>
-<li><p>（一股脑）使用<code>merge</code>命令合并分支，解决完冲突，执行<code>git add .</code>和<code>git commit -m&#39;fix conflict&#39;</code>。这个时候会产生一个commit。</p>
-</li>
-<li><p>（交互式）使用<code>rebase</code>命令合并分支，解决完冲突，执行<code>git add .</code>和<code>git rebase --continue</code>，不会产生额外的commit。这样的好处是，‘干净’，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个<code>commit</code>，需要重复处理多次冲突。</p>
-<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><p>1）不要在公共分支使用rebase</p>
-<p>2）本地和远端对应同一条分支,优先使用rebase,而不是merge</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1615,7 +1554,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">42</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
