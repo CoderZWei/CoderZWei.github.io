@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/11/24/Android天气类app实现/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2017/11/24/Android天气类app实现/1.jpg">
 <meta property="og:image" content="http://yoursite.com/2017/11/24/Android天气类app实现/4.png">
-<meta property="og:updated_time" content="2017-11-24T08:12:27.461Z">
+<meta property="og:updated_time" content="2019-07-10T03:26:57.882Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android天气类app实现">
 <meta name="twitter:description" content="为了要练习Android开发，打算写一些app作为练习项目，第一个写的是手机拨号器，实现了手机系统拨号应用的常用基本功能，由于比较简单，所以就不写到博客里了。这个是第二个项目，实现了手机天气应用的基本功能。">
@@ -362,29 +362,23 @@
 <p>运行截图如下：</p>
 <img src="/2017/11/24/Android天气类app实现/1.jpg"><img src="/2017/11/24/Android天气类app实现/1.jpg"><img src="/2017/11/24/Android天气类app实现/1.jpg">
 <p>需要实现的主要功能有：天气数据获取；城市定位；城市切换 下面开始逐一说明：</p>
-<p>一、天气数据获取</p>
-<p>我这里用的是百度提供的API，注册并下载百度开发者的SDK，再按照demo里的调用示例，即可获得所要查询城市天气数据</p>
+<h4 id="一、天气数据获取"><a href="#一、天气数据获取" class="headerlink" title="一、天气数据获取"></a>一、天气数据获取</h4><p>我这里用的是百度提供的API，注册并下载百度开发者的SDK，再按照demo里的调用示例，即可获得所要查询城市天气数据</p>
 <p>首先新建一个类继承自Application类，在类中实现SDK的初始化，并在项目配置文件AndroidManifest.xml中application标签下android:name中指定该类，application中代码如下：</p>
-<p>public class MyApplication extends Application {<br>​      public LocationService locationService;<br>​    public Vibrator mVibrator;<br>​    private static MyApplication instance;<br>​    @Override<br>​    public void onCreate() {<br>​        ApiStoreSDK.init(this,”您的apikey”);<br>​        locationService =new LocationService(getApplicationContext());<br>​        mVibrator=(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);<br>​        SDKInitializer.initialize(getApplicationContext());<br>​        instance=this;<br>​        super.onCreate();<br>​    }<br>​    public static MyApplication getInstance(){<br>​        return instance;<br>​    }<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class MyApplication extends Application &#123;</div><div class="line">      public LocationService locationService;</div><div class="line">    public Vibrator mVibrator;</div><div class="line">    private static MyApplication instance;</div><div class="line">    @Override</div><div class="line">    public void onCreate() &#123;</div><div class="line">        ApiStoreSDK.init(this,&quot;您的apikey&quot;);</div><div class="line">        locationService =new LocationService(getApplicationContext());</div><div class="line">        mVibrator=(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);</div><div class="line">        SDKInitializer.initialize(getApplicationContext());</div><div class="line">        instance=this;</div><div class="line">        super.onCreate();</div><div class="line">    &#125;</div><div class="line">    public static MyApplication getInstance()&#123;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>与此功能相关的代码为 ApiStoreSDK.init(this,”您的apikey”);</p>
 <p>在类中接口调用的代码为：</p>
-<p>​    Parameters para=new Parameters();<br>​                        para.put(“city”,city);<br>​                        ApiStoreSDK.execute(“<a href="http://apis.baidu.com/heweather/weather/free&quot;,ApiStoreSDK.GET" target="_blank" rel="external">http://apis.baidu.com/heweather/weather/free&quot;,ApiStoreSDK.GET</a>,<br>​                                para,new ApiCallBack(){<br>​                                    @Override<br>​                                    public void onSuccess(int i, String s) {<br>​                                        super.onSuccess(i, s);<br>​                                  //字符串s即为查询所获得数据，具体解析看查看API文档<br>​      }});}</p>
-<p>二、城市定位</p>
-<p>实现这个功能时遇到的麻烦最多，一开始的想法是通过Android自带的LOCATION_SERVICE功能取得位置数据，但是在调用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Parameters para=new Parameters();</div><div class="line">para.put(&quot;city&quot;,city);                        ApiStoreSDK.execute(&quot;http://apis.baidu.com/heweather/weather/free&quot;,ApiStoreSDK.GET,</div><div class="line">                                para,new ApiCallBack()&#123;</div><div class="line">                                    @Override</div><div class="line">                                    public void onSuccess(int i, String s) &#123;</div><div class="line">                                        super.onSuccess(i, s);</div><div class="line">                                  //字符串s即为查询所获得数据，具体解析看查看API文档</div><div class="line">      &#125;&#125;);&#125;</div></pre></td></tr></table></figure>
+<h4 id="二、城市定位"><a href="#二、城市定位" class="headerlink" title="二、城市定位"></a>二、城市定位</h4><p>实现这个功能时遇到的麻烦最多，一开始的想法是通过Android自带的LOCATION_SERVICE功能取得位置数据，但是在调用</p>
 <p>locationManager.getLastKnownLocation方法时返回的Location总是为null，查了资料有的说是与手机有关，有的说是因为无法使用Google服务，于是果断换百度的定位SDK。仿照demo中的代码实现一个简单的定位，但在执行SDKInitializer.initialize(getApplication())这句时都会报错，一开始以为是自己代码的问题，调试了半天还是无法解决。仔细看错误原因才发现是因为没有添加.so文件，只添加了jar包，添加之后依然报相同的错误，那就是添加.so文件失败了。在网上找了好多方法都无法成功，最终决定索性用最简单的方法试一试，首先在libs目录下添加armeabi及arm64-8a目录(这是我所用到的，不同版本及功能添加 的不同）,将自己所需要的.so文件复制进去，如下图所示：</p>
 <img src="/2017/11/24/Android天气类app实现/4.png">
 <p>之后在build.gradle文件中添加如下一句:</p>
 <p> compile fileTree(include: [‘*.jar’], dir: ‘libs’);</p>
 <p>点击build-&gt;make project，之后再次运行，发现错误已解决，并可以取得正确数据</p>
 <p>其中application类中的相关代码为</p>
-<p>​        locationService =new LocationService(getApplicationContext());<br>​        mVibrator=(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);<br>​        SDKInitializer.initialize(getApplicationContext());</p>
-<p>java类中的相关代码为：</p>
-<p>​        locationService = ((MyApplication) getApplication()).locationService;<br>​        locationService.registerListener(mListener);<br>​        locationService.setLocationOption(locationService.getDefaultLocationClientOption());</p>
-<p>​        locationService.start();</p>
-<p>private BDLocationListener mListener = new BDLocationListener() {<br>​        @Override<br>​        public void onReceiveLocation(BDLocation location) {<br>​            // TODO Auto-generated method stub<br>​            if (null != location &amp;&amp; location.getLocType() != BDLocation.TypeServerError) {<br>​                city=location.getCity();<br>​              if (city.contains(“市”)){<br>​                 city=city.replace(“市”,””);<br>​              }}}};</p>
-<p>三、城市切换 </p>
-<p>在图2所示界面可选择所要查询的城市，点击之后将此城市存入数据库，在图3所示界面可对选择过的城市列表进行管理，在图1所示界面中通过手势的左右滑动，可以实现不同城市间的转换，此功能通过ViewPager+Fragment组合实现。</p>
-<p>这里有一点要说明，在滚动ViewPager时，为了保存Fragment的状态，防止被初始化，将适配器adapter继承自FragmentStatePagerAdapter即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">   locationService =new LocationService(getApplicationContext());</div><div class="line">        mVibrator=(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);</div><div class="line">        SDKInitializer.initialize(getApplicationContext());</div><div class="line"></div><div class="line">//java类中的相关代码为：</div><div class="line"></div><div class="line">        locationService = ((MyApplication) getApplication()).locationService;</div><div class="line">        locationService.registerListener(mListener);</div><div class="line">        locationService.setLocationOption(locationService.getDefaultLocationClientOption());</div><div class="line"></div><div class="line">        locationService.start();</div><div class="line"></div><div class="line">private BDLocationListener mListener = new BDLocationListener() &#123;</div><div class="line">        @Override</div><div class="line">        public void onReceiveLocation(BDLocation location) &#123;</div><div class="line">            // TODO Auto-generated method stub</div><div class="line">            if (null != location &amp;&amp; location.getLocType() != BDLocation.TypeServerError) &#123;</div><div class="line">                city=location.getCity();</div><div class="line">              if (city.contains(&quot;市&quot;))&#123;</div><div class="line">                 city=city.replace(&quot;市&quot;,&quot;&quot;);</div><div class="line">              &#125;&#125;&#125;&#125;;</div></pre></td></tr></table></figure>
+<h4 id="三、城市切换"><a href="#三、城市切换" class="headerlink" title="三、城市切换"></a>三、城市切换</h4><p>​    在图2所示界面可选择所要查询的城市，点击之后将此城市存入数据库，在图3所示界面可对选择过的城市列表进行管理，在图1所示界面中通过手势的左右滑动，可以实现不同城市间的转换，此功能通过ViewPager+Fragment组合实现</p>
+<p>​    这里有一点要说明，在滚动ViewPager时，为了保存Fragment的状态，防止被初始化，将适配器adapter继承自FragmentStatePagerAdapter即可</p>
+<h4 id="项目地址："><a href="#项目地址：" class="headerlink" title="项目地址："></a>项目地址：</h4><p><a href="https://github.com/CoderZWei/WeatherApp" target="_blank" rel="external">https://github.com/CoderZWei/WeatherApp</a></p>
 
       
     </div>
@@ -481,8 +475,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -548,6 +551,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、天气数据获取"><span class="nav-number">1.</span> <span class="nav-text">一、天气数据获取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、城市定位"><span class="nav-number">2.</span> <span class="nav-text">二、城市定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、城市切换"><span class="nav-number">3.</span> <span class="nav-text">三、城市切换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目地址："><span class="nav-number">4.</span> <span class="nav-text">项目地址：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
