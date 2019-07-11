@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="kaldi集成了语音识别中的很多工具，最基础的便是音频特征的提取，我目前使用过mfcc和fbank特征，提取过程都大同小异，这里记录一下基本步骤。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-08T06:13:01.948Z">
+<meta property="og:updated_time" content="2019-07-11T03:40:39.096Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kaldi音频特征提取">
 <meta name="twitter:description" content="kaldi集成了语音识别中的很多工具，最基础的便是音频特征的提取，我目前使用过mfcc和fbank特征，提取过程都大同小异，这里记录一下基本步骤。">
@@ -348,7 +348,7 @@
 <p>1、make_mxfeats.sh(将label和音频特征写到一个data集中并转成kaldi可读的格式，以便dataloader加载，注意label.txt中是以帧作标签的)，hr-combine-ali-feats命令需要将hr-combine-ali-feats.cc编译到kaldi中</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line">mxfeats_dir=mxfeats_fbank_shuffle</div><div class="line">[ -d $mxfeats_dir ] &amp;&amp; rm -rf $mxfeats_dir</div><div class="line">mkdir $mxfeats_dir</div><div class="line"></div><div class="line">hr-combine-ali-feats ark:shuffle_fbank/label.txt scp:shuffle_fbank/feats_fbank.scp ark,t:- ark,t:- 2&gt;mxfeats_log/log |\</div><div class="line"> ./scripts/kaldi2mxfeats.py - 5000 ./$mxfeats_dir/mxfeats</div></pre></td></tr></table></figure>
 <p>2、计算特征的一阶、二阶差并输入到compute-cmvn中，并将计算结果转换成mxnet.ndarray格式</p>
-<p>add-deltas scp:data/train/feats.scp ark:- | compute-cmvn-stats –binary=false ark:- ark,t:- | ./scripts/cmvn2meanvar.py</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">add-deltas scp:data/train/feats.scp ark:- | compute-cmvn-stats --binary=false ark:- ark,t:- | ./scripts/cmvn2meanvar.py</div></pre></td></tr></table></figure>
 <p>模型训练时只需要将第一步和第二步得到的文件加载进即可</p>
 
       

@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
 <meta property="og:description" content="记录查看kaldi训练生成的中间文件内容所需要的命令">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-09-08T06:15:16.130Z">
+<meta property="og:updated_time" content="2019-07-11T02:27:38.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="kaldi查看文件">
 <meta name="twitter:description" content="记录查看kaldi训练生成的中间文件内容所需要的命令">
@@ -334,23 +334,34 @@
 <ol>
 <li>ark,scp文件</li>
 </ol>
-<p>~/kaldi/src/featbin/copy-feats ark:raw_mfcc_dev.10.ark ark,t:-|head<br>ark存的试二进制文件，scp可以直接用cat命令看。</p>
-<p>   2.fst文件</p>
-<p>~/kaldi/tools/openfst-1.6.2/bin/fstprint L.fst | head -n 10<br>~/kaldi/tools/openfst-1.6.2/bin/fstprint –isymbols=phones.txt –osymbols=words.txt L.fst | head -n 15<br>fstdraw [–isymbols=phones.txt –osymbols=words.txt] L.fst | dot –Tps  |  ps2pdf – L.pdf<br>~/kaldi/tools/openfst-1.6.2/bin/fstdraw –isymbols=phones.txt –osymbols=words.txt HCLG.fst</p>
-<p>3.mfcc 生成的文件<br>~/kaldi/src/featbin/copy-feats ark:raw_mfcc_test_hires.1.ark ark,t:- | head<br>在文件前边加ark关键字，告诉copy-feats是什么格式的，还有后面加一个ark,t:- 表示输出格式为t文本，否则默认是二进制。<br>~/kaldi/src/featbin/copy-feats ark:raw_mfcc_dev.10.ark ark:- |~/kaldi/src/featbin/add-deltas ark:- ark,t:- | head<br>这样可以看到40维的数据</p>
-<p>4.mdl文件<br>~/kaldi/src/gmmbin/gmm-copy –binary=false 0.mdl - </p>
-<p>5.tree文件<br>~/kaldi/src/bin/copy-tree –binary=false tree -<br>~/kaldi/src/bin/draw-tree ../../data/lang/phones.txt tree | dot -Gsize=50,100 -Tps|ps2pdf - tree.pdf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~/kaldi/src/featbin/copy-feats ark:raw_mfcc_dev.10.ark ark,t:-|head</div></pre></td></tr></table></figure>
+<p>ark存的试二进制文件，scp可以直接用cat命令看。</p>
+<p> 2.fst文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">~/kaldi/tools/openfst-1.6.2/bin/fstprint L.fst | head -n 10 </div><div class="line"></div><div class="line">~/kaldi/tools/openfst-1.6.2/bin/fstprint --isymbols=phones.txt --osymbols=words.txt L.fst | head -n 15</div><div class="line"></div><div class="line">fstdraw [--isymbols=phones.txt --osymbols=words.txt] L.fst | dot –Tps  |  ps2pdf – L.pdf</div><div class="line"></div><div class="line">~/kaldi/tools/openfst-1.6.2/bin/fstdraw --isymbols=phones.txt --osymbols=words.txt HCLG.fst</div></pre></td></tr></table></figure>
+<p>3.mfcc 生成的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~/kaldi/src/featbin/copy-feats ark:raw_mfcc_test_hires.1.ark ark,t:- | head</div></pre></td></tr></table></figure>
+<p>​    在文件前边加ark关键字，告诉copy-feats是什么格式的，还有后面加一个ark,t:- 表示输出格式为t文本，否则默认是二进制。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~/kaldi/src/featbin/copy-feats ark:raw_mfcc_dev.10.ark ark:- |~/kaldi/src/featbin/add-deltas ark:- ark,t:- | head</div></pre></td></tr></table></figure>
+<p>这样可以看到40维的数据</p>
+<p>4.mdl文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~/kaldi/src/gmmbin/gmm-copy --binary=false 0.mdl -</div></pre></td></tr></table></figure>
+<p>5.tree文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">~/kaldi/src/bin/copy-tree --binary=false tree -</div><div class="line"></div><div class="line">~/kaldi/src/bin/draw-tree ../../data/lang/phones.txt tree | dot -Gsize=50,100 -Tps|ps2pdf - tree.pdf</div></pre></td></tr></table></figure>
 <p>6.ali.1.gz 对齐文件</p>
-<p>1）~/kaldi/src/bin/copy-int-vector “ark:gunzip -c ali.1.gz|” ark,t:- |head -n 1</p>
-<p>  代表的是每句话和transition-id的对应关系，每个transition-id对应一个特征向量</p>
-<p>$ copy-int-vector “ark:gunzip -c ali.1.gz|” ark,t:- | head -n 1</p>
+<p>1）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~/kaldi/src/bin/copy-int-vector &quot;ark:gunzip -c ali.1.gz|&quot; ark,t:- |head -n 1</div></pre></td></tr></table></figure>
+<p> 代表的是每句话和transition-id的对应关系，每个transition-id对应一个特征向量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ copy-int-vector &quot;ark:gunzip -c ali.1.gz|&quot; ark,t:- | head -n 1</div></pre></td></tr></table></figure>
 <p>如：</p>
 <blockquote>
 <p>speaker001_00003 4 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 16 15 15 15 18 890 889 889 889 889 889 889 892 894 893 893 893 86 88 87 90 89 89 89 89 89 89 89 89 89 89 89 89 89 89 194 193 196 195 195 198 197 386 385 385 385 385 385 385 385 385 388 387 387 390 902 901 901 904 903 906 905 905 905 905 905 905 905 905 905 905 905 914 913 913 916 918 917 917 917 917 917 917 752 751 751 751 751 751 754 753 753 753 753 753 753 753 753 756 755 755 926 925 928 927 927 927 927 927 927 927 930 929 929 929 929 929 929 929 929 4 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 16 18</p>
 </blockquote>
-<p>2）可以先解压 gunzip ali.1.gz<br>然后  ~/kaldi/src/bin/show-alignments ../../data/lang/phones.txt 40.mdl ark:ali.1 |head -n 2</p>
-<p>3）若要查看其中的transition-id和transition-state的对应关系：</p>
-<p>show-transitions data/lang/phones.txt exp/mono/0.mdl</p>
+<p>2）</p>
+<p>可以先解压 gunzip ali.1.gz<br>然后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">~/kaldi/src/bin/show-alignments ../../data/lang/phones.txt 40.mdl ark:ali.1 |head -n 2</div></pre></td></tr></table></figure>
+<p>3）</p>
+<p>若要查看其中的transition-id和transition-state的对应关系：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show-transitions data/lang/phones.txt exp/mono/0.mdl</div></pre></td></tr></table></figure>
 <p>如：</p>
 <blockquote>
 <p>Transition-state 1: phone = sil hmm-state = 0 pdf = 0</p>
@@ -376,14 +387,14 @@
 </blockquote>
 <p>其中一个transition-state对应唯一的pdf，其下又包括多个transition-id</p>
 <p>若要增加可读性：</p>
-<p>show-transitions data/lang/phones.txt exp/mono/final.mdl exp/mono/final.occs | less</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show-transitions data/lang/phones.txt exp/mono/final.mdl exp/mono/final.occs | less</div></pre></td></tr></table></figure>
 <p>(.occs文件是指occupation counts)</p>
 <p>7.查看mfcc特征文件</p>
-<p>copy-feats copy-matrix</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copy-feats copy-matrix</div></pre></td></tr></table></figure>
 <p>8.查看vad特征文件</p>
-<p>copy-vector</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">copy-vector</div></pre></td></tr></table></figure>
 <p>9.查看fsts.1.gz</p>
-<p>fstcopy ‘ark:gunzip -c exp/mono0a/fsts.1.gz|’ ark,t:- | head -n 20</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fstcopy &apos;ark:gunzip -c exp/mono0a/fsts.1.gz|&apos; ark,t:- | head -n 20</div></pre></td></tr></table></figure>
 <p>10.查看hmm结构</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">show-transitions phones.txt 1.mdl 1.occs</div></pre></td></tr></table></figure>
 <p>11.查看mdl文件</p>
@@ -393,18 +404,18 @@
 <p>13.查看hmm的整体信息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">hmm-info trans.mdl 或 am-info trans.mdl</div><div class="line">输出为：</div><div class="line">hmm-info final.mdl</div><div class="line">number of phones 48</div><div class="line">number of pdfs 144</div><div class="line">number of transition-ids 288</div><div class="line">number of transition-states 144</div></pre></td></tr></table></figure>
 <p>14.查看tree信息</p>
-<p>tree-info tree</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tree-info tree</div></pre></td></tr></table></figure>
 <p>15.查看网络结构和信息</p>
-<p>nnet-am-copy –binary=false baseline/exp/nnet4d/final.mdl - </p>
-<p> nnet-am-info </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">nnet-am-copy --binary=false baseline/exp/nnet4d/final.mdl - </div><div class="line"></div><div class="line">nnet-am-info</div></pre></td></tr></table></figure>
 <p>16.若要将对齐文件中的transition-id转化为对应的pdf-d:</p>
-<p>ali-to-pdf final.mdl “ark:gunzip -c ali.1.gz|” ark,t:- | head -n 1 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ali-to-pdf final.mdl &quot;ark:gunzip -c ali.1.gz|&quot; ark,t:- | head -n 1</div></pre></td></tr></table></figure>
 <blockquote>
 <p>输出</p>
 <p>speaker001_00003 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 3 3 3 4 440 440 440 440 440 440 440 441 442 442 442 442 38 39 39 40 40 40 40 40 40 40 40 40 40 40 40 40 40 40 92 92 93 93 93 94 94 188 188 188 188 188 188 188 188 188 189 189 189 190 446 446 446 447 447 448 448 448 448 448 448 448 448 448 448 448 448 452 452 452 453 454 454 454 454 454 454 454 371 371 371 371 371 371 372 372 372 372 372 372 372 372 372 373 373 373 458 458 459 459 459 459 459 459 459 459 460 460 460 460 460 460 460 460 460 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 3 4 </p>
 </blockquote>
 <p>对比之前的copy-int-vector查看的对其文件的前两帧，4和1两个transition-id都对应于一个pdf-id：0</p>
-<p>17.ali-to-post: 根据得到的pdf-id，生成[pdf, post]对，即pdf与其对应的后验概率</p>
+<p>17.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ali-to-post: 根据得到的pdf-id，生成[pdf, post]对，即pdf与其对应的后验概率</div></pre></td></tr></table></figure>
 <blockquote>
 <p>ali-to-pdf final.mdl “ark:gunzip -c ali.1.gz|” ark,t:- | head -n 1 | ali-to-post ark,t:- ark,t:-</p>
 <p> speaker001_00003 [ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ] ……[ 3 1 ][ 3 1 ][ 3 1 ][ 3 1 ][ 4 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 440 1 ][ 441 1 ][ 442 1 ][ 442 1 ][ 442 1 ][ 442 1 ][ 38 1 ][ 39 1 ][ 39 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 40 1 ][ 92 1 ][ 92 1 ]…… [ 0 1 ][ 0 1 ][ 0 1 ][ 0 1 ][ 3 1 ][ 4 1 ]</p>
