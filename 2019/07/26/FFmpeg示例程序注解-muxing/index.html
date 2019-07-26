@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="封装一个媒体文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg示例程序注解-muxing">
+<meta property="og:url" content="http://yoursite.com/2019/07/26/FFmpeg示例程序注解-muxing/index.html">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="封装一个媒体文件">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-26T01:20:01.207Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FFmpeg示例程序注解-muxing">
+<meta name="twitter:description" content="封装一个媒体文件">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/26/FFmpeg示例程序注解-muxing/"/>
+
+
+
+
+
+  <title>FFmpeg示例程序注解-muxing | CoderZWei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CoderZWei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/FFmpeg示例程序注解-muxing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FFmpeg示例程序注解-muxing</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-26T09:14:31+08:00">
+                2019-07-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>封装一个媒体文件</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div><div class="line">338</div><div class="line">339</div><div class="line">340</div><div class="line">341</div><div class="line">342</div><div class="line">343</div><div class="line">344</div><div class="line">345</div><div class="line">346</div><div class="line">347</div><div class="line">348</div><div class="line">349</div><div class="line">350</div><div class="line">351</div><div class="line">352</div><div class="line">353</div><div class="line">354</div><div class="line">355</div><div class="line">356</div><div class="line">357</div><div class="line">358</div><div class="line">359</div><div class="line">360</div><div class="line">361</div><div class="line">362</div><div class="line">363</div><div class="line">364</div><div class="line">365</div><div class="line">366</div><div class="line">367</div><div class="line">368</div><div class="line">369</div><div class="line">370</div><div class="line">371</div><div class="line">372</div><div class="line">373</div><div class="line">374</div><div class="line">375</div><div class="line">376</div><div class="line">377</div><div class="line">378</div><div class="line">379</div><div class="line">380</div><div class="line">381</div><div class="line">382</div><div class="line">383</div><div class="line">384</div><div class="line">385</div><div class="line">386</div><div class="line">387</div><div class="line">388</div><div class="line">389</div><div class="line">390</div><div class="line">391</div><div class="line">392</div><div class="line">393</div><div class="line">394</div><div class="line">395</div><div class="line">396</div><div class="line">397</div><div class="line">398</div><div class="line">399</div><div class="line">400</div><div class="line">401</div><div class="line">402</div><div class="line">403</div><div class="line">404</div><div class="line">405</div><div class="line">406</div><div class="line">407</div><div class="line">408</div><div class="line">409</div><div class="line">410</div><div class="line">411</div><div class="line">412</div><div class="line">413</div><div class="line">414</div><div class="line">415</div><div class="line">416</div><div class="line">417</div><div class="line">418</div><div class="line">419</div><div class="line">420</div><div class="line">421</div><div class="line">422</div><div class="line">423</div><div class="line">424</div><div class="line">425</div><div class="line">426</div><div class="line">427</div><div class="line">428</div><div class="line">429</div><div class="line">430</div><div class="line">431</div><div class="line">432</div><div class="line">433</div><div class="line">434</div><div class="line">435</div><div class="line">436</div><div class="line">437</div><div class="line">438</div><div class="line">439</div><div class="line">440</div><div class="line">441</div><div class="line">442</div><div class="line">443</div><div class="line">444</div><div class="line">445</div><div class="line">446</div><div class="line">447</div><div class="line">448</div><div class="line">449</div><div class="line">450</div><div class="line">451</div><div class="line">452</div><div class="line">453</div><div class="line">454</div><div class="line">455</div><div class="line">456</div><div class="line">457</div><div class="line">458</div><div class="line">459</div><div class="line">460</div><div class="line">461</div><div class="line">462</div><div class="line">463</div><div class="line">464</div><div class="line">465</div><div class="line">466</div><div class="line">467</div><div class="line">468</div><div class="line">469</div><div class="line">470</div><div class="line">471</div><div class="line">472</div><div class="line">473</div><div class="line">474</div><div class="line">475</div><div class="line">476</div><div class="line">477</div><div class="line">478</div><div class="line">479</div><div class="line">480</div><div class="line">481</div><div class="line">482</div><div class="line">483</div><div class="line">484</div><div class="line">485</div><div class="line">486</div><div class="line">487</div><div class="line">488</div><div class="line">489</div><div class="line">490</div><div class="line">491</div><div class="line">492</div><div class="line">493</div><div class="line">494</div><div class="line">495</div><div class="line">496</div><div class="line">497</div><div class="line">498</div><div class="line">499</div><div class="line">500</div><div class="line">501</div><div class="line">502</div><div class="line">503</div><div class="line">504</div><div class="line">505</div><div class="line">506</div><div class="line">507</div><div class="line">508</div><div class="line">509</div><div class="line">510</div><div class="line">511</div><div class="line">512</div><div class="line">513</div><div class="line">514</div><div class="line">515</div><div class="line">516</div><div class="line">517</div><div class="line">518</div><div class="line">519</div><div class="line">520</div><div class="line">521</div><div class="line">522</div><div class="line">523</div><div class="line">524</div><div class="line">525</div><div class="line">526</div><div class="line">527</div><div class="line">528</div><div class="line">529</div><div class="line">530</div><div class="line">531</div><div class="line">532</div><div class="line">533</div><div class="line">534</div><div class="line">535</div><div class="line">536</div><div class="line">537</div><div class="line">538</div><div class="line">539</div><div class="line">540</div><div class="line">541</div><div class="line">542</div><div class="line">543</div><div class="line">544</div><div class="line">545</div><div class="line">546</div><div class="line">547</div><div class="line">548</div><div class="line">549</div><div class="line">550</div><div class="line">551</div><div class="line">552</div><div class="line">553</div><div class="line">554</div><div class="line">555</div><div class="line">556</div><div class="line">557</div><div class="line">558</div><div class="line">559</div><div class="line">560</div><div class="line">561</div><div class="line">562</div><div class="line">563</div><div class="line">564</div><div class="line">565</div><div class="line">566</div><div class="line">567</div><div class="line">568</div><div class="line">569</div><div class="line">570</div><div class="line">571</div><div class="line">572</div><div class="line">573</div><div class="line">574</div><div class="line">575</div><div class="line">576</div><div class="line">577</div><div class="line">578</div><div class="line">579</div><div class="line">580</div><div class="line">581</div><div class="line">582</div><div class="line">583</div><div class="line">584</div><div class="line">585</div><div class="line">586</div><div class="line">587</div><div class="line">588</div><div class="line">589</div><div class="line">590</div><div class="line">591</div><div class="line">592</div><div class="line">593</div><div class="line">594</div><div class="line">595</div><div class="line">596</div><div class="line">597</div><div class="line">598</div><div class="line">599</div><div class="line">600</div><div class="line">601</div><div class="line">602</div><div class="line">603</div><div class="line">604</div><div class="line">605</div><div class="line">606</div><div class="line">607</div><div class="line">608</div><div class="line">609</div><div class="line">610</div><div class="line">611</div><div class="line">612</div><div class="line">613</div><div class="line">614</div><div class="line">615</div><div class="line">616</div><div class="line">617</div><div class="line">618</div><div class="line">619</div><div class="line">620</div><div class="line">621</div><div class="line">622</div><div class="line">623</div><div class="line">624</div><div class="line">625</div><div class="line">626</div><div class="line">627</div><div class="line">628</div><div class="line">629</div><div class="line">630</div><div class="line">631</div><div class="line">632</div><div class="line">633</div><div class="line">634</div><div class="line">635</div><div class="line">636</div><div class="line">637</div><div class="line">638</div><div class="line">639</div><div class="line">640</div><div class="line">641</div><div class="line">642</div><div class="line">643</div><div class="line">644</div><div class="line">645</div><div class="line">646</div><div class="line">647</div><div class="line">648</div><div class="line">649</div><div class="line">650</div><div class="line">651</div><div class="line">652</div><div class="line">653</div><div class="line">654</div><div class="line">655</div><div class="line">656</div><div class="line">657</div><div class="line">658</div><div class="line">659</div><div class="line">660</div><div class="line">661</div><div class="line">662</div><div class="line">663</div><div class="line">664</div><div class="line">665</div><div class="line">666</div><div class="line">667</div><div class="line">668</div><div class="line">669</div><div class="line">670</div><div class="line">671</div><div class="line">672</div><div class="line">673</div><div class="line">674</div><div class="line">675</div><div class="line">676</div><div class="line">677</div><div class="line">678</div><div class="line">679</div><div class="line">680</div><div class="line">681</div><div class="line">682</div><div class="line">683</div><div class="line">684</div><div class="line">685</div><div class="line">686</div><div class="line">687</div><div class="line">688</div><div class="line">689</div><div class="line">690</div><div class="line">691</div><div class="line">692</div><div class="line">693</div><div class="line">694</div><div class="line">695</div><div class="line">696</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @file</div><div class="line"> * libavformat API example.</div><div class="line"> *</div><div class="line"> * Output a media file in any supported libavformat format. The default</div><div class="line"> * codecs are used.</div><div class="line"> * @example muxing.c</div><div class="line"> */</div><div class="line">//Mux分为三步骤：1）写文件头(avformat_write_header) 2)写packet(av_write_frame/av_interleaved_write_frame) 3)写文件尾(av_write_trailer)</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;string.h&gt;</div><div class="line">#include &lt;math.h&gt;</div><div class="line"></div><div class="line">#include &lt;libavutil/avassert.h&gt;</div><div class="line">#include &lt;libavutil/channel_layout.h&gt;</div><div class="line">#include &lt;libavutil/opt.h&gt;</div><div class="line">#include &lt;libavutil/mathematics.h&gt;</div><div class="line">#include &lt;libavutil/timestamp.h&gt;</div><div class="line">#include &lt;libavformat/avformat.h&gt;</div><div class="line">#include &lt;libswscale/swscale.h&gt;</div><div class="line">#include &lt;libswresample/swresample.h&gt;</div><div class="line"></div><div class="line">#define STREAM_DURATION   10.0</div><div class="line">#define STREAM_FRAME_RATE 25 /* 25 images/s */</div><div class="line">#define STREAM_PIX_FMT    AV_PIX_FMT_YUV420P /* default pix_fmt */</div><div class="line"></div><div class="line">#define SCALE_FLAGS SWS_BICUBIC</div><div class="line"></div><div class="line">// a wrapper around a single output AVStream</div><div class="line">typedef struct OutputStream &#123;</div><div class="line">    //多媒体文件解封装(解复用)之后，从容器中分离出来的流就是AVStream。</div><div class="line">    //AVStream是存储视频/音频流相关数据信息的结构体。每个AVStream对应一个AVCodecContext，存储该视频/音频使用解码方式的相关数据</div><div class="line">    //每个AVCodecContext中对应一个AVCodec，包含该视频/音频对应的解码器。每种解码器都对应一个AVCodec结构</div><div class="line">    //解出来几条流，就会在AVFormateContext中的nb_streams+1,并且将AVStream保存在streams数组中</div><div class="line">    AVStream *st;</div><div class="line">    AVCodecContext *enc;</div><div class="line"></div><div class="line">    /* pts of the next frame that will be generated */</div><div class="line">    int64_t next_pts;</div><div class="line">    int samples_count;</div><div class="line"></div><div class="line">    AVFrame *frame;</div><div class="line">    AVFrame *tmp_frame;</div><div class="line"></div><div class="line">    float t, tincr, tincr2;</div><div class="line">    //SwsContext(software scale)用于视频图像的转换，如格式转换、图像缩放</div><div class="line">    struct SwsContext *sws_ctx;</div><div class="line">    //SwrContext(software resample)用于音频重采样，如采样率转换、声道转换</div><div class="line">    struct SwrContext *swr_ctx;</div><div class="line">&#125; OutputStream;</div><div class="line"></div><div class="line">static void log_packet(const AVFormatContext *fmt_ctx, const AVPacket *pkt)</div><div class="line">&#123;</div><div class="line">    AVRational *time_base = &amp;fmt_ctx-&gt;streams[pkt-&gt;stream_index]-&gt;time_base;</div><div class="line"></div><div class="line">    printf(&quot;pts:%s pts_time:%s dts:%s dts_time:%s duration:%s duration_time:%s stream_index:%d\n&quot;,</div><div class="line">           av_ts2str(pkt-&gt;pts), av_ts2timestr(pkt-&gt;pts, time_base),</div><div class="line">           av_ts2str(pkt-&gt;dts), av_ts2timestr(pkt-&gt;dts, time_base),</div><div class="line">           av_ts2str(pkt-&gt;duration), av_ts2timestr(pkt-&gt;duration, time_base),</div><div class="line">           pkt-&gt;stream_index);</div><div class="line">&#125;</div><div class="line"></div><div class="line">static int write_frame(AVFormatContext *fmt_ctx, const AVRational *time_base, AVStream *st, AVPacket *pkt)</div><div class="line">&#123;</div><div class="line">    /* rescale output packet timestamp values from codec to stream timebase */</div><div class="line">    //av_packet_rescale_ts用于将AVPacket中各种时间值从一种时间基转换为另一种时间基</div><div class="line">    av_packet_rescale_ts(pkt, *time_base, st-&gt;time_base);</div><div class="line">    pkt-&gt;stream_index = st-&gt;index;</div><div class="line"></div><div class="line">    /* Write the compressed frame to the media file. */</div><div class="line">    log_packet(fmt_ctx, pkt);</div><div class="line">    //av_write_frame直接将包写进Mux，没有缓存和重新排序，一切都需要用户自己设置</div><div class="line">    //av_interleaved_write_frame将对packet进行缓存和pts检查</div><div class="line">    return av_interleaved_write_frame(fmt_ctx, pkt);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* Add an output stream. */</div><div class="line">static void add_stream(OutputStream *ost, AVFormatContext *oc,</div><div class="line">                       AVCodec **codec,</div><div class="line">                       enum AVCodecID codec_id)</div><div class="line">&#123;</div><div class="line">    AVCodecContext *c;</div><div class="line">    int i;</div><div class="line"></div><div class="line">    /* find the encoder */</div><div class="line">    *codec = avcodec_find_encoder(codec_id);</div><div class="line">    if (!(*codec)) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not find encoder for &apos;%s&apos;\n&quot;,</div><div class="line">                avcodec_get_name(codec_id));</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line">    //创建流通道</div><div class="line">    ost-&gt;st = avformat_new_stream(oc, NULL);</div><div class="line">    if (!ost-&gt;st) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not allocate stream\n&quot;);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line">    ost-&gt;st-&gt;id = oc-&gt;nb_streams-1;</div><div class="line">    //创建编码器上下文</div><div class="line">    c = avcodec_alloc_context3(*codec);</div><div class="line">    if (!c) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not alloc an encoding context\n&quot;);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line">    ost-&gt;enc = c;</div><div class="line">    //AVMedia type</div><div class="line">    switch ((*codec)-&gt;type) &#123;</div><div class="line">    //音频类型</div><div class="line">    case AVMEDIA_TYPE_AUDIO:</div><div class="line">        //设置音频编码器上下文的参数</div><div class="line">        c-&gt;sample_fmt  = (*codec)-&gt;sample_fmts ?</div><div class="line">            (*codec)-&gt;sample_fmts[0] : AV_SAMPLE_FMT_FLTP;</div><div class="line">        c-&gt;bit_rate    = 64000;</div><div class="line">        c-&gt;sample_rate = 44100;</div><div class="line">        if ((*codec)-&gt;supported_samplerates) &#123;</div><div class="line">            c-&gt;sample_rate = (*codec)-&gt;supported_samplerates[0];</div><div class="line">            for (i = 0; (*codec)-&gt;supported_samplerates[i]; i++) &#123;</div><div class="line">                if ((*codec)-&gt;supported_samplerates[i] == 44100)</div><div class="line">                    c-&gt;sample_rate = 44100;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        c-&gt;channels        = av_get_channel_layout_nb_channels(c-&gt;channel_layout);</div><div class="line">        c-&gt;channel_layout = AV_CH_LAYOUT_STEREO;</div><div class="line">        if ((*codec)-&gt;channel_layouts) &#123;</div><div class="line">            c-&gt;channel_layout = (*codec)-&gt;channel_layouts[0];</div><div class="line">            for (i = 0; (*codec)-&gt;channel_layouts[i]; i++) &#123;</div><div class="line">                if ((*codec)-&gt;channel_layouts[i] == AV_CH_LAYOUT_STEREO)</div><div class="line">                    c-&gt;channel_layout = AV_CH_LAYOUT_STEREO;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        c-&gt;channels        = av_get_channel_layout_nb_channels(c-&gt;channel_layout);</div><div class="line">        ost-&gt;st-&gt;time_base = (AVRational)&#123; 1, c-&gt;sample_rate &#125;;</div><div class="line">        break;</div><div class="line">    //视频类型</div><div class="line">    case AVMEDIA_TYPE_VIDEO:</div><div class="line">        //设置视频编码器上下文的参数</div><div class="line">        c-&gt;codec_id = codec_id;</div><div class="line"></div><div class="line">        c-&gt;bit_rate = 400000;</div><div class="line">        /* Resolution must be a multiple of two. */</div><div class="line">        c-&gt;width    = 352;</div><div class="line">        c-&gt;height   = 288;</div><div class="line">        /* timebase: This is the fundamental unit of time (in seconds) in terms</div><div class="line">         * of which frame timestamps are represented. For fixed-fps content,</div><div class="line">         * timebase should be 1/framerate and timestamp increments should be</div><div class="line">         * identical to 1. */</div><div class="line">        ost-&gt;st-&gt;time_base = (AVRational)&#123; 1, STREAM_FRAME_RATE &#125;;</div><div class="line">        c-&gt;time_base       = ost-&gt;st-&gt;time_base;</div><div class="line"></div><div class="line">        c-&gt;gop_size      = 12; /* emit one intra frame every twelve frames at most */</div><div class="line">        c-&gt;pix_fmt       = STREAM_PIX_FMT;</div><div class="line">        if (c-&gt;codec_id == AV_CODEC_ID_MPEG2VIDEO) &#123;</div><div class="line">            /* just for testing, we also add B-frames */</div><div class="line">            c-&gt;max_b_frames = 2;</div><div class="line">        &#125;</div><div class="line">        if (c-&gt;codec_id == AV_CODEC_ID_MPEG1VIDEO) &#123;</div><div class="line">            /* Needed to avoid using macroblocks in which some coeffs overflow.</div><div class="line">             * This does not happen with normal video, it just happens here as</div><div class="line">             * the motion of the chroma plane does not match the luma plane. */</div><div class="line">            c-&gt;mb_decision = 2;</div><div class="line">        &#125;</div><div class="line">    break;</div><div class="line"></div><div class="line">    default:</div><div class="line">        break;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* Some formats want stream headers to be separate. */</div><div class="line">    if (oc-&gt;oformat-&gt;flags &amp; AVFMT_GLOBALHEADER)</div><div class="line">        c-&gt;flags |= AV_CODEC_FLAG_GLOBAL_HEADER;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**************************************************************/</div><div class="line">/* audio output */</div><div class="line"></div><div class="line">static AVFrame *alloc_audio_frame(enum AVSampleFormat sample_fmt,</div><div class="line">                                  uint64_t channel_layout,</div><div class="line">                                  int sample_rate, int nb_samples)</div><div class="line">&#123;</div><div class="line">    AVFrame *frame = av_frame_alloc();</div><div class="line">    int ret;</div><div class="line"></div><div class="line">    if (!frame) &#123;</div><div class="line">        fprintf(stderr, &quot;Error allocating an audio frame\n&quot;);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    frame-&gt;format = sample_fmt;</div><div class="line">    frame-&gt;channel_layout = channel_layout;</div><div class="line">    frame-&gt;sample_rate = sample_rate;</div><div class="line">    frame-&gt;nb_samples = nb_samples;</div><div class="line"></div><div class="line">    if (nb_samples) &#123;</div><div class="line">        ret = av_frame_get_buffer(frame, 0);</div><div class="line">        if (ret &lt; 0) &#123;</div><div class="line">            fprintf(stderr, &quot;Error allocating an audio buffer\n&quot;);</div><div class="line">            exit(1);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void open_audio(AVFormatContext *oc, AVCodec *codec, OutputStream *ost, AVDictionary *opt_arg)</div><div class="line">&#123;</div><div class="line">    AVCodecContext *c;</div><div class="line">    int nb_samples;</div><div class="line">    int ret;</div><div class="line">    AVDictionary *opt = NULL;</div><div class="line"></div><div class="line">    c = ost-&gt;enc;</div><div class="line"></div><div class="line">    /* open it */</div><div class="line">    //拷贝参数</div><div class="line">    av_dict_copy(&amp;opt, opt_arg, 0);</div><div class="line">    ret = avcodec_open2(c, codec, &amp;opt);</div><div class="line">    av_dict_free(&amp;opt);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not open audio codec: %s\n&quot;, av_err2str(ret));</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* init signal generator */</div><div class="line">    ost-&gt;t     = 0;</div><div class="line">    ost-&gt;tincr = 2 * M_PI * 110.0 / c-&gt;sample_rate;</div><div class="line">    /* increment frequency by 110 Hz per second */</div><div class="line">    ost-&gt;tincr2 = 2 * M_PI * 110.0 / c-&gt;sample_rate / c-&gt;sample_rate;</div><div class="line"></div><div class="line">    if (c-&gt;codec-&gt;capabilities &amp; AV_CODEC_CAP_VARIABLE_FRAME_SIZE)</div><div class="line">        nb_samples = 10000;</div><div class="line">    else</div><div class="line">        nb_samples = c-&gt;frame_size;</div><div class="line"></div><div class="line">    ost-&gt;frame     = alloc_audio_frame(c-&gt;sample_fmt, c-&gt;channel_layout,</div><div class="line">                                       c-&gt;sample_rate, nb_samples);</div><div class="line">    ost-&gt;tmp_frame = alloc_audio_frame(AV_SAMPLE_FMT_S16, c-&gt;channel_layout,</div><div class="line">                                       c-&gt;sample_rate, nb_samples);</div><div class="line"></div><div class="line">    /* copy the stream parameters to the muxer */</div><div class="line">    //AVStream-&gt;codecpar:指向该音频流的AVCodecContext</div><div class="line">    ret = avcodec_parameters_from_context(ost-&gt;st-&gt;codecpar, c);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not copy the stream parameters\n&quot;);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* create resampler context */</div><div class="line">    //声明SwrContext结构体</div><div class="line">        ost-&gt;swr_ctx = swr_alloc();</div><div class="line">        if (!ost-&gt;swr_ctx) &#123;</div><div class="line">            fprintf(stderr, &quot;Could not allocate resampler context\n&quot;);</div><div class="line">            exit(1);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        /* set options */</div><div class="line">        //设置SwrContext参数</div><div class="line">        av_opt_set_int       (ost-&gt;swr_ctx, &quot;in_channel_count&quot;,   c-&gt;channels,       0);</div><div class="line">        av_opt_set_int       (ost-&gt;swr_ctx, &quot;in_sample_rate&quot;,     c-&gt;sample_rate,    0);</div><div class="line">        av_opt_set_sample_fmt(ost-&gt;swr_ctx, &quot;in_sample_fmt&quot;,      AV_SAMPLE_FMT_S16, 0);</div><div class="line">        av_opt_set_int       (ost-&gt;swr_ctx, &quot;out_channel_count&quot;,  c-&gt;channels,       0);</div><div class="line">        av_opt_set_int       (ost-&gt;swr_ctx, &quot;out_sample_rate&quot;,    c-&gt;sample_rate,    0);</div><div class="line">        av_opt_set_sample_fmt(ost-&gt;swr_ctx, &quot;out_sample_fmt&quot;,     c-&gt;sample_fmt,     0);</div><div class="line"></div><div class="line">        /* initialize the resampling context 初始化SwrContext */</div><div class="line">        if ((ret = swr_init(ost-&gt;swr_ctx)) &lt; 0) &#123;</div><div class="line">            fprintf(stderr, &quot;Failed to initialize the resampling context\n&quot;);</div><div class="line">            exit(1);</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/* Prepare a 16 bit dummy audio frame of &apos;frame_size&apos; samples and</div><div class="line"> * &apos;nb_channels&apos; channels. */</div><div class="line">static AVFrame *get_audio_frame(OutputStream *ost)</div><div class="line">&#123;</div><div class="line">    AVFrame *frame = ost-&gt;tmp_frame;</div><div class="line">    int j, i, v;</div><div class="line">    int16_t *q = (int16_t*)frame-&gt;data[0];</div><div class="line"></div><div class="line">    /* check if we want to generate more frames */</div><div class="line">    ////超过10s就不需要再产生音频帧了</div><div class="line">    if (av_compare_ts(ost-&gt;next_pts, ost-&gt;enc-&gt;time_base,</div><div class="line">                      STREAM_DURATION, (AVRational)&#123; 1, 1 &#125;) &gt;= 0)</div><div class="line">        return NULL;</div><div class="line">    //nb_samples:一个音频AVFrame包含音频帧的个数</div><div class="line">    for (j = 0; j &lt;frame-&gt;nb_samples; j++) &#123;</div><div class="line">        v = (int)(sin(ost-&gt;t) * 10000);</div><div class="line">        for (i = 0; i &lt; ost-&gt;enc-&gt;channels; i++)</div><div class="line">            *q++ = v;</div><div class="line">        ost-&gt;t     += ost-&gt;tincr;</div><div class="line">        ost-&gt;tincr += ost-&gt;tincr2;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    frame-&gt;pts = ost-&gt;next_pts;</div><div class="line">    //下一帧的index要加上此帧所包含的音频帧的个数</div><div class="line">    ost-&gt;next_pts  += frame-&gt;nb_samples;</div><div class="line"></div><div class="line">    return frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/*</div><div class="line"> * encode one audio frame and send it to the muxer</div><div class="line"> * return 1 when encoding is finished, 0 otherwise</div><div class="line"> */</div><div class="line">static int write_audio_frame(AVFormatContext *oc, OutputStream *ost)</div><div class="line">&#123;</div><div class="line">    AVCodecContext *c;</div><div class="line">    AVPacket pkt = &#123; 0 &#125;; // data and size must be 0;</div><div class="line">    AVFrame *frame;</div><div class="line">    int ret;</div><div class="line">    int got_packet;</div><div class="line">    int dst_nb_samples;</div><div class="line"></div><div class="line">    av_init_packet(&amp;pkt);</div><div class="line">    c = ost-&gt;enc;</div><div class="line"></div><div class="line">    frame = get_audio_frame(ost);</div><div class="line"></div><div class="line">    if (frame) &#123;</div><div class="line">        /* convert samples from native format to destination codec format, using the resampler */</div><div class="line">            /* compute destination number of samples */</div><div class="line">            //swr_get_delay得到输入sample和输出sample之间的延迟</div><div class="line">            //av_rescale_rnd是按指定的舍入方式计算a*b/c</div><div class="line">            //dst_nb_samples为转换后的sample个数</div><div class="line">            dst_nb_samples = av_rescale_rnd(swr_get_delay(ost-&gt;swr_ctx, c-&gt;sample_rate) + frame-&gt;nb_samples,</div><div class="line">                                            c-&gt;sample_rate, c-&gt;sample_rate, AV_ROUND_UP);</div><div class="line">            av_assert0(dst_nb_samples == frame-&gt;nb_samples);</div><div class="line"></div><div class="line">        /* when we pass a frame to the encoder, it may keep a reference to it</div><div class="line">         * internally;</div><div class="line">         * make sure we do not overwrite it here</div><div class="line">         */</div><div class="line">        ret = av_frame_make_writable(ost-&gt;frame);</div><div class="line">        if (ret &lt; 0)</div><div class="line">            exit(1);</div><div class="line"></div><div class="line">        /* convert to destination format */</div><div class="line">        //针对每一帧音频的处理，把一帧帧的音频作相应的重采样</div><div class="line">        //输入参数：1）音频重采样上下文SwrContext 2）输出数组的指针 3）输出的样本数量，不是字节数，是单通道的样本数量 </div><div class="line">        //4）输入的数组，AVFrame解码出来的data 5）输入的单通道的样本数量</div><div class="line">        ret = swr_convert(ost-&gt;swr_ctx,</div><div class="line">                          ost-&gt;frame-&gt;data, dst_nb_samples,</div><div class="line">                          (const uint8_t **)frame-&gt;data, frame-&gt;nb_samples);</div><div class="line">        if (ret &lt; 0) &#123;</div><div class="line">            fprintf(stderr, &quot;Error while converting\n&quot;);</div><div class="line">            exit(1);</div><div class="line">        &#125;</div><div class="line">        frame = ost-&gt;frame;</div><div class="line">        //time_base之间的转换，a*b/c</div><div class="line">        frame-&gt;pts = av_rescale_q(ost-&gt;samples_count, (AVRational)&#123;1, c-&gt;sample_rate&#125;, c-&gt;time_base);</div><div class="line">        ost-&gt;samples_count += dst_nb_samples;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ret = avcodec_encode_audio2(c, &amp;pkt, frame, &amp;got_packet);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Error encoding audio frame: %s\n&quot;, av_err2str(ret));</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (got_packet) &#123;</div><div class="line">        //送入封装器</div><div class="line">        ret = write_frame(oc, &amp;c-&gt;time_base, ost-&gt;st, &amp;pkt);</div><div class="line">        if (ret &lt; 0) &#123;</div><div class="line">            fprintf(stderr, &quot;Error while writing audio frame: %s\n&quot;,</div><div class="line">                    av_err2str(ret));</div><div class="line">            exit(1);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return (frame || got_packet) ? 0 : 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**************************************************************/</div><div class="line">/* video output */</div><div class="line"></div><div class="line">static AVFrame *alloc_picture(enum AVPixelFormat pix_fmt, int width, int height)</div><div class="line">&#123;</div><div class="line">    AVFrame *picture;</div><div class="line">    int ret;</div><div class="line"></div><div class="line">    picture = av_frame_alloc();</div><div class="line">    if (!picture)</div><div class="line">        return NULL;</div><div class="line"></div><div class="line">    picture-&gt;format = pix_fmt;</div><div class="line">    picture-&gt;width  = width;</div><div class="line">    picture-&gt;height = height;</div><div class="line"></div><div class="line">    /* allocate the buffers for the frame data */</div><div class="line">    ret = av_frame_get_buffer(picture, 32);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not allocate frame data.\n&quot;);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return picture;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void open_video(AVFormatContext *oc, AVCodec *codec, OutputStream *ost, AVDictionary *opt_arg)</div><div class="line">&#123;</div><div class="line">    int ret;</div><div class="line">    AVCodecContext *c = ost-&gt;enc;</div><div class="line">    AVDictionary *opt = NULL;</div><div class="line">    //opg_arg拷贝给opt</div><div class="line">    av_dict_copy(&amp;opt, opt_arg, 0);</div><div class="line"></div><div class="line">    /* open the codec */</div><div class="line">    //初始化视频解码器的AVCodecContext opt以键值对形式保存相关参数</div><div class="line">    ret = avcodec_open2(c, codec, &amp;opt);</div><div class="line">    av_dict_free(&amp;opt);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not open video codec: %s\n&quot;, av_err2str(ret));</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* allocate and init a re-usable frame */</div><div class="line">    //初始化视频的AVFrame</div><div class="line">    ost-&gt;frame = alloc_picture(c-&gt;pix_fmt, c-&gt;width, c-&gt;height);</div><div class="line">    if (!ost-&gt;frame) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not allocate video frame\n&quot;);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* If the output format is not YUV420P, then a temporary YUV420P</div><div class="line">     * picture is needed too. It is then converted to the required</div><div class="line">     * output format. */</div><div class="line">    ost-&gt;tmp_frame = NULL;</div><div class="line">    if (c-&gt;pix_fmt != AV_PIX_FMT_YUV420P) &#123;</div><div class="line">        ost-&gt;tmp_frame = alloc_picture(AV_PIX_FMT_YUV420P, c-&gt;width, c-&gt;height);</div><div class="line">        if (!ost-&gt;tmp_frame) &#123;</div><div class="line">            fprintf(stderr, &quot;Could not allocate temporary picture\n&quot;);</div><div class="line">            exit(1);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* copy the stream parameters to the muxer */</div><div class="line">    //将c中的参数拷贝给st-&gt;codecpar</div><div class="line">    ret = avcodec_parameters_from_context(ost-&gt;st-&gt;codecpar, c);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not copy the stream parameters\n&quot;);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">//创造一张假图像</div><div class="line">/* Prepare a dummy image. */</div><div class="line">static void fill_yuv_image(AVFrame *pict, int frame_index,</div><div class="line">                           int width, int height)</div><div class="line">&#123;</div><div class="line">    int x, y, i;</div><div class="line"></div><div class="line">    i = frame_index;</div><div class="line"></div><div class="line">    /* Y */</div><div class="line">    for (y = 0; y &lt; height; y++)</div><div class="line">        for (x = 0; x &lt; width; x++)</div><div class="line">            pict-&gt;data[0][y * pict-&gt;linesize[0] + x] = x + y + i * 3;</div><div class="line"></div><div class="line">    /* Cb and Cr */</div><div class="line">    for (y = 0; y &lt; height / 2; y++) &#123;</div><div class="line">        for (x = 0; x &lt; width / 2; x++) &#123;</div><div class="line">            pict-&gt;data[1][y * pict-&gt;linesize[1] + x] = 128 + y + i * 2;</div><div class="line">            pict-&gt;data[2][y * pict-&gt;linesize[2] + x] = 64 + x + i * 5;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static AVFrame *get_video_frame(OutputStream *ost)</div><div class="line">&#123;</div><div class="line">    AVCodecContext *c = ost-&gt;enc;</div><div class="line"></div><div class="line">    /* check if we want to generate more frames */</div><div class="line">    //超过10s就不需要再产生视频帧了</div><div class="line">    if (av_compare_ts(ost-&gt;next_pts, c-&gt;time_base,</div><div class="line">                      STREAM_DURATION, (AVRational)&#123; 1, 1 &#125;) &gt;= 0)</div><div class="line">        return NULL;</div><div class="line"></div><div class="line">    /* when we pass a frame to the encoder, it may keep a reference to it</div><div class="line">     * internally; make sure we do not overwrite it here */</div><div class="line">    if (av_frame_make_writable(ost-&gt;frame) &lt; 0)</div><div class="line">        exit(1);</div><div class="line">    //若不是YUV420P格式则进行格式转换</div><div class="line">    if (c-&gt;pix_fmt != AV_PIX_FMT_YUV420P) &#123;</div><div class="line">        /* as we only generate a YUV420P picture, we must convert it</div><div class="line">         * to the codec pixel format if needed */</div><div class="line">        if (!ost-&gt;sws_ctx) &#123;</div><div class="line">            //创建一个SwsContext，感觉这边写完了，先写愿图像格式再写目标图像格式</div><div class="line">            ost-&gt;sws_ctx = sws_getContext(c-&gt;width, c-&gt;height,</div><div class="line">                                          AV_PIX_FMT_YUV420P,</div><div class="line">                                          c-&gt;width, c-&gt;height,</div><div class="line">                                          c-&gt;pix_fmt,</div><div class="line">                                          SCALE_FLAGS, NULL, NULL, NULL);</div><div class="line">            if (!ost-&gt;sws_ctx) &#123;</div><div class="line">                fprintf(stderr,</div><div class="line">                        &quot;Could not initialize the conversion context\n&quot;);</div><div class="line">                exit(1);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        fill_yuv_image(ost-&gt;tmp_frame, ost-&gt;next_pts, c-&gt;width, c-&gt;height);</div><div class="line">        //图像转换</div><div class="line">        sws_scale(ost-&gt;sws_ctx, (const uint8_t * const *) ost-&gt;tmp_frame-&gt;data,</div><div class="line">                  ost-&gt;tmp_frame-&gt;linesize, 0, c-&gt;height, ost-&gt;frame-&gt;data,</div><div class="line">                  ost-&gt;frame-&gt;linesize);</div><div class="line">    &#125; else &#123;</div><div class="line">        fill_yuv_image(ost-&gt;frame, ost-&gt;next_pts, c-&gt;width, c-&gt;height);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ost-&gt;frame-&gt;pts = ost-&gt;next_pts++;</div><div class="line"></div><div class="line">    return ost-&gt;frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/*</div><div class="line"> * encode one video frame and send it to the muxer</div><div class="line"> * return 1 when encoding is finished, 0 otherwise</div><div class="line"> */</div><div class="line">static int write_video_frame(AVFormatContext *oc, OutputStream *ost)</div><div class="line">&#123;</div><div class="line">    int ret;</div><div class="line">    AVCodecContext *c;</div><div class="line">    AVFrame *frame;</div><div class="line">    int got_packet = 0;</div><div class="line">    AVPacket pkt = &#123; 0 &#125;;</div><div class="line"></div><div class="line">    c = ost-&gt;enc;</div><div class="line">    //得到一个视频帧</div><div class="line">    frame = get_video_frame(ost);</div><div class="line">    //初始化一个AVPacket</div><div class="line">    av_init_packet(&amp;pkt);</div><div class="line"></div><div class="line">    /* encode the image */</div><div class="line">    //2.X版本的编码api</div><div class="line">    ret = avcodec_encode_video2(c, &amp;pkt, frame, &amp;got_packet);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Error encoding video frame: %s\n&quot;, av_err2str(ret));</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (got_packet) &#123;</div><div class="line">        //送入封装器</div><div class="line">        ret = write_frame(oc, &amp;c-&gt;time_base, ost-&gt;st, &amp;pkt);</div><div class="line">    &#125; else &#123;</div><div class="line">        ret = 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Error while writing video frame: %s\n&quot;, av_err2str(ret));</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return (frame || got_packet) ? 0 : 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static void close_stream(AVFormatContext *oc, OutputStream *ost)</div><div class="line">&#123;</div><div class="line">    avcodec_free_context(&amp;ost-&gt;enc);</div><div class="line">    av_frame_free(&amp;ost-&gt;frame);</div><div class="line">    av_frame_free(&amp;ost-&gt;tmp_frame);</div><div class="line">    sws_freeContext(ost-&gt;sws_ctx);</div><div class="line">    swr_free(&amp;ost-&gt;swr_ctx);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**************************************************************/</div><div class="line">/* media file output */</div><div class="line"></div><div class="line">int main(int argc, char **argv)</div><div class="line">&#123;</div><div class="line">    OutputStream video_st = &#123; 0 &#125;, audio_st = &#123; 0 &#125;;</div><div class="line">    const char *filename;</div><div class="line">    //AVOutputFormat保存了输出文件格式(MP4、FLV等)的格式信息和常规设置，如视频、音频编码器，初始化格式等</div><div class="line">    AVOutputFormat *fmt;</div><div class="line">    //AVFormatContext主要存储视音频封装格式中包含的信息</div><div class="line">    //AVInputFormat存储输入视音频使用的封装格式。每种视音频封装格式都对应一个AVInputFormat 结构。</div><div class="line">    AVFormatContext *oc;</div><div class="line">    AVCodec *audio_codec, *video_codec;</div><div class="line">    int ret;</div><div class="line">    int have_video = 0, have_audio = 0;</div><div class="line">    int encode_video = 0, encode_audio = 0;</div><div class="line">    //FFmpeg中的字典</div><div class="line">    AVDictionary *opt = NULL;</div><div class="line">    int i;</div><div class="line"></div><div class="line">    if (argc &lt; 2) &#123;</div><div class="line">        printf(&quot;usage: %s output_file\n&quot;</div><div class="line">               &quot;API example program to output a media file with libavformat.\n&quot;</div><div class="line">               &quot;This program generates a synthetic audio and video stream, encodes and\n&quot;</div><div class="line">               &quot;muxes them into a file named output_file.\n&quot;</div><div class="line">               &quot;The output format is automatically guessed according to the file extension.\n&quot;</div><div class="line">               &quot;Raw images can also be output by using &apos;%%d&apos; in the filename.\n&quot;</div><div class="line">               &quot;\n&quot;, argv[0]);</div><div class="line">        return 1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    filename = argv[1];</div><div class="line">    for (i = 2; i+1 &lt; argc; i+=2) &#123;</div><div class="line">        if (!strcmp(argv[i], &quot;-flags&quot;) || !strcmp(argv[i], &quot;-fflags&quot;))</div><div class="line">            //argv[i]+1为key argv[i+1]为value</div><div class="line">            av_dict_set(&amp;opt, argv[i]+1, argv[i+1], 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* allocate the output media context */</div><div class="line">    //初始化一个用于输出的AVFormatContext结构体</div><div class="line">    //第二个参数用于指定AVFormatContext中的AVOutputFormat，用于确定输出格式</div><div class="line">    //如果第二个参数指定为NULL，可以设定后两个参数（format_name或者filename）由FFmpeg猜测输出格式</div><div class="line">    avformat_alloc_output_context2(&amp;oc, NULL, NULL, filename);</div><div class="line">    if (!oc) &#123;</div><div class="line">        printf(&quot;Could not deduce output format from file extension: using MPEG.\n&quot;);</div><div class="line">        avformat_alloc_output_context2(&amp;oc, NULL, &quot;mpeg&quot;, filename);</div><div class="line">    &#125;</div><div class="line">    if (!oc)</div><div class="line">        return 1;</div><div class="line"></div><div class="line">    fmt = oc-&gt;oformat;</div><div class="line"></div><div class="line">    /* Add the audio and video streams using the default format codecs</div><div class="line">     * and initialize the codecs. */</div><div class="line">    if (fmt-&gt;video_codec != AV_CODEC_ID_NONE) &#123;</div><div class="line">        add_stream(&amp;video_st, oc, &amp;video_codec, fmt-&gt;video_codec);</div><div class="line">        have_video = 1;</div><div class="line">        encode_video = 1;</div><div class="line">    &#125;</div><div class="line">    if (fmt-&gt;audio_codec != AV_CODEC_ID_NONE) &#123;</div><div class="line">        add_stream(&amp;audio_st, oc, &amp;audio_codec, fmt-&gt;audio_codec);</div><div class="line">        have_audio = 1;</div><div class="line">        encode_audio = 1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* Now that all the parameters are set, we can open the audio and</div><div class="line">     * video codecs and allocate the necessary encode buffers. */</div><div class="line">    if (have_video)</div><div class="line">        open_video(oc, video_codec, &amp;video_st, opt);</div><div class="line"></div><div class="line">    if (have_audio)</div><div class="line">        open_audio(oc, audio_codec, &amp;audio_st, opt);</div><div class="line">    //自动打印MetaData信息 流信息 0是流的index</div><div class="line">    av_dump_format(oc, 0, filename, 1);</div><div class="line"></div><div class="line">    /* open the output file, if needed */</div><div class="line">    //AVOutputFormat-&gt;flags：可用标志</div><div class="line">    if (!(fmt-&gt;flags &amp; AVFMT_NOFILE)) &#123;</div><div class="line">        //AVIOContext *pb：输入数据的缓存  AVIOContext是管理输入输出数据的结构体</div><div class="line">        //打开FFmpeg的输出文件 AVIO_FLAG_WRITE表示只写</div><div class="line">        ret = avio_open(&amp;oc-&gt;pb, filename, AVIO_FLAG_WRITE);</div><div class="line">        if (ret &lt; 0) &#123;</div><div class="line">            fprintf(stderr, &quot;Could not open &apos;%s&apos;: %s\n&quot;, filename,</div><div class="line">                    av_err2str(ret));</div><div class="line">            return 1;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    //av_write_frame()用于写视频数据</div><div class="line">    //avformat_write_header()用于写视频文件头 oc为用于输出的AVFormatContext opt为额外的选项</div><div class="line">    //av_write_trailer用于写视频文件尾 </div><div class="line">    /* Write the stream header, if any. */</div><div class="line">    ret = avformat_write_header(oc, &amp;opt);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Error occurred when opening output file: %s\n&quot;,</div><div class="line">                av_err2str(ret));</div><div class="line">        return 1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    while (encode_video || encode_audio) &#123;</div><div class="line">        /* select the stream to encode */</div><div class="line">        if (encode_video &amp;&amp;</div><div class="line">        //没有音频或者av_compare_ts决定应该写入视频</div><div class="line">            (!encode_audio || av_compare_ts(video_st.next_pts, video_st.enc-&gt;time_base,</div><div class="line">                                            audio_st.next_pts, audio_st.enc-&gt;time_base) &lt;= 0)) &#123;</div><div class="line">            //write_video_frame返回1表示写成功</div><div class="line">            encode_video = !write_video_frame(oc, &amp;video_st);</div><div class="line">        &#125; else &#123;</div><div class="line">            //write_audio_frame返回1表示写成功</div><div class="line">            encode_audio = !write_audio_frame(oc, &amp;audio_st);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* Write the trailer, if any. The trailer must be written before you</div><div class="line">     * close the CodecContexts open when you wrote the header; otherwise</div><div class="line">     * av_write_trailer() may try to use memory that was freed on</div><div class="line">     * av_codec_close(). */</div><div class="line">       //av_write_trailer用于写视频文件尾 </div><div class="line">    av_write_trailer(oc);</div><div class="line"></div><div class="line">    /* Close each codec. */</div><div class="line">    if (have_video)</div><div class="line">        close_stream(oc, &amp;video_st);</div><div class="line">    if (have_audio)</div><div class="line">        close_stream(oc, &amp;audio_st);</div><div class="line"></div><div class="line">    if (!(fmt-&gt;flags &amp; AVFMT_NOFILE))</div><div class="line">        /* Close the output file. */</div><div class="line">        avio_closep(&amp;oc-&gt;pb);</div><div class="line"></div><div class="line">    /* free the stream */</div><div class="line">    avformat_free_context(oc);</div><div class="line"></div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/25/FFmpeg示例程序注解-decode_video/" rel="next" title="FFmpeg示例程序注解-视频解码">
+                <i class="fa fa-chevron-left"></i> FFmpeg示例程序注解-视频解码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/panpan.jpg"
+                alt="CoderZWei" />
+            
+              <p class="site-author-name" itemprop="name">CoderZWei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CoderZWei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
