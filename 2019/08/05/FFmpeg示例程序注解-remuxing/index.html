@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="音视频," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,25 +79,14 @@
 
 
 
-<meta name="description" content="系统环境为Windows，开发环境为visual studio2015">
-<meta name="keywords" content="音视频">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows下ffmpeg开发环境配置">
-<meta property="og:url" content="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/index.html">
+<meta property="og:title" content="FFmpeg示例程序注解-remuxing">
+<meta property="og:url" content="http://yoursite.com/2019/08/05/FFmpeg示例程序注解-remuxing/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="系统环境为Windows，开发环境为visual studio2015">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/1.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/2.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/3.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/4.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/5.png">
-<meta property="og:image" content="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/6.png">
-<meta property="og:updated_time" content="2019-07-31T03:14:29.684Z">
+<meta property="og:updated_time" content="2019-08-05T14:30:21.924Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Windows下ffmpeg开发环境配置">
-<meta name="twitter:description" content="系统环境为Windows，开发环境为visual studio2015">
-<meta name="twitter:image" content="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/1.png">
+<meta name="twitter:title" content="FFmpeg示例程序注解-remuxing">
 
 
 
@@ -127,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/08/05/FFmpeg示例程序注解-remuxing/"/>
 
 
 
 
 
-  <title>Windows下ffmpeg开发环境配置 | CoderZWei's blog</title>
+  <title>FFmpeg示例程序注解-remuxing | CoderZWei's blog</title>
   
 
 
@@ -270,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/16/Windows下ffmpeg开发环境配置/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/05/FFmpeg示例程序注解-remuxing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CoderZWei">
@@ -287,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Windows下ffmpeg开发环境配置</h1>
+          <h1 class="post-title" itemprop="name headline">FFmpeg示例程序注解-remuxing</h1>
         
 
         <div class="post-meta">
@@ -299,8 +288,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-16T19:35:23+08:00">
-                2018-11-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-08-05T22:30:21+08:00">
+                2019-08-05
               </time>
             
 
@@ -309,28 +298,6 @@
             
           </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -359,29 +326,7 @@
       
 
       
-        <p>系统环境为Windows，开发环境为visual studio2015</p>
-<a id="more"></a>
-<p>1、首先下载ffmpeg，从官网下载即可，总共分为三种类型：</p>
-<blockquote>
-<p>1）static：提供了静态版本的ffpmeg工具(三个exe可执行文件)，将依赖的库生成在了最终的可执行文件中</p>
-<p>2）share：该版本的工具包括可执行文件和dll动态库，程序运行过程必须依赖于提供的dll文件</p>
-<p>3）dev：提供了库的头文件和dll的引导库</p>
-</blockquote>
-<img src="/2018/11/16/Windows下ffmpeg开发环境配置/1.png">
-<p>2、将share版本中的bin目录路径加入path环境变量可在命令行中调用ffmpeg，注意其中要有dll</p>
-<p>3、注：此步骤使用的是dev版本中的文件</p>
-<p>新建visual studio 空项目，在属性管理器(可在 视图-&gt;其他窗口-&gt;属性管理器 打开)中的对应版本中右键-&gt;添加新项目属性表 (添加所需的ffmpeg文件)</p>
-<img src="/2018/11/16/Windows下ffmpeg开发环境配置/2.png">
-<p>1）在 C++ -&gt; 常规 -&gt; 附加包含目录 中添加include目录</p>
-<img src="/2018/11/16/Windows下ffmpeg开发环境配置/3.png">
-<p>2）在 链接器 -&gt; 常规 -&gt; 附加库目录 中添加lib目录</p>
-<img src="/2018/11/16/Windows下ffmpeg开发环境配置/4.png">
-<p>3）在 链接器 -&gt; 输入 -&gt; 附加依赖图 中添加lib目录下的lib库</p>
-<img src="/2018/11/16/Windows下ffmpeg开发环境配置/5.png">
-<p>以上可以生成配置文件，之后新建项目时引入此配置文件即可</p>
-<p>4、写代码测试</p>
-<img src="/2018/11/16/Windows下ffmpeg开发环境配置/6.png">
-
+        
       
     </div>
     
@@ -396,12 +341,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/音视频/" rel="tag"># 音视频</a>
-          
-        </div>
-      
 
       
       
@@ -411,8 +350,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/08/毕设总结/" rel="next" title="毕设总结">
-                <i class="fa fa-chevron-left"></i> 毕设总结
+              <a href="/2019/07/26/FFmpeg示例程序注解-muxing/" rel="next" title="FFmpeg示例程序注解-muxing">
+                <i class="fa fa-chevron-left"></i> FFmpeg示例程序注解-muxing
               </a>
             
           </div>
@@ -420,10 +359,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/09/Linux开发板网络设置/" rel="prev" title="Linux开发板网络设置">
-                Linux开发板网络设置 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
