@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="音视频," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
+<meta name="description" content="多客户端接受数据">
+<meta name="keywords" content="音视频">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FFmpeg示例程序注解-http_multiclient">
 <meta property="og:url" content="http://yoursite.com/2019/08/16/FFmpeg示例程序注解-http-multiclient/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="多客户端接受数据">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-08-16T07:07:16.690Z">
+<meta property="og:updated_time" content="2019-08-22T01:03:20.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="FFmpeg示例程序注解-http_multiclient">
+<meta name="twitter:description" content="多客户端接受数据">
 
 
 
@@ -299,6 +303,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -326,7 +352,10 @@
       
 
       
-        
+        <p>多客户端接受数据</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * @file</div><div class="line"> * libavformat multi-client network API usage example.</div><div class="line"> *</div><div class="line"> * @example http_multiclient.c</div><div class="line"> * This example will serve a file without decoding or demuxing it over http.</div><div class="line"> * Multiple clients can connect and will receive the same file.</div><div class="line"> */</div><div class="line"></div><div class="line">#include &lt;libavformat/avformat.h&gt;</div><div class="line">#include &lt;libavutil/opt.h&gt;</div><div class="line">#include &lt;unistd.h&gt;</div><div class="line"></div><div class="line">static void process_client(AVIOContext *client, const char *in_uri)</div><div class="line">&#123;</div><div class="line">    AVIOContext *input = NULL;</div><div class="line">    uint8_t buf[1024];</div><div class="line">    int ret, n, reply_code;</div><div class="line">    uint8_t *resource = NULL;</div><div class="line">    //avio_handshake:返回值大于0表示成功</div><div class="line">    while ((ret = avio_handshake(client)) &gt; 0) &#123;</div><div class="line">        av_opt_get(client, &quot;resource&quot;, AV_OPT_SEARCH_CHILDREN, &amp;resource);</div><div class="line">        // check for strlen(resource) is necessary, because av_opt_get()</div><div class="line">        // may return empty string.</div><div class="line">        if (resource &amp;&amp; strlen(resource))</div><div class="line">            break;</div><div class="line">        av_freep(&amp;resource);</div><div class="line">    &#125;</div><div class="line">    if (ret &lt; 0)</div><div class="line">        goto end;</div><div class="line">    av_log(client, AV_LOG_TRACE, &quot;resource=%p\n&quot;, resource);</div><div class="line">    if (resource &amp;&amp; resource[0] == &apos;/&apos; &amp;&amp; !strcmp((resource + 1), in_uri)) &#123;</div><div class="line">        reply_code = 200;</div><div class="line">    &#125; else &#123;</div><div class="line">        reply_code = AVERROR_HTTP_NOT_FOUND;</div><div class="line">    &#125;</div><div class="line">    if ((ret = av_opt_set_int(client, &quot;reply_code&quot;, reply_code, AV_OPT_SEARCH_CHILDREN)) &lt; 0) &#123;</div><div class="line">        av_log(client, AV_LOG_ERROR, &quot;Failed to set reply_code: %s.\n&quot;, av_err2str(ret));</div><div class="line">        goto end;</div><div class="line">    &#125;</div><div class="line">    av_log(client, AV_LOG_TRACE, &quot;Set reply code to %d\n&quot;, reply_code);</div><div class="line">    //avio_handshake:返回值大于0表示成功</div><div class="line">    while ((ret = avio_handshake(client)) &gt; 0);</div><div class="line"></div><div class="line">    if (ret &lt; 0)</div><div class="line">        goto end;</div><div class="line"></div><div class="line">    fprintf(stderr, &quot;Handshake performed.\n&quot;);</div><div class="line">    if (reply_code != 200)</div><div class="line">        goto end;</div><div class="line">    fprintf(stderr, &quot;Opening input file.\n&quot;);</div><div class="line">    //avio_open2：用于打开ffmpeg的输入输出文件</div><div class="line">    if ((ret = avio_open2(&amp;input, in_uri, AVIO_FLAG_READ, NULL, NULL)) &lt; 0) &#123;</div><div class="line">        av_log(input, AV_LOG_ERROR, &quot;Failed to open input: %s: %s.\n&quot;, in_uri,</div><div class="line">               av_err2str(ret));</div><div class="line">        goto end;</div><div class="line">    &#125;</div><div class="line">    for(;;) &#123;</div><div class="line">        //从AVIOContext中读数据入buf</div><div class="line">        n = avio_read(input, buf, sizeof(buf));</div><div class="line">        if (n &lt; 0) &#123;</div><div class="line">            if (n == AVERROR_EOF)</div><div class="line">                break;</div><div class="line">            av_log(input, AV_LOG_ERROR, &quot;Error reading from input: %s.\n&quot;,</div><div class="line">                   av_err2str(n));</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">        avio_write(client, buf, n);</div><div class="line">        avio_flush(client);</div><div class="line">    &#125;</div><div class="line">end:</div><div class="line">    fprintf(stderr, &quot;Flushing client\n&quot;);</div><div class="line">    avio_flush(client);</div><div class="line">    fprintf(stderr, &quot;Closing client\n&quot;);</div><div class="line">    avio_close(client);</div><div class="line">    fprintf(stderr, &quot;Closing input\n&quot;);</div><div class="line">    avio_close(input);</div><div class="line">    av_freep(&amp;resource);</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main(int argc, char **argv)</div><div class="line">&#123;</div><div class="line">    AVDictionary *options = NULL;</div><div class="line">    //AVIOContext是管理输入输出数据的结构体</div><div class="line">    AVIOContext *client = NULL, *server = NULL;</div><div class="line">    const char *in_uri, *out_uri;</div><div class="line">    int ret, pid;</div><div class="line">    av_log_set_level(AV_LOG_TRACE);</div><div class="line">    if (argc &lt; 3) &#123;</div><div class="line">        printf(&quot;usage: %s input http://hostname[:port]\n&quot;</div><div class="line">               &quot;API example program to serve http to multiple clients.\n&quot;</div><div class="line">               &quot;\n&quot;, argv[0]);</div><div class="line">        return 1;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    in_uri = argv[1];</div><div class="line">    out_uri = argv[2];</div><div class="line">    //avformat_network_init：初始化网络，加载socket库以及网络加密协议相关的库，为后续使用网络相关提供支持</div><div class="line">    avformat_network_init();</div><div class="line"></div><div class="line">    if ((ret = av_dict_set(&amp;options, &quot;listen&quot;, &quot;2&quot;, 0)) &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Failed to set listen mode for server: %s\n&quot;, av_err2str(ret));</div><div class="line">        return ret;</div><div class="line">    &#125;</div><div class="line">    //avio_open2：用于打开ffmpeg的输入输出文件</div><div class="line">    //1、server:函数调用成功后创建的AVIOContext结构体</div><div class="line">    //2、out_uri：输入输出协议的地址(或是文件地址)</div><div class="line">    //3、AVIO_FLAG_WRITE：只写</div><div class="line">    if ((ret = avio_open2(&amp;server, out_uri, AVIO_FLAG_WRITE, NULL, &amp;options)) &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Failed to open server: %s\n&quot;, av_err2str(ret));</div><div class="line">        return ret;</div><div class="line">    &#125;</div><div class="line">    fprintf(stderr, &quot;Entering main loop.\n&quot;);</div><div class="line">    for(;;) &#123;</div><div class="line">        //avio_accept：根据server创建其上的client，大于等于0表示成功</div><div class="line">        if ((ret = avio_accept(server, &amp;client)) &lt; 0)</div><div class="line">            goto end;</div><div class="line">        fprintf(stderr, &quot;Accepted client, forking process.\n&quot;);</div><div class="line">        // XXX: Since we don&apos;t reap our children and don&apos;t ignore signals</div><div class="line">        //      this produces zombie processes.</div><div class="line">        pid = fork();</div><div class="line">        if (pid &lt; 0) &#123;</div><div class="line">            perror(&quot;Fork failed&quot;);</div><div class="line">            ret = AVERROR(errno);</div><div class="line">            goto end;</div><div class="line">        &#125;</div><div class="line">        //子进程</div><div class="line">        if (pid == 0) &#123;</div><div class="line">            fprintf(stderr, &quot;In child.\n&quot;);</div><div class="line">            process_client(client, in_uri);</div><div class="line">            //avio_close:关闭AVIOContext访问的资源并释放它</div><div class="line">            avio_close(server);</div><div class="line">            exit(0);</div><div class="line">        &#125;</div><div class="line">        //父进程</div><div class="line">        if (pid &gt; 0)</div><div class="line">            avio_close(client);</div><div class="line">    &#125;</div><div class="line">end:</div><div class="line">    avio_close(server);</div><div class="line">    if (ret &lt; 0 &amp;&amp; ret != AVERROR_EOF) &#123;</div><div class="line">        fprintf(stderr, &quot;Some errors occurred: %s\n&quot;, av_err2str(ret));</div><div class="line">        return 1;</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -340,6 +369,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/音视频/" rel="tag"># 音视频</a>
+          
+        </div>
       
 
       
