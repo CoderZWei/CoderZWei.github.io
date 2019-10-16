@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="自定义布局两种引入方式： 第一种：自定义根布局的xml文件的根为自定义布局类MyLayout 1）直接在 父layout.xml 里include 自定义layout文件，在onFinishInflate()里获取子控件，不能在构造函数中获取 2）在 父layout.xml中不引入任何东西，在 父layout.java里addView（如  View view=(View)View.inflat">
+<meta name="description" content="记录Android自定义布局的实现方式">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android自定义布局注意事项">
 <meta property="og:url" content="http://yoursite.com/2019/06/21/Android自定义布局注意事项/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="自定义布局两种引入方式： 第一种：自定义根布局的xml文件的根为自定义布局类MyLayout 1）直接在 父layout.xml 里include 自定义layout文件，在onFinishInflate()里获取子控件，不能在构造函数中获取 2）在 父layout.xml中不引入任何东西，在 父layout.java里addView（如  View view=(View)View.inflat">
+<meta property="og:description" content="记录Android自定义布局的实现方式">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-07-30T08:23:08.925Z">
+<meta property="og:updated_time" content="2019-10-16T02:48:06.939Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android自定义布局注意事项">
-<meta name="twitter:description" content="自定义布局两种引入方式： 第一种：自定义根布局的xml文件的根为自定义布局类MyLayout 1）直接在 父layout.xml 里include 自定义layout文件，在onFinishInflate()里获取子控件，不能在构造函数中获取 2）在 父layout.xml中不引入任何东西，在 父layout.java里addView（如  View view=(View)View.inflat">
+<meta name="twitter:description" content="记录Android自定义布局的实现方式">
 
 
 
@@ -352,7 +352,8 @@
       
 
       
-        <a id="more"></a>
+        <p>记录Android自定义布局的实现方式</p>
+<a id="more"></a>
 <p>自定义布局两种引入方式：</p>
 <p>第一种：自定义根布局的xml文件的根为自定义布局类MyLayout</p>
 <p>1）直接在 父layout.xml 里include 自定义layout文件，在onFinishInflate()里获取子控件，不能在构造函数中获取</p>

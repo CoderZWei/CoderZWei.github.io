@@ -638,29 +638,14 @@
 
       
         
-          
-            <p>快捷键：</p>
-<p>1）Ctrl+F12：查看类中的所有变量、方法、内部类、内部接口。</p>
-<p>2）Ctrl+Tab：切换面板或文件，类似于Windows下的Alt+Tab</p>
-<p>3）Ctrl + N：快速查找类</p>
-<p>4）Ctrl+R：在当前文件中替换输入的内容</p>
-<p>5）Ctrl+Shift+R：全局替换</p>
-<p>6）Ctrl+Shift+F 或 Double Shift：全局搜索。Double Shift 搜索的范围更广，支持符号检索，除了Ctrl + N、Ctrl + Shift + N的检索内容外，还可以搜索到变量、资源id等</p>
-<p>7）Shift+F6：快速重命名。选中某个类、变量、资源id等之后，可以快速重命名，只要改动一个位置，其它地方也都会自动全部重命名。</p>
-<p>8）Alt+F7：快速查找某个类、方法、变量、资源id被调用的地方</p>
-<p>9）Ctrl+D：快速复制行</p>
-<p>10）Alt+Insert：快速插入代码。可以快速生成构造方法、Getter/Setter方法等</p>
-<p>11）Alt+Enter：快速修复错误</p>
-<p>12）Ctrl+Alt+Space：类名或接口名提示。输入一个不完整的类名或者接口名，按Ctrl + Alt + Space，会给出完整类名或接口名的提示</p>
-<p>13）Ctrl + Shift + I：快速查看某个方法、类、接口的内容。将鼠标光标定位到某个方法、类名、接口名，然后按Ctrl + Shift + I，将会在当前光标位置显示改方法、类、接口的内容</p>
-<p>14）Ctrl+P：显示参数信息</p>
-<p>15）Ctrl+/：单行注释</p>
-<p>16）Ctrl+Shift+/：多行注释</p>
-<p>17）Ctrl+Alt+O：优化导入的类和包</p>
-<p>18）Ctrl+F12：显示当前文件的结构</p>
-<p>19）Ctrl+H：显示类结构图</p>
-
-          
+          <p>记录Android Studio开发常用快捷键</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/25/Android开发调试相关/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -940,70 +925,14 @@
 
       
         
-          
-            <a id="more"></a>
-<p>创建分支（dev）：</p>
-<blockquote>
-<p>git branch dev</p>
-</blockquote>
-<p>切换分支：</p>
-<blockquote>
-<p>git checkout dev</p>
-</blockquote>
-<p>在本地创建新的分支并切换到此分支：</p>
-<blockquote>
-<p>git checkout -b dev   //git branch dev + git checkout dev</p>
-</blockquote>
-<p>将代码从仓库提交到远程库（不需要事先在远程库创建分支）：</p>
-<blockquote>
-<p>git push origin dev</p>
-</blockquote>
-<p>查看本地分支：</p>
-<blockquote>
-<p>git branch</p>
-</blockquote>
-<p>创建远程库的dev分支到本地：</p>
-<blockquote>
-<p>git checkout -b dev origin/dev</p>
-</blockquote>
-<p>将dev分支合并到某分支</p>
-<blockquote>
-<p>切换到目标分支，然后</p>
-<p>git merge dev</p>
-</blockquote>
-<p>删除dev分支：</p>
-<blockquote>
-<p>git branch -d dev</p>
-</blockquote>
-<p>在远程库创建仓库时有readme等文件时，本地需要和远程库同步</p>
-<blockquote>
-<p>1）在本地git init</p>
-<p>2）git remote add origin git@github.com:XXX/XXX.git 进行连接</p>
-<p>3）git pull origin master 将远程库文件拉下来</p>
-<p>4）git add </p>
-<p>5）git commit</p>
-<p>6）git push -u origin master</p>
-</blockquote>
-<p>变基(rebase)操作：</p>
-<blockquote>
-<p>git add XXX</p>
-<p>git commit XXX</p>
-<p>git rebase 分支名</p>
-<p>git push origin XXX</p>
-</blockquote>
-<p>merge和rebase区别：</p>
-<img class=".png">
-<p>处理冲突的方式：</p>
-<ul>
-<li><p>（一股脑）使用<code>merge</code>命令合并分支，解决完冲突，执行<code>git add .</code>和<code>git commit -m&#39;fix conflict&#39;</code>。这个时候会产生一个commit。</p>
-</li>
-<li><p>（交互式）使用<code>rebase</code>命令合并分支，解决完冲突，执行<code>git add .</code>和<code>git rebase --continue</code>，不会产生额外的commit。这样的好处是，‘干净’，分支上不会有无意义的解决分支的commit；坏处，如果合并的分支中存在多个<code>commit</code>，需要重复处理多次冲突。</p>
-<h5 id="注意："><a href="#注意：" class="headerlink" title="注意："></a>注意：</h5><p>1）不要在公共分支使用rebase</p>
-<p>2）本地和远端对应同一条分支,优先使用rebase,而不是merge</p>
-</li>
-</ul>
-
-          
+          <p>记录git使用中的常用命令</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/17/git相关/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
