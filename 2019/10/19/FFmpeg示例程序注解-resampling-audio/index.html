@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="音视频," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="音频重采样">
+<meta name="keywords" content="音视频">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg示例程序注解-resampling_audio">
+<meta property="og:url" content="http://yoursite.com/2019/10/19/FFmpeg示例程序注解-resampling-audio/index.html">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="音频重采样">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-10-19T15:33:24.874Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FFmpeg示例程序注解-resampling_audio">
+<meta name="twitter:description" content="音频重采样">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/10/19/FFmpeg示例程序注解-resampling-audio/"/>
+
+
+
+
+
+  <title>FFmpeg示例程序注解-resampling_audio | CoderZWei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CoderZWei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/19/FFmpeg示例程序注解-resampling-audio/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">FFmpeg示例程序注解-resampling_audio</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-19T23:32:09+08:00">
+                2019-10-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>音频重采样</p>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div></pre></td><td class="code"><pre><div class="line">#include &lt;libavutil/opt.h&gt;</div><div class="line">#include &lt;libavutil/channel_layout.h&gt;</div><div class="line">#include &lt;libavutil/samplefmt.h&gt;</div><div class="line">#include &lt;libswresample/swresample.h&gt;</div><div class="line"></div><div class="line">static int get_format_from_sample_fmt(const char **fmt,</div><div class="line">                                      enum AVSampleFormat sample_fmt)</div><div class="line">&#123;</div><div class="line">    int i;</div><div class="line">    struct sample_fmt_entry &#123;</div><div class="line">        enum AVSampleFormat sample_fmt; const char *fmt_be, *fmt_le;</div><div class="line">    &#125; sample_fmt_entries[] = &#123;</div><div class="line">        &#123; AV_SAMPLE_FMT_U8,  &quot;u8&quot;,    &quot;u8&quot;    &#125;,</div><div class="line">        &#123; AV_SAMPLE_FMT_S16, &quot;s16be&quot;, &quot;s16le&quot; &#125;,</div><div class="line">        &#123; AV_SAMPLE_FMT_S32, &quot;s32be&quot;, &quot;s32le&quot; &#125;,</div><div class="line">        &#123; AV_SAMPLE_FMT_FLT, &quot;f32be&quot;, &quot;f32le&quot; &#125;,</div><div class="line">        &#123; AV_SAMPLE_FMT_DBL, &quot;f64be&quot;, &quot;f64le&quot; &#125;,</div><div class="line">    &#125;;</div><div class="line">    *fmt = NULL;</div><div class="line"></div><div class="line">    for (i = 0; i &lt; FF_ARRAY_ELEMS(sample_fmt_entries); i++) &#123;</div><div class="line">        struct sample_fmt_entry *entry = &amp;sample_fmt_entries[i];</div><div class="line">        if (sample_fmt == entry-&gt;sample_fmt) &#123;</div><div class="line">            *fmt = AV_NE(entry-&gt;fmt_be, entry-&gt;fmt_le);</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    fprintf(stderr,</div><div class="line">            &quot;Sample format %s not supported as output format\n&quot;,</div><div class="line">            av_get_sample_fmt_name(sample_fmt));</div><div class="line">    return AVERROR(EINVAL);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Fill dst buffer with nb_samples, generated starting from t.</div><div class="line"> */</div><div class="line">static void fill_samples(double *dst, int nb_samples, int nb_channels, int sample_rate, double *t)</div><div class="line">&#123;</div><div class="line">    int i, j;</div><div class="line">    double tincr = 1.0 / sample_rate, *dstp = dst;</div><div class="line">    const double c = 2 * M_PI * 440.0;</div><div class="line"></div><div class="line">    /* generate sin tone with 440Hz frequency and duplicated channels */</div><div class="line">    for (i = 0; i &lt; nb_samples; i++) &#123;</div><div class="line">        *dstp = sin(c * *t);</div><div class="line">        for (j = 1; j &lt; nb_channels; j++)</div><div class="line">            dstp[j] = dstp[0];</div><div class="line">        dstp += nb_channels;</div><div class="line">        *t += tincr;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int main(int argc, char **argv)</div><div class="line">&#123;   </div><div class="line">    //AV_CH_LAYOUT_STEREO:stereo   AV_CH_LAYOUT_SURROUND:3.0</div><div class="line">    //channel_layout是一个64位整数，每个值为1的位对应一个通道。在channel_layout.h中定义</div><div class="line">    //channel_layout中定义了音频中每一通道对应的index(plannar格式)或各个通道是以怎样的顺序交织存储的(packed格式)</div><div class="line">    int64_t src_ch_layout = AV_CH_LAYOUT_STEREO, dst_ch_layout = AV_CH_LAYOUT_SURROUND;</div><div class="line">    //源采样率 目标采样率</div><div class="line">    int src_rate = 48000, dst_rate = 44100;</div><div class="line">    uint8_t **src_data = NULL, **dst_data = NULL;</div><div class="line">    //源通道数  目标通道数</div><div class="line">    int src_nb_channels = 0, dst_nb_channels = 0;</div><div class="line">    int src_linesize, dst_linesize;</div><div class="line">    int src_nb_samples = 1024, dst_nb_samples, max_dst_nb_samples;</div><div class="line">    enum AVSampleFormat src_sample_fmt = AV_SAMPLE_FMT_DBL, dst_sample_fmt = AV_SAMPLE_FMT_S16;</div><div class="line">    const char *dst_filename = NULL;</div><div class="line">    FILE *dst_file;</div><div class="line">    int dst_bufsize;</div><div class="line">    const char *fmt;</div><div class="line"></div><div class="line">    struct SwrContext *swr_ctx;</div><div class="line">    double t;</div><div class="line">    int ret;</div><div class="line"></div><div class="line">    if (argc != 2) &#123;</div><div class="line">        fprintf(stderr, &quot;Usage: %s output_file\n&quot;</div><div class="line">                &quot;API example program to show how to resample an audio stream with libswresample.\n&quot;</div><div class="line">                &quot;This program generates a series of audio frames, resamples them to a specified &quot;</div><div class="line">                &quot;output format and rate and saves them to an output file named output_file.\n&quot;,</div><div class="line">            argv[0]);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line">    dst_filename = argv[1];</div><div class="line"></div><div class="line">    dst_file = fopen(dst_filename, &quot;wb&quot;);</div><div class="line">    if (!dst_file) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not open destination file %s\n&quot;, dst_filename);</div><div class="line">        exit(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* create resampler context */</div><div class="line">    //创建SwrContext结构体</div><div class="line">    swr_ctx = swr_alloc();</div><div class="line">    if (!swr_ctx) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not allocate resampler context\n&quot;);</div><div class="line">        ret = AVERROR(ENOMEM);</div><div class="line">        goto end;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* 设置SwrContext参数 resample上下文*/</div><div class="line">    av_opt_set_int(swr_ctx, &quot;in_channel_layout&quot;,    src_ch_layout, 0);//源的channel_layout</div><div class="line">    av_opt_set_int(swr_ctx, &quot;in_sample_rate&quot;,       src_rate, 0);//源的采样率</div><div class="line">    av_opt_set_sample_fmt(swr_ctx, &quot;in_sample_fmt&quot;, src_sample_fmt, 0);//源的采样格式</div><div class="line"></div><div class="line">    av_opt_set_int(swr_ctx, &quot;out_channel_layout&quot;,    dst_ch_layout, 0);</div><div class="line">    av_opt_set_int(swr_ctx, &quot;out_sample_rate&quot;,       dst_rate, 0);</div><div class="line">    av_opt_set_sample_fmt(swr_ctx, &quot;out_sample_fmt&quot;, dst_sample_fmt, 0);</div><div class="line"></div><div class="line">    /* initialize the resampling context */</div><div class="line">    //初始化SwrContext</div><div class="line">    if ((ret = swr_init(swr_ctx)) &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Failed to initialize the resampling context\n&quot;);</div><div class="line">        goto end;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* allocate source and destination samples buffers */</div><div class="line">    //根据通道的layout返回通道的个数</div><div class="line">    src_nb_channels = av_get_channel_layout_nb_channels(src_ch_layout);</div><div class="line">    //av_samples_alloc_array_and_samples：根据音频格式分配相应大小的内存空间</div><div class="line">    //创建源数据空间</div><div class="line">    ret = av_samples_alloc_array_and_samples(&amp;src_data, &amp;src_linesize, src_nb_channels,</div><div class="line">                                             src_nb_samples, src_sample_fmt, 0);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not allocate source samples\n&quot;);</div><div class="line">        goto end;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /* compute the number of converted samples: buffering is avoided</div><div class="line">     * ensuring that the output buffer will contain at least all the</div><div class="line">     * converted input samples */</div><div class="line">     ////av_rescale_rnd是按指定的舍入方式计算a*b/c</div><div class="line">     //计算目标采样数</div><div class="line">    max_dst_nb_samples = dst_nb_samples =</div><div class="line">        av_rescale_rnd(src_nb_samples, dst_rate, src_rate, AV_ROUND_UP);</div><div class="line"></div><div class="line">    /* buffer is going to be directly written to a rawaudio file, no alignment */</div><div class="line">    dst_nb_channels = av_get_channel_layout_nb_channels(dst_ch_layout);</div><div class="line">    //创建目标数据空间</div><div class="line">    ret = av_samples_alloc_array_and_samples(&amp;dst_data, &amp;dst_linesize, dst_nb_channels,</div><div class="line">                                             dst_nb_samples, dst_sample_fmt, 0);</div><div class="line">    if (ret &lt; 0) &#123;</div><div class="line">        fprintf(stderr, &quot;Could not allocate destination samples\n&quot;);</div><div class="line">        goto end;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    t = 0;</div><div class="line">    do &#123;</div><div class="line">        /* generate synthetic audio */</div><div class="line">        //根据参数创造10秒音频数据</div><div class="line">        fill_samples((double *)src_data[0], src_nb_samples, src_nb_channels, src_rate, &amp;t);</div><div class="line">        //swr_get_delay得到输入sample和输出sample之间的延迟</div><div class="line">        /* compute destination number of samples */</div><div class="line">        dst_nb_samples = av_rescale_rnd(swr_get_delay(swr_ctx, src_rate) +</div><div class="line">                                        src_nb_samples, dst_rate, src_rate, AV_ROUND_UP);</div><div class="line">        if (dst_nb_samples &gt; max_dst_nb_samples) &#123;</div><div class="line">            //释放内存</div><div class="line">            av_freep(&amp;dst_data[0]);</div><div class="line">            //重新开辟内存，用于调整大小，防止dst_data太小无法存放dst_sample</div><div class="line">            ret = av_samples_alloc(dst_data, &amp;dst_linesize, dst_nb_channels,</div><div class="line">                                   dst_nb_samples, dst_sample_fmt, 1);</div><div class="line">            if (ret &lt; 0)</div><div class="line">                break;</div><div class="line">            max_dst_nb_samples = dst_nb_samples;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        /* convert to destination format */</div><div class="line">        //针对每一帧音频的处理，把一帧帧的音频作相应的重采样</div><div class="line">        //输入参数：1）音频重采样上下文SwrContext 2）输出数组的指针 3）输出的样本数量，不是字节数，是单通道的样本数量 </div><div class="line">        //4）输入的数组，AVFrame解码出来的data 5）输入的单通道的样本数量</div><div class="line">        //成功则返回转换后的sample数量</div><div class="line">        ret = swr_convert(swr_ctx, dst_data, dst_nb_samples, (const uint8_t **)src_data, src_nb_samples);</div><div class="line">        if (ret &lt; 0) &#123;</div><div class="line">            fprintf(stderr, &quot;Error while converting\n&quot;);</div><div class="line">            goto end;</div><div class="line">        &#125;</div><div class="line">        //av_samples_get_buffer_size：计算出把这些sample保存起来所需要的缓存大小</div><div class="line">        dst_bufsize = av_samples_get_buffer_size(&amp;dst_linesize, dst_nb_channels,</div><div class="line">                                                 ret, dst_sample_fmt, 1);</div><div class="line">        if (dst_bufsize &lt; 0) &#123;</div><div class="line">            fprintf(stderr, &quot;Could not get sample buffer size\n&quot;);</div><div class="line">            goto end;</div><div class="line">        &#125;</div><div class="line">        printf(&quot;t:%f in:%d out:%d\n&quot;, t, src_nb_samples, ret);</div><div class="line">        fwrite(dst_data[0], 1, dst_bufsize, dst_file);</div><div class="line">    &#125; while (t &lt; 10);</div><div class="line"></div><div class="line">    if ((ret = get_format_from_sample_fmt(&amp;fmt, dst_sample_fmt)) &lt; 0)</div><div class="line">        goto end;</div><div class="line">    fprintf(stderr, &quot;Resampling succeeded. Play the output file with the command:\n&quot;</div><div class="line">            &quot;ffplay -f %s -channel_layout %&quot;PRId64&quot; -channels %d -ar %d %s\n&quot;,</div><div class="line">            fmt, dst_ch_layout, dst_nb_channels, dst_rate, dst_filename);</div><div class="line"></div><div class="line">end:</div><div class="line">    fclose(dst_file);</div><div class="line"></div><div class="line">    if (src_data)</div><div class="line">        av_freep(&amp;src_data[0]);</div><div class="line">    av_freep(&amp;src_data);</div><div class="line"></div><div class="line">    if (dst_data)</div><div class="line">        av_freep(&amp;dst_data[0]);</div><div class="line">    av_freep(&amp;dst_data);</div><div class="line"></div><div class="line">    swr_free(&amp;swr_ctx);</div><div class="line">    return ret &lt; 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/音视频/" rel="tag"># 音视频</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/10/17/FFmpeg示例程序注解-qsvdec/" rel="next" title="FFmpeg示例程序注解-qsvdec">
+                <i class="fa fa-chevron-left"></i> FFmpeg示例程序注解-qsvdec
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/panpan.jpg"
+                alt="CoderZWei" />
+            
+              <p class="site-author-name" itemprop="name">CoderZWei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CoderZWei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
