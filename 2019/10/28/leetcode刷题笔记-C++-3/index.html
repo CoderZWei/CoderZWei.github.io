@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="音视频," />
+  <meta name="keywords" content="算法," />
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="常见的视频文件有.mp4、.flv、.wmv格式等，但我们都知道这个文件中是既包括了音频序列又包含了视频(图像)序列的，事实上就是在这两者之上做了一个封装。">
-<meta name="keywords" content="音视频">
+<meta name="description" content="记录leetcode的上做过的一些题的解法思路">
+<meta name="keywords" content="算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="音视频编解码">
-<meta property="og:url" content="http://yoursite.com/2018/05/05/音视频编解码/index.html">
+<meta property="og:title" content="leetcode刷题笔记-C++_3">
+<meta property="og:url" content="http://yoursite.com/2019/10/28/leetcode刷题笔记-C++-3/index.html">
 <meta property="og:site_name" content="CoderZWei&#39;s blog">
-<meta property="og:description" content="常见的视频文件有.mp4、.flv、.wmv格式等，但我们都知道这个文件中是既包括了音频序列又包含了视频(图像)序列的，事实上就是在这两者之上做了一个封装。">
+<meta property="og:description" content="记录leetcode的上做过的一些题的解法思路">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://yoursite.com/2018/05/05/音视频编解码/process.png">
-<meta property="og:updated_time" content="2019-07-31T03:17:03.805Z">
+<meta property="og:updated_time" content="2019-10-28T06:36:16.817Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="音视频编解码">
-<meta name="twitter:description" content="常见的视频文件有.mp4、.flv、.wmv格式等，但我们都知道这个文件中是既包括了音频序列又包含了视频(图像)序列的，事实上就是在这两者之上做了一个封装。">
-<meta name="twitter:image" content="http://yoursite.com/2018/05/05/音视频编解码/process.png">
+<meta name="twitter:title" content="leetcode刷题笔记-C++_3">
+<meta name="twitter:description" content="记录leetcode的上做过的一些题的解法思路">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/05/05/音视频编解码/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/10/28/leetcode刷题笔记-C++-3/"/>
 
 
 
 
 
-  <title>音视频编解码 | CoderZWei's blog</title>
+  <title>leetcode刷题笔记-C++_3 | CoderZWei's blog</title>
   
 
 
@@ -265,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/05/音视频编解码/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/28/leetcode刷题笔记-C++-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CoderZWei">
@@ -282,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">音视频编解码</h1>
+          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-C++_3</h1>
         
 
         <div class="post-meta">
@@ -294,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-05T20:21:08+08:00">
-                2018-05-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-28T14:15:19+08:00">
+                2019-10-28
               </time>
             
 
@@ -354,226 +352,11 @@
       
 
       
-        <p>常见的视频文件有.mp4、.flv、.wmv格式等，但我们都知道这个文件中是既包括了音频序列又包含了视频(图像)序列的，事实上就是在这两者之上做了一个封装。</p>
+        <p>记录leetcode的上做过的一些题的解法思路</p>
 <a id="more"></a>
-<p>当视频播放器播放一个网络上的视频文件时，要经过以下步骤：解协议-&gt;解封装-&gt;解码音、视频-&gt;音、视频同步-&gt;送到音频、视频播放设备，流程如下：</p>
-<img src="/2018/05/05/音视频编解码/process.png">
-<p>在本地播放视频文件的时候，没有解封装这一过程。</p>
-<p><strong>解协议</strong>：将流媒体协议的数据，解析为标准的相应的封装格式数据。视音频在网络上传播的时候，常常采用各种流媒体协议，例如HTTP，RTMP，或是MMS等等。这些协议在传输视音频数据的同时，也会传输一些信令数据。这些信令数据包括对播放的控制（播放，暂停，停止），或者对网络状态的描述等。解协议的过程中会去除掉信令数据而只保留视音频数据。例如，采用RTMP协议传输的数据，经过解协议操作后，输出FLV格式的数据。</p>
-<p><strong>解封装</strong>：将输入的封装格式的数据，分离成为音频流压缩编码数据和视频流压缩编码数据。封装格式种类很多，例如MP4，MKV，RMVB，TS，FLV，AVI等等，它的作用就是将已经压缩编码的视频数据和音频数据按照一定的格式放到一起。例如，FLV格式的数据，经过解封装操作后，输出H.264编码的视频码流和AAC编码的音频码流。</p>
-<p><strong>解码</strong>：将视频/音频压缩编码数据，解码成为非压缩的视频/音频原始数据。音频的压缩编码标准包含AAC，MP3，AC-3等等，视频的压缩编码标准则包含H.264，MPEG2，VC-1等等。解码是整个系统中最重要也是最复杂的一个环节。通过解码，压缩编码的视频数据输出成为非压缩的颜色数据，例如YUV420P，RGB等等；压缩编码的音频数据输出成为非压缩的音频抽样数据，例如PCM数据。</p>
-<p><strong>视音频同步</strong>：根据解封装模块处理过程中获取到的参数信息，同步解码出来的视频和音频数据，并将视频音频数据送至系统的显卡和声卡播放出来。</p>
-<p><strong>流媒</strong>：多媒体的一种，是指在传送的时候可以边传边播，媒体供应商在网络上传输媒体数据的同时，用户可以一遍不断地接收并播放。比如在视频传输的时候，通过视频流的方式，不是一次将整个文件发送出去，而是将其按播放的时间顺序划分为小的片段，类似于图像中的帧，然后将这些片段依次发送给用户。</p>
-<p><strong>流媒体协议</strong>：是服务器与客户端之间通信遵循的规定，当前网络上主要的流媒体协议如下所示：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>推出机构</th>
-<th>传输层协议</th>
-<th>客户端</th>
-<th>目前使用领域</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RTSP+RTP</td>
-<td>IETF</td>
-<td>TCP+UDP</td>
-<td>VLC, WMP</td>
-<td>IPTV</td>
-</tr>
-<tr>
-<td>RTMP</td>
-<td>Adobe Inc.</td>
-<td>TCP</td>
-<td>Flash</td>
-<td>互联网直播</td>
-</tr>
-<tr>
-<td>RTMFP</td>
-<td>Adobe Inc.</td>
-<td>UDP</td>
-<td>Flash</td>
-<td>互联网直播</td>
-</tr>
-<tr>
-<td>MMS</td>
-<td>Microsoft Inc.</td>
-<td>TCP/UDP</td>
-<td>WMP</td>
-<td>互联网直播+点播</td>
-</tr>
-<tr>
-<td>HTTP</td>
-<td>WWW+IETF</td>
-<td>TCP</td>
-<td>Flash</td>
-<td>互联网点播</td>
-</tr>
-</tbody>
-</table>
-<p>RTSP+RTP经常用于IPTV领域。因为其采用UDP传输视音频，支持组播，效率较高。但其缺点是网络不好的情况下可能会丢包，影响视频观看质量。因而围绕IPTV的视频质量的研究还是挺多的。</p>
-<p><strong>封装格式</strong>：把视频码流和音频码流按照一定的格式存储在一个文件中，当前主流的封装格式如下所示：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>推出机构</th>
-<th>流媒体</th>
-<th>支持的视频编码</th>
-<th>支持的音频编码</th>
-<th>目前使用领域</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AVI</td>
-<td>Microsoft Inc.</td>
-<td>不支持</td>
-<td>几乎所有格式</td>
-<td>几乎所有格式</td>
-<td>BT下载影视</td>
-</tr>
-<tr>
-<td>MP4</td>
-<td>MPEG</td>
-<td>支持</td>
-<td>MPEG-2, MPEG-4, H.264, H.263等</td>
-<td>AAC, MPEG-1 Layers I, II, III, AC-3等</td>
-<td>互联网视频网站</td>
-</tr>
-<tr>
-<td>TS</td>
-<td>MPEG</td>
-<td>支持</td>
-<td>MPEG-1, MPEG-2, MPEG-4, H.264</td>
-<td>MPEG-1 Layers I, II, III, AAC,</td>
-<td>IPTV，数字电视</td>
-</tr>
-<tr>
-<td>FLV</td>
-<td>Adobe Inc.</td>
-<td>支持</td>
-<td>Sorenson, VP6, H.264</td>
-<td>MP3, ADPCM, Linear PCM, AAC等</td>
-<td>互联网视频网站</td>
-</tr>
-<tr>
-<td>MKV</td>
-<td>CoreCodec Inc.</td>
-<td>支持</td>
-<td>几乎所有格式</td>
-<td>几乎所有格式</td>
-<td>互联网视频网站</td>
-</tr>
-<tr>
-<td>RMVB</td>
-<td>Real Networks Inc.</td>
-<td>支持</td>
-<td>RealVideo 8, 9, 10</td>
-<td>AAC, Cook Codec, RealAudio Lossless</td>
-<td>BT下载影视</td>
-</tr>
-</tbody>
-</table>
-<p>由表可见，除了AVI之外，其他封装格式都支持流媒体，即可以“边下边播”。有些格式更“万能”一些，支持的视音频编码标准多一些，比如MKV。而有些格式则支持的相对比较少，比如说RMVB。</p>
-<p><strong>视频编码</strong>：将视频像素数据(RGB，YUV)压缩成为视频码流，如果视频不经过压缩而是以一帧一帧图像进行存储的话，视频文件会非常大，而视频压缩通过利用相邻帧之间的相似性和人眼的视觉延迟，将帧进行压缩编码编码存储，可以将视频文件大小缩小几百上千倍。当前主要的视频编码如下：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>推出机构</th>
-<th>推出时间</th>
-<th>目前使用领域</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>HEVC(H.265)</td>
-<td>MPEG/ITU-T</td>
-<td>2013</td>
-<td>研发中</td>
-</tr>
-<tr>
-<td>H.264</td>
-<td>MPEG/ITU-T</td>
-<td>2003</td>
-<td>各个领域</td>
-</tr>
-<tr>
-<td>MPEG4</td>
-<td>MPEG</td>
-<td>2001</td>
-<td>不温不火</td>
-</tr>
-<tr>
-<td>MPEG2</td>
-<td>MPEG</td>
-<td>1994</td>
-<td>数字电视</td>
-</tr>
-<tr>
-<td>VP9</td>
-<td>Google</td>
-<td>2013</td>
-<td>研发中</td>
-</tr>
-<tr>
-<td>VP8</td>
-<td>Google</td>
-<td>2008</td>
-<td>不普及</td>
-</tr>
-<tr>
-<td>VC-1</td>
-<td>Microsoft Inc.</td>
-<td>2006</td>
-<td>微软平台</td>
-</tr>
-</tbody>
-</table>
-<p><strong>音频编码</strong>：将音频采样数据(PCM等)压缩成为音频码流，作用同视频编码。当前主要的音频编码如下：</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>推出机构</th>
-<th>推出时间</th>
-<th>目前使用领域</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AAC</td>
-<td>MPEG</td>
-<td>1997</td>
-<td>各个领域（新）</td>
-</tr>
-<tr>
-<td>AC-3</td>
-<td>Dolby Inc.</td>
-<td>1992</td>
-<td>电影</td>
-</tr>
-<tr>
-<td>MP3</td>
-<td>MPEG</td>
-<td>1993</td>
-<td>各个领域（旧）</td>
-</tr>
-<tr>
-<td>WMA</td>
-<td>Microsoft Inc.</td>
-<td>1999</td>
-<td>微软平台</td>
-</tr>
-</tbody>
-</table>
-<p>音频编码流程：硬件采集-&gt;PCM编码-&gt;分帧(生成原始数据块，以帧的形式存在)-&gt;封装(AAC等)</p>
-<p>参考自：</p>
-<p><a href="https://blog.csdn.net/leixiaohua1020/article/details/18893769" target="_blank" rel="external">https://blog.csdn.net/leixiaohua1020/article/details/18893769</a></p>
-<p><a href="https://www.cnblogs.com/lidabo/p/7234671.html" target="_blank" rel="external">https://www.cnblogs.com/lidabo/p/7234671.html</a></p>
+<h5 id="384、打乱数组"><a href="#384、打乱数组" class="headerlink" title="384、打乱数组"></a>384、打乱数组</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">打乱一个没有重复元素的数组。</div><div class="line">示例:</div><div class="line">// 以数字集合 1, 2 和 3 初始化数组。</div><div class="line">int[] nums = &#123;1,2,3&#125;;</div><div class="line">Solution solution = new Solution(nums);</div><div class="line"></div><div class="line">// 打乱数组 [1,2,3] 并返回结果。任何 [1,2,3]的排列返回的概率应该相同。</div><div class="line">solution.shuffle();</div><div class="line"></div><div class="line">// 重设数组到它的初始状态[1,2,3]。</div><div class="line">solution.reset();</div><div class="line"></div><div class="line">// 随机返回数组[1,2,3]打乱后的结果。</div><div class="line">solution.shuffle();</div></pre></td></tr></table></figure>
+<p>解法：水塘抽样算法 <a href="https://cloud.tencent.com/developer/article/1376934" target="_blank" rel="external">https://cloud.tencent.com/developer/article/1376934</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">vector&lt;int&gt; v;</div><div class="line">Solution(vector&lt;int&gt;&amp; nums) &#123;</div><div class="line">    v=nums;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/** Resets the array to its original configuration and return it. */</div><div class="line">vector&lt;int&gt; reset() &#123;</div><div class="line">    return v;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/** Returns a random shuffling of the array. */</div><div class="line">vector&lt;int&gt; shuffle() &#123;</div><div class="line">     vector&lt;int&gt; res = v;</div><div class="line">    for (int i = 0; i &lt; res.size(); ++i) &#123;</div><div class="line">        int t = i + rand() % (res.size() - i);</div><div class="line">        swap(res[i], res[t]);</div><div class="line">    &#125;</div><div class="line">    return res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -591,7 +374,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/音视频/" rel="tag"># 音视频</a>
+            <a href="/tags/算法/" rel="tag"># 算法</a>
           
         </div>
       
@@ -604,8 +387,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/29/Android-JNI初探/" rel="next" title="Android JNI初探">
-                <i class="fa fa-chevron-left"></i> Android JNI初探
+              <a href="/2019/10/20/FFmpeg示例程序注解-scaling-video/" rel="next" title="FFmpeg示例程序注解-scaling_video">
+                <i class="fa fa-chevron-left"></i> FFmpeg示例程序注解-scaling_video
               </a>
             
           </div>
@@ -613,10 +396,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/05/05/AAC音频编码/" rel="prev" title="AAC音频编码">
-                AAC音频编码 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -668,8 +447,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -735,6 +523,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#384、打乱数组"><span class="nav-number">1.</span> <span class="nav-text">384、打乱数组</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
