@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="记录leetcode的上做过的一些题的解法思路(Java版本)，防止忘掉">
+<meta name="keywords" content="算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="leetcode刷题笔记-Java">
+<meta property="og:url" content="http://yoursite.com/2019/06/11/leetcode笔记-Java-1/index.html">
+<meta property="og:site_name" content="CoderZWei&#39;s blog">
+<meta property="og:description" content="记录leetcode的上做过的一些题的解法思路(Java版本)，防止忘掉">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-10T13:45:20.711Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="leetcode刷题笔记-Java">
+<meta name="twitter:description" content="记录leetcode的上做过的一些题的解法思路(Java版本)，防止忘掉">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/11/leetcode笔记-Java-1/"/>
+
+
+
+
+
+  <title>leetcode刷题笔记-Java | CoderZWei's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">CoderZWei's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            About
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/11/leetcode笔记-Java-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="CoderZWei">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/panpan.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CoderZWei's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">leetcode刷题笔记-Java</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-11T22:12:07+08:00">
+                2019-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>记录leetcode的上做过的一些题的解法思路(Java版本)，防止忘掉</p>
+<a id="more"></a>
+<h5 id="活字印刷"><a href="#活字印刷" class="headerlink" title="活字印刷"></a>活字印刷</h5><p>你有一套活字字模 <code>tiles</code>，其中每个字模上都刻有一个字母 <code>tiles[i]</code>。返回你可以印出的非空字母序列的数目。</p>
+<p><strong>示例 1：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">输入：&quot;AAB&quot;</div><div class="line">输出：8</div><div class="line">解释：可能的序列为 &quot;A&quot;, &quot;B&quot;, &quot;AA&quot;, &quot;AB&quot;, &quot;BA&quot;, &quot;AAB&quot;, &quot;ABA&quot;, &quot;BAA&quot;。</div></pre></td></tr></table></figure>
+<p><strong>示例 2：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">输入：&quot;AAABBC&quot;</div><div class="line">输出：188</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">    int res=0;</div><div class="line">    int[] visited;</div><div class="line">    public int numTilePossibilities(String tiles) &#123;</div><div class="line">    	if(tiles==null || tiles.length()==0)&#123;</div><div class="line">        	return 0;</div><div class="line">		&#125;</div><div class="line">        char[] arrayCh=tiles.toCharArray();</div><div class="line">        Arrays.sort(arrayCh);</div><div class="line">        tiles=new String(arrayCh);</div><div class="line"></div><div class="line">		visited=new int[tiles.length()];</div><div class="line">        for(int i=0;i&lt;visited.length;i++)&#123;</div><div class="line">            visited[i]=0;</div><div class="line">        &#125;</div><div class="line">		dfs(tiles,0);</div><div class="line">		return res;</div><div class="line">	&#125;</div><div class="line">    public void dfs(String tiles,int cur)&#123;</div><div class="line">        if(cur==tiles.length())&#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        for(int i=0;i&lt;tiles.length();i++)&#123;</div><div class="line">            if(visited[i]==1)&#123;</div><div class="line">                continue;</div><div class="line">            &#125;</div><div class="line">            if(i&gt;0 &amp;&amp; tiles.charAt(i)==tiles.charAt(i-1) &amp;&amp; visited[i-1]==0)					&#123;</div><div class="line">                continue;</div><div class="line">            &#125;</div><div class="line">            visited[i]=1;</div><div class="line">            res++;</div><div class="line">            dfs(tiles,cur+1);</div><div class="line">            visited[i]=0;</div><div class="line">        &#125;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="50、Pow-x-n"><a href="#50、Pow-x-n" class="headerlink" title="50、Pow(x,n)"></a>50、Pow(x,n)</h5><p>实现 pow(x, n) ，即计算 x 的 n 次幂函数。</p>
+<p>示例 1:</p>
+<p>输入: 2.00000, 10<br>输出: 1024.00000<br>示例 2:</p>
+<p>输入: 2.10000, 3<br>输出: 9.26100<br>示例 3:</p>
+<p>输入: 2.00000, -2<br>输出: 0.25000<br>解释: 2-2 = 1/22 = 1/4 = 0.25</p>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">class Solution &#123;</div><div class="line">1）</div><div class="line">	/*</div><div class="line">    //n可能会是int的负数的最大值，转为正数时会超过整型最大值，所以n为-2的31次方时不行</div><div class="line">    public double myPow(double x, int n) &#123;</div><div class="line">        boolean flag =true;</div><div class="line">        if(n&lt;0)&#123;</div><div class="line">            flag=false;</div><div class="line">            n=-n;</div><div class="line">        &#125;</div><div class="line">        double res=func(x,n);</div><div class="line">        if(flag==false)&#123;</div><div class="line">            res=1/res;</div><div class="line">        &#125;</div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">    double func(double x,int n)&#123;</div><div class="line">        if(n==0)&#123;</div><div class="line">            return 1;</div><div class="line">        &#125;</div><div class="line">        double tmp=func(x,n/2);</div><div class="line">        double res=tmp*tmp;</div><div class="line">        if(n%2==1)&#123;</div><div class="line">            res=res*x;</div><div class="line">        &#125;</div><div class="line">        return res;</div><div class="line">    &#125;*/</div><div class="line">2）    </div><div class="line">    public double myPow(double x, int n) &#123;</div><div class="line">        if(n==0)&#123;</div><div class="line">            return 1;</div><div class="line">        &#125;</div><div class="line">        double half=myPow(x,n/2);</div><div class="line">        if(n%2==0)&#123;</div><div class="line">            return half*half;</div><div class="line">        &#125;else if(n&gt;0)&#123;</div><div class="line">            return half*half*x;</div><div class="line">        &#125;else&#123;</div><div class="line">        	//负数时，除以一个x，因为相当于x(-[n/2])*x(-[n/2])/x 即n的负([n/2]+[n/2]+1)次</div><div class="line">            return half*half/x;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="95、不同的二叉搜索树II"><a href="#95、不同的二叉搜索树II" class="headerlink" title="95、不同的二叉搜索树II"></a>95、不同的二叉搜索树II</h5><p>给定一个整数 n，生成所有由 1 … n 为节点所组成的二叉搜索树。</p>
+<p>示例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">输入: 3</div><div class="line">输出:</div><div class="line">[</div><div class="line">  [1,null,3,2],</div><div class="line">  [3,2,null,1],</div><div class="line">  [3,1,null,null,2],</div><div class="line">  [2,1,3],</div><div class="line">  [1,null,2,null,3]</div><div class="line">]</div><div class="line">解释:</div><div class="line">以上的输出对应以下 5 种不同结构的二叉搜索树：</div><div class="line"></div><div class="line">   1         3     3      2      1</div><div class="line">    \       /     /      / \      \</div><div class="line">     3     2     1      1   3      2</div><div class="line">    /     /       \                 \</div><div class="line">   2     1         2                 3</div></pre></td></tr></table></figure>
+<p>解法：递归，左子树为[start,i-1]，右子树为[i+1,end]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * Definition for a binary tree node.</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">class Solution &#123;</div><div class="line">    public List&lt;TreeNode&gt; generateTrees(int n) &#123;</div><div class="line">        if(n==0)&#123;</div><div class="line">            return new ArrayList&lt;TreeNode&gt;();</div><div class="line">        &#125;</div><div class="line">        return helper(1,n);</div><div class="line">    &#125;</div><div class="line">    public ArrayList&lt;TreeNode&gt;helper(int start,int end)&#123;</div><div class="line">        ArrayList&lt;TreeNode&gt;res=new ArrayList&lt;TreeNode&gt;();</div><div class="line">        if(start&gt;end)&#123;</div><div class="line">            res.add(null);</div><div class="line">            return res;  </div><div class="line">        &#125;</div><div class="line">        for(int i=start;i&lt;=end;i++)&#123;</div><div class="line">            ArrayList&lt;TreeNode&gt; left=helper(start,i-1);</div><div class="line">            ArrayList&lt;TreeNode&gt; right=helper(i+1,end);</div><div class="line">            for(TreeNode lNode:left)&#123;</div><div class="line">                for(TreeNode rNode:right)&#123;</div><div class="line">                    TreeNode node=new TreeNode(i);</div><div class="line">                    node.left=lNode;</div><div class="line">                    node.right=rNode;</div><div class="line">                    res.add(node);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return res;</div><div class="line">    &#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="96、-不同的二叉搜索树"><a href="#96、-不同的二叉搜索树" class="headerlink" title="96、 不同的二叉搜索树"></a>96、 不同的二叉搜索树</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">给定一个整数 n，求以 1 ... n 为节点组成的二叉搜索树有多少种？</div><div class="line"></div><div class="line">示例:</div><div class="line"></div><div class="line">输入: 3</div><div class="line">输出: 5</div><div class="line">解释:</div><div class="line">给定 n = 3, 一共有 5 种不同结构的二叉搜索树:</div><div class="line"></div><div class="line">   1         3     3      2      1</div><div class="line">    \       /     /      / \      \</div><div class="line">     3     2     1      1   3      2</div><div class="line">    /     /       \                 \</div><div class="line">   2     1         2                 3</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>参考：<a href="https://www.cnblogs.com/grandyang/p/4299608.html" target="_blank" rel="external">https://www.cnblogs.com/grandyang/p/4299608.html</a></p>
+<p>构造递归式：</p>
+<blockquote>
+<p>dp[0]=dp[1]=1</p>
+<p>dp[2] =  dp[0] * dp[1]　　　(1为根的情况，则左子树一定不存在，右子树可以有一个数字)</p>
+<p>​           +dp[1] * dp[0]　　  (2为根的情况，则左子树可以有一个数字，右子树一定不存在)</p>
+<p>dp[3] =  dp[0] * dp[2]　　　(1为根的情况，则左子树一定不存在，右子树可以有两个数字)</p>
+<p>　　　　+ dp[1] * dp[1]　　  (2为根的情况，则左右子树都可以各有一个数字)</p>
+<p> 　　　  + dp[2] * dp[0]　　  (3为根的情况，则左子树可以有两个数字，右子树一定不存在</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public int numTrees(int n) &#123;</div><div class="line">        if(n==0 || n==1)&#123;</div><div class="line">            return 1;</div><div class="line">        &#125;</div><div class="line">        int[] dp=new int[n+1];</div><div class="line">        dp[0]=1;</div><div class="line">        dp[1]=1;</div><div class="line">        for(int i=2;i&lt;=n;i++)&#123;</div><div class="line">            for(int j=0;j&lt;i;j++)&#123;</div><div class="line">                dp[i]+=dp[j]*dp[i-j-1];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return dp[n];</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="71、-简化路径"><a href="#71、-简化路径" class="headerlink" title="71、 简化路径"></a>71、 简化路径</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">以 Unix 风格给出一个文件的绝对路径，你需要简化它。或者换句话说，将其转换为规范路径。</div><div class="line"></div><div class="line">在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；此外，两个点 （..） 表示将目录切换到上一级（指向父目录）；两者都可以是复杂相对路径的组成部分。更多信息请参阅：Linux / Unix中的绝对路径 vs 相对路径</div><div class="line"></div><div class="line">请注意，返回的规范路径必须始终以斜杠 / 开头，并且两个目录名之间必须只有一个斜杠 /。最后一个目录名（如果存在）不能以 / 结尾。此外，规范路径必须是表示绝对路径的最短字符串。</div><div class="line"></div><div class="line">示例 1：</div><div class="line">输入：&quot;/home/&quot;</div><div class="line">输出：&quot;/home&quot;</div><div class="line">解释：注意，最后一个目录名后面没有斜杠。</div><div class="line"></div><div class="line">示例 2：</div><div class="line">输入：&quot;/../&quot;</div><div class="line">输出：&quot;/&quot;</div><div class="line">解释：从根目录向上一级是不可行的，因为根是你可以到达的最高级。</div><div class="line"></div><div class="line">示例 3：</div><div class="line">输入：&quot;/home//foo/&quot;</div><div class="line">输出：&quot;/home/foo&quot;</div><div class="line">解释：在规范路径中，多个连续斜杠需要用一个斜杠替换。</div><div class="line"></div><div class="line">示例 4：</div><div class="line">输入：&quot;/a/./b/../../c/&quot;</div><div class="line">输出：&quot;/c&quot;</div><div class="line">示例 5：</div><div class="line"></div><div class="line">输入：&quot;/a/../../b/../c//.//&quot;</div><div class="line">输出：&quot;/c&quot;</div><div class="line"></div><div class="line">示例 6：</div><div class="line">输入：&quot;/a//b////c/d//././/..&quot;</div><div class="line">输出：&quot;/a/b/c&quot;</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>利用栈的思想，“..”就出栈，”.” 、“” 就跳过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public String simplifyPath(String path) &#123;</div><div class="line">       String[] strs=path.split(&quot;/&quot;);</div><div class="line">       ArrayList&lt;String&gt;list=new ArrayList&lt;String&gt;();</div><div class="line">       for(String t:strs)&#123;</div><div class="line">           if (!list.isEmpty() &amp;&amp; t.equals(&quot;..&quot;)) &#123;</div><div class="line">               list.remove(list.size()-1);</div><div class="line">           &#125; </div><div class="line">           else if (!t.equals(&quot;.&quot;) &amp;&amp; !t.equals(&quot;&quot;) &amp;&amp; !t.equals(&quot;..&quot;)) 			 &#123;</div><div class="line">               list.add(t);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       String res=&quot;/&quot;+String.join(&quot;/&quot;,list);</div><div class="line">       return res;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="75、颜色分类"><a href="#75、颜色分类" class="headerlink" title="75、颜色分类"></a>75、颜色分类</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">给定一个包含红色、白色和蓝色，一共 n 个元素的数组，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。</div><div class="line"></div><div class="line">此题中，我们使用整数 0、 1 和 2 分别表示红色、白色和蓝色。</div><div class="line"></div><div class="line">注意:</div><div class="line">不能使用代码库中的排序函数来解决这道题。</div><div class="line"></div><div class="line">示例:</div><div class="line"></div><div class="line">输入: [2,0,2,1,1,0]</div><div class="line">输出: [0,0,1,1,2,2]</div><div class="line">进阶：</div><div class="line"></div><div class="line">一个直观的解决方案是使用计数排序的两趟扫描算法。</div><div class="line">首先，迭代计算出0、1 和 2 元素的个数，然后按照0、1、2的排序，重写当前数组。</div><div class="line">你能想出一个仅使用常数空间的一趟扫描算法吗？</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>一遍扫描，遇0则移到前面，遇2则移到后面，通过两个变量start和end记录前后的位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">public void sortColors(int[] nums) &#123;</div><div class="line">       int start=0,end=nums.length-1;</div><div class="line">       for(int i=0;i&lt;=end;i++)&#123;</div><div class="line">       	//因为和0交换后的一定是1，所以不需要 i--</div><div class="line">           if(nums[i]==0 )&#123;</div><div class="line">               int tmp=nums[start];</div><div class="line">               nums[start]=nums[i];</div><div class="line">               nums[i]=tmp;</div><div class="line">               start++;</div><div class="line">           &#125;</div><div class="line">           //因为和2交换后的可能是0，所以需要 i--</div><div class="line">           else if(nums[i]==2 )&#123;</div><div class="line">                 int tmp=nums[end];</div><div class="line">               nums[end]=nums[i];</div><div class="line">               nums[i]=tmp;</div><div class="line">               end--;</div><div class="line">               i--;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>#####114、 二叉树展开为链表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">给定一个二叉树，原地将它展开为链表。</div><div class="line">例如，给定二叉树</div><div class="line">            1</div><div class="line">           / \</div><div class="line">          2   5</div><div class="line">         / \   \</div><div class="line">        3   4   6</div><div class="line">将其展开为：</div><div class="line">        1</div><div class="line">         \</div><div class="line">          2</div><div class="line">           \</div><div class="line">            3</div><div class="line">             \</div><div class="line">              4</div><div class="line">               \</div><div class="line">                5</div><div class="line">                 \</div><div class="line">                  6</div></pre></td></tr></table></figure>
+<p>解法：使用递归</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * public class TreeNode &#123;</div><div class="line"> *     int val;</div><div class="line"> *     TreeNode left;</div><div class="line"> *     TreeNode right;</div><div class="line"> *     TreeNode(int x) &#123; val = x; &#125;</div><div class="line"> * &#125;</div><div class="line"> */</div><div class="line">1)</div><div class="line">class Solution &#123;</div><div class="line">    public void flatten(TreeNode root) &#123;</div><div class="line">        if(root==null)&#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        if(root.left!=null)&#123;</div><div class="line">            flatten(root.left);</div><div class="line">        &#125;</div><div class="line">        if(root.right!=null)&#123;</div><div class="line">            flatten(root.right);</div><div class="line">        &#125;</div><div class="line">        TreeNode tmp=root.right;</div><div class="line">         root.right = root.left;</div><div class="line">        root.left=null;</div><div class="line">        while(root.right!=null)&#123;</div><div class="line">            root=root.right;</div><div class="line">        &#125;</div><div class="line">        root.right=tmp;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">2)非递归</div><div class="line">	从根节点开始出发，先检测其左子结点是否存在，如存在则将根节点和其右子节点断开，将左子结点及其后面所有结构一起连到原右子节点的位置，把原右子节点连到元左子结点最后面的右子节点之后。</div><div class="line"> void flatten(TreeNode *root) &#123;</div><div class="line">        TreeNode *cur = root;</div><div class="line">        while (cur) &#123;</div><div class="line">            if (cur-&gt;left) &#123;</div><div class="line">                TreeNode *p = cur-&gt;left;</div><div class="line">                while (p-&gt;right) p = p-&gt;right;</div><div class="line">                p-&gt;right = cur-&gt;right;</div><div class="line">                cur-&gt;right = cur-&gt;left;</div><div class="line">                cur-&gt;left = NULL;</div><div class="line">            &#125;</div><div class="line">            cur = cur-&gt;right;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="112、路径总和"><a href="#112、路径总和" class="headerlink" title="112、路径总和"></a>112、路径总和</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。</div><div class="line"></div><div class="line">说明: 叶子节点是指没有子节点的节点。</div><div class="line"></div><div class="line">示例: </div><div class="line">给定如下二叉树，以及目标和 sum = 22，</div><div class="line"></div><div class="line">              5</div><div class="line">             / \</div><div class="line">            4   8</div><div class="line">           /   / \</div><div class="line">          11  13  4</div><div class="line">         /  \      \</div><div class="line">        7    2      1</div><div class="line">返回 true, 因为存在目标和为 22 的根节点到叶子节点的路径 5-&gt;4-&gt;11-&gt;2。</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>​    使用深搜</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public boolean hasPathSum(TreeNode root, int sum) &#123;</div><div class="line">        if(root==null)&#123;</div><div class="line">            return false;</div><div class="line">        &#125;</div><div class="line">        return dfs(root,0,sum);</div><div class="line">    &#125;</div><div class="line">    boolean dfs(TreeNode root,int tmp,int sum)&#123;</div><div class="line">        if(root==null)&#123;</div><div class="line">            return false;</div><div class="line">        &#125;</div><div class="line">        tmp=tmp+root.val;</div><div class="line">        if(root.left==null &amp;&amp; root.right==null &amp;&amp; tmp==sum)&#123;</div><div class="line">                return true;</div><div class="line">        &#125;</div><div class="line">         return dfs(root.left,tmp,sum)||dfs(root.right,tmp,sum);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="67、二进制求和"><a href="#67、二进制求和" class="headerlink" title="67、二进制求和"></a>67、二进制求和</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">给定两个二进制字符串，返回他们的和（用二进制表示）。</div><div class="line"></div><div class="line">输入为非空字符串且只包含数字 1 和 0。</div><div class="line"></div><div class="line">示例 1:</div><div class="line"></div><div class="line">输入: a = &quot;11&quot;, b = &quot;1&quot;</div><div class="line">输出: &quot;100&quot;</div><div class="line">示例 2:</div><div class="line"></div><div class="line">输入: a = &quot;1010&quot;, b = &quot;1011&quot;</div><div class="line">输出: &quot;10101&quot;</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>从右向左遍历，遇1+1则进位</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">1)</div><div class="line"> public String addBinary(String a, String b) &#123;</div><div class="line">        int m=a.length()-1,n=b.length()-1;</div><div class="line">        String res=&quot;&quot;;</div><div class="line">        int add=0;</div><div class="line">        while(m&gt;=0 &amp;&amp; n&gt;=0)&#123;</div><div class="line">            res=((a.charAt(m)-&apos;0&apos;)+(b.charAt(n)-&apos;0&apos;)+add)%2+res;</div><div class="line">            add=((a.charAt(m)-&apos;0&apos;)+(b.charAt(n)-&apos;0&apos;)+add)/2;</div><div class="line">            m--;</div><div class="line">            n--;</div><div class="line">        &#125;</div><div class="line">        if(m&gt;=0)&#123;</div><div class="line">            for(int i=m;i&gt;=0;i--)&#123;</div><div class="line">                res=((a.charAt(i)-&apos;0&apos;)+add)%2+res;</div><div class="line">                add=((a.charAt(i)-&apos;0&apos;)+add)/2;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if(n&gt;=0)&#123;</div><div class="line">             for(int i=n;i&gt;=0;i--)&#123;</div><div class="line">                 res=((b.charAt(i)-&apos;0&apos;)+add)%2+res;</div><div class="line">                add=((b.charAt(i)-&apos;0&apos;)+add)/2;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if(add==1)&#123;</div><div class="line">            res=&quot;1&quot;+res;</div><div class="line">        &#125;</div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">2)</div><div class="line"> string addBinary(string a, string b) &#123;</div><div class="line">        string res = &quot;&quot;;</div><div class="line">        int m = a.size() - 1, n = b.size() - 1, carry = 0;</div><div class="line">        while (m &gt;= 0 || n &gt;= 0) &#123;</div><div class="line">            int p = m &gt;= 0 ? a[m--] - &apos;0&apos; : 0;</div><div class="line">            int q = n &gt;= 0 ? b[n--] - &apos;0&apos; : 0;</div><div class="line">            int sum = p + q + carry;</div><div class="line">            res = to_string(sum % 2) + res;</div><div class="line">            carry = sum / 2;</div><div class="line">        &#125;</div><div class="line">        return carry == 1 ? &quot;1&quot; + res : res;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="77、组合"><a href="#77、组合" class="headerlink" title="77、组合"></a>77、组合</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。</div><div class="line"></div><div class="line">示例:</div><div class="line"></div><div class="line">输入: n = 4, k = 2</div><div class="line">输出:</div><div class="line">[</div><div class="line">  [2,4],</div><div class="line">  [3,4],</div><div class="line">  [2,3],</div><div class="line">  [1,2],</div><div class="line">  [1,3],</div><div class="line">  [1,4],</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>使用深搜，因为结果是按顺序的，所以用level记录起点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public List&lt;List&lt;Integer&gt;&gt; combine(int n, int k) &#123;</div><div class="line">      List&lt;List&lt;Integer&gt;&gt;res=new ArrayList&lt;&gt;();</div><div class="line">      if(n==0 || k==0)&#123;</div><div class="line">          return res;</div><div class="line">      &#125;</div><div class="line">      List&lt;Integer&gt;tmp=new ArrayList&lt;Integer&gt;();</div><div class="line">      int visited[]=new int[n+1];</div><div class="line">      dfs(res,tmp,visited,1,n,k);</div><div class="line">      return res;</div><div class="line">  &#125;</div><div class="line">  void dfs(List&lt;List&lt;Integer&gt;&gt;res,List&lt;Integer&gt;tmp,int[]visited,int level,int n,int k)&#123;</div><div class="line">      if(tmp.size()==k)&#123;</div><div class="line">          res.add(new ArrayList&lt;&gt;(tmp));</div><div class="line">          return;</div><div class="line">      &#125;</div><div class="line">      for(int i=level;i&lt;=n;i++)&#123;</div><div class="line">          if(visited[i]==0)&#123;</div><div class="line">              visited[i]=1;</div><div class="line">              tmp.add(i);</div><div class="line">              dfs(res,tmp,visited,i+1,n,k);</div><div class="line">              tmp.remove(tmp.size()-1);</div><div class="line">              visited[i]=0;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h5 id="100、相同的树"><a href="#100、相同的树" class="headerlink" title="100、相同的树"></a>100、相同的树</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">给定两个二叉树，编写一个函数来检验它们是否相同。</div><div class="line"></div><div class="line">如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的。</div><div class="line"></div><div class="line">示例 1:</div><div class="line"></div><div class="line">输入:       1         1</div><div class="line">          / \       / \</div><div class="line">         2   3     2   3</div><div class="line"></div><div class="line">        [1,2,3],   [1,2,3]</div><div class="line"></div><div class="line">输出: true</div><div class="line">示例 2:</div><div class="line"></div><div class="line">输入:      1          1</div><div class="line">          /           \</div><div class="line">         2             2</div><div class="line"></div><div class="line">        [1,2],     [1,null,2]</div><div class="line"></div><div class="line">输出: false</div><div class="line">示例 3:</div><div class="line"></div><div class="line">输入:       1         1</div><div class="line">          / \       / \</div><div class="line">         2   1     1   2</div><div class="line"></div><div class="line">        [1,2,1],   [1,1,2]</div><div class="line"></div><div class="line">输出: false</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public boolean isSameTree(TreeNode p, TreeNode q) &#123;</div><div class="line">       if(p==null &amp;&amp; q==null)&#123;</div><div class="line">           return true;</div><div class="line">       &#125;</div><div class="line">       </div><div class="line">       if(p==null || q==null || p.val!=q.val)&#123;</div><div class="line">           return false;</div><div class="line">       &#125;</div><div class="line">       return isSameTree(p.left,q.left)&amp;&amp;isSameTree(p.right,q.right);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="74、搜索二维矩阵"><a href="#74、搜索二维矩阵" class="headerlink" title="74、搜索二维矩阵"></a>74、搜索二维矩阵</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。该矩阵具有如下特性：</div><div class="line"></div><div class="line">每行中的整数从左到右按升序排列。</div><div class="line">每行的第一个整数大于前一行的最后一个整数。</div><div class="line">示例 1:</div><div class="line"></div><div class="line">输入:</div><div class="line">matrix = [</div><div class="line">  [1,   3,  5,  7],</div><div class="line">  [10, 11, 16, 20],</div><div class="line">  [23, 30, 34, 50]</div><div class="line">]</div><div class="line">target = 3</div><div class="line">输出: true</div><div class="line">示例 2:</div><div class="line"></div><div class="line">输入:</div><div class="line">matrix = [</div><div class="line">  [1,   3,  5,  7],</div><div class="line">  [10, 11, 16, 20],</div><div class="line">  [23, 30, 34, 50]</div><div class="line">]</div><div class="line">target = 13</div><div class="line">输出: false</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>先用二分搜索法找到第一列中最后一个不大于target的数，然后在此行中二分搜索target</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">//https://www.cnblogs.com/grandyang/p/4323301.html</div><div class="line">bool searchMatrix(vector&lt;vector&lt;int&gt;&gt;&amp; matrix, int target) &#123;</div><div class="line">        if (matrix.empty() || matrix[0].empty()) return false;</div><div class="line">        int left = 0, right = matrix.size();</div><div class="line">        while (left &lt; right) &#123;</div><div class="line">            int mid = (left + right) / 2;</div><div class="line">            if (matrix[mid][0] == target) return true;</div><div class="line">            if (matrix[mid][0] &lt;= target) left = mid + 1;</div><div class="line">            else right = mid;</div><div class="line">        &#125;</div><div class="line">        int tmp = (right &gt; 0) ? (right - 1) : right;</div><div class="line">        left = 0;</div><div class="line">        right = matrix[tmp].size();</div><div class="line">        while (left &lt; right) &#123;</div><div class="line">            int mid = (left + right) / 2;</div><div class="line">            if (matrix[tmp][mid] == target) return true;</div><div class="line">            if (matrix[tmp][mid] &lt; target) left = mid + 1;</div><div class="line">            else right = mid;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="106、从中序与后序遍历序列构造二叉树"><a href="#106、从中序与后序遍历序列构造二叉树" class="headerlink" title="106、从中序与后序遍历序列构造二叉树"></a>106、从中序与后序遍历序列构造二叉树</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">根据一棵树的中序遍历与后序遍历构造二叉树。</div><div class="line"></div><div class="line">注意:</div><div class="line">你可以假设树中没有重复的元素。</div><div class="line"></div><div class="line">例如，给出</div><div class="line"></div><div class="line">中序遍历 inorder = [9,3,15,20,7]</div><div class="line">后序遍历 postorder = [9,15,7,20,3]</div><div class="line">返回如下的二叉树：</div><div class="line"></div><div class="line">    3</div><div class="line">   / \</div><div class="line">  9  20</div><div class="line">    /  \</div><div class="line">   15   7</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>根据后序遍历的最后一个节点对后序序列和中序序列进行分割处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public TreeNode buildTree(int[] inorder, int[] postorder) &#123;</div><div class="line">     TreeNode root=null;</div><div class="line">     if(inorder.length==0)&#123;</div><div class="line">         return root;</div><div class="line">     &#125;</div><div class="line">     return func(inorder,0,inorder.length-1,postorder,0,postorder.length-1);</div><div class="line"> &#125;</div><div class="line"> TreeNode func(int []inorder,int startI,int endI,int []postorder,int startP,int endP)&#123;</div><div class="line">     if(startI&gt;endI || startP&gt;endP)&#123;</div><div class="line">         return null;</div><div class="line">     &#125;</div><div class="line">     TreeNode root=new TreeNode(postorder[endP]);</div><div class="line">     for(int i=startI;i&lt;=endI;i++)&#123;</div><div class="line">         if(inorder[i]==postorder[endP])&#123;</div><div class="line">             root.left=func(inorder,startI,i-1,postorder,startP,startP+(i-startI)-1);</div><div class="line">             root.right=func(inorder,i+1,endI,postorder,startP+(i-startI),endP-1);</div><div class="line">             break;</div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line">     return root;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h5 id="107、二叉树的层次遍历-II"><a href="#107、二叉树的层次遍历-II" class="headerlink" title="107、二叉树的层次遍历 II"></a>107、二叉树的层次遍历 II</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">给定一个二叉树，返回其节点值自底向上的层次遍历。 （即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）</div><div class="line"></div><div class="line">例如：</div><div class="line">给定二叉树 [3,9,20,null,null,15,7],</div><div class="line"></div><div class="line">    3</div><div class="line">   / \</div><div class="line">  9  20</div><div class="line">    /  \</div><div class="line">   15   7</div><div class="line">返回其自底向上的层次遍历为：</div><div class="line"></div><div class="line">[</div><div class="line">  [15,7],</div><div class="line">  [9,20],</div><div class="line">  [3]</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>每层加入的时候加入到首位，就成了逆序层次遍历</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">public List&lt;List&lt;Integer&gt;&gt; levelOrderBottom(TreeNode root) &#123;</div><div class="line">       List&lt;List&lt;Integer&gt;&gt;res=new ArrayList&lt;&gt;();</div><div class="line">       if(root==null)&#123;</div><div class="line">           return res;</div><div class="line">       &#125;</div><div class="line">       List&lt;TreeNode&gt;tmp=new ArrayList&lt;TreeNode&gt;();</div><div class="line">       tmp.add(root);</div><div class="line">       int length;</div><div class="line">       while(tmp.size()&gt;0)&#123;</div><div class="line">           length=tmp.size();</div><div class="line">           List&lt;Integer&gt;oneRow=new ArrayList&lt;Integer&gt;();</div><div class="line">           for(int i=0;i&lt;length;i++)&#123;</div><div class="line">               oneRow.add(tmp.get(0).val);</div><div class="line">               if(tmp.get(0).left!=null)&#123;</div><div class="line">                   tmp.add(tmp.get(0).left);</div><div class="line">               &#125;</div><div class="line">                if(tmp.get(0).right!=null)&#123;</div><div class="line">                   tmp.add(tmp.get(0).right);</div><div class="line">               &#125;</div><div class="line">               tmp.remove(0);</div><div class="line">           &#125;</div><div class="line">           res.add(0,oneRow);</div><div class="line">       &#125;</div><div class="line">       return res;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="219、存在重复元素-II"><a href="#219、存在重复元素-II" class="headerlink" title="219、存在重复元素 II"></a>219、存在重复元素 II</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">给定一个整数数组和一个整数 k，判断数组中是否存在两个不同的索引 i 和 j，使得 nums [i] = nums [j]，并且 i 和 j 的差的绝对值最大为 k。</div><div class="line"></div><div class="line">示例 1:</div><div class="line"></div><div class="line">输入: nums = [1,2,3,1], k = 3</div><div class="line">输出: true</div><div class="line">示例 2:</div><div class="line"></div><div class="line">输入: nums = [1,0,1,1], k = 1</div><div class="line">输出: true</div><div class="line">示例 3:</div><div class="line"></div><div class="line">输入: nums = [1,2,3,1,2,3], k = 2</div><div class="line">输出: false</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>使用map存储元素的最后一个下标，直接每一个遍历的话会超时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public boolean containsNearbyDuplicate(int[] nums, int k) &#123;</div><div class="line">       Map&lt;Integer,Integer&gt;map=new HashMap&lt;Integer,Integer&gt;();</div><div class="line">     for(int i=0;i&lt;nums.length;i++)&#123;</div><div class="line">         if(map.get(nums[i])==null)&#123;</div><div class="line">           map.put(nums[i],i);  </div><div class="line">         &#125;else&#123;</div><div class="line">             if(i-map.get(nums[i])&lt;=k)&#123;</div><div class="line">                 return true;</div><div class="line">             &#125;else&#123;</div><div class="line">                 map.put(nums[i],i);  </div><div class="line">             &#125;</div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line">       return false;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="268、缺失数字"><a href="#268、缺失数字" class="headerlink" title="268、缺失数字"></a>268、缺失数字</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">给定一个包含 0, 1, 2, ..., n 中 n 个数的序列，找出 0 .. n 中没有出现在序列中的那个数。</div><div class="line"></div><div class="line">示例 1:</div><div class="line"></div><div class="line">输入: [3,0,1]</div><div class="line">输出: 2</div><div class="line">示例 2:</div><div class="line"></div><div class="line">输入: [9,6,4,2,3,5,7,0,1]</div><div class="line">输出: 8</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>1）使用等差数列公式求1到n的和，然后减去数组之和就是缺失的n</p>
+<p>2）将数组和1到n的数字异或，最后就是缺失的n</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public int missingNumber(int[] nums) &#123;</div><div class="line">       int res=0;</div><div class="line">       for(int i=0;i&lt;nums.length;i++)&#123;</div><div class="line">           res^=nums[i];</div><div class="line">           res^=(i+1);</div><div class="line">       &#125;</div><div class="line">       return res;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="331、验证二叉树的前序序列化"><a href="#331、验证二叉树的前序序列化" class="headerlink" title="331、验证二叉树的前序序列化"></a>331、验证二叉树的前序序列化</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">序列化二叉树的一种方法是使用前序遍历。当我们遇到一个非空节点时，我们可以记录下这个节点的值。如果它是一个空节点，我们可以使用一个标记值记录，例如 #。</div><div class="line">     _9_</div><div class="line">    /   \</div><div class="line">   3     2</div><div class="line">  / \   / \</div><div class="line"> 4   1  #  6</div><div class="line">/ \ / \   / \</div><div class="line"># # # #   # #</div><div class="line">例如，上面的二叉树可以被序列化为字符串 &quot;9,3,4,#,#,1,#,#,2,#,6,#,#&quot;，其中 # 代表一个空节点。</div><div class="line">给定一串以逗号分隔的序列，验证它是否是正确的二叉树的前序序列化。编写一个在不重构树的条件下的可行算法。</div><div class="line">每个以逗号分隔的字符或为一个整数或为一个表示 null 指针的 &apos;#&apos; 。</div><div class="line">你可以认为输入格式总是有效的，例如它永远不会包含两个连续的逗号，比如 &quot;1,,3&quot; 。</div><div class="line">示例 1:</div><div class="line">输入: &quot;9,3,4,#,#,1,#,#,2,#,6,#,#&quot;</div><div class="line">输出: true</div><div class="line">示例 2:</div><div class="line">输入: &quot;1,#&quot;</div><div class="line">输出: false</div><div class="line">示例 3:</div><div class="line">输入: &quot;9,#,#,1&quot;</div><div class="line">输出: false</div></pre></td></tr></table></figure>
+<p>解法：参考自<a href="https://www.cnblogs.com/grandyang/p/5174738.html" target="_blank" rel="external">https://www.cnblogs.com/grandyang/p/5174738.html</a></p>
+<ol>
+<li><p>数字的个数总是比#号少一个</p>
+</li>
+<li><p>最后一个一定是#号</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public boolean isValidSerialization(String preorder) &#123;</div><div class="line">       String[] str=preorder.split(&quot;,&quot;);</div><div class="line">       int count=0;</div><div class="line">       for(int i=0;i&lt;str.length-1;i++)&#123;</div><div class="line">           if(str[i].equals(&quot;#&quot;))&#123;</div><div class="line">               if(count==0)&#123;</div><div class="line">                   return false;</div><div class="line">               &#125;    </div><div class="line">               count--;</div><div class="line">           &#125;else&#123;</div><div class="line">               count++;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       if(count==0 &amp;&amp; str[str.length-1].equals(&quot;#&quot;))&#123;</div><div class="line">               return true;</div><div class="line">           &#125;else&#123;</div><div class="line">               return false;</div><div class="line">           &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="345、反转字符串中的元音字母"><a href="#345、反转字符串中的元音字母" class="headerlink" title="345、反转字符串中的元音字母"></a>345、反转字符串中的元音字母</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">编写一个函数，以字符串作为输入，反转该字符串中的元音字母。</div><div class="line">示例 1:</div><div class="line">输入: &quot;hello&quot;</div><div class="line">输出: &quot;holle&quot;</div><div class="line">示例 2:</div><div class="line">输入: &quot;leetcode&quot;</div><div class="line">输出: &quot;leotcede&quot;</div></pre></td></tr></table></figure>
+<p>解法：先遍历一遍记录元音字母的下标，然后根据下标交换字母（有点儿麻烦了，可以直接从左右遍历，遇到元音就交换）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public String reverseVowels(String s) &#123;</div><div class="line">       List&lt;Integer&gt;list=new ArrayList&lt;Integer&gt;();</div><div class="line">       String str=&quot;aeiouAEIOU&quot;;</div><div class="line">       for(int i=0;i&lt;s.length();i++)&#123;</div><div class="line">           if(str.contains(Character.toString(s.charAt(i))))&#123;</div><div class="line">               list.add(i);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       int left=0,right=list.size()-1;</div><div class="line">       StringBuilder sb=new StringBuilder(s);</div><div class="line">       while(left&lt;=right)&#123;</div><div class="line">           char tmp=s.charAt(list.get(left));</div><div class="line">           sb.setCharAt(list.get(left),sb.charAt(list.get(right)));</div><div class="line">           sb.setCharAt(list.get(right),tmp);</div><div class="line">           left++;</div><div class="line">           right--;</div><div class="line">       &#125;</div><div class="line">       return sb.toString();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="6、Z字形变换"><a href="#6、Z字形变换" class="headerlink" title="6、Z字形变换"></a>6、Z字形变换</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">请你实现这个将字符串进行指定行数变换的函数：</div><div class="line">string convert(string s, int numRows);</div><div class="line">示例 1:</div><div class="line">输入: s = &quot;LEETCODEISHIRING&quot;, numRows = 3</div><div class="line">输出: &quot;LCIRETOESIIGEDHN&quot;</div><div class="line">示例 2:</div><div class="line">输入: s = &quot;LEETCODEISHIRING&quot;, numRows = 4</div><div class="line">输出: &quot;LDREOEIIECIHNTSG&quot;</div><div class="line">解释:</div><div class="line">L     D     R</div><div class="line">E   O E   I I</div><div class="line">E C   I H   N</div><div class="line">T     S     G</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">1）三行的可以这么写，多行的就不行了</div><div class="line"> public String convert(String s, int numRows) &#123;</div><div class="line">        List&lt;Character&gt;line1=new ArrayList&lt;Character&gt;();</div><div class="line">        List&lt;Character&gt;line2=new ArrayList&lt;Character&gt;();</div><div class="line">        List&lt;Character&gt;line3=new ArrayList&lt;Character&gt;();</div><div class="line">        for(int i=0;i&lt;s.length();i++)&#123;</div><div class="line">            if(i%4==0 )&#123;</div><div class="line">                line1.add(s.charAt(i));</div><div class="line">            &#125;else if(i%4==1||i%4==3)&#123;</div><div class="line">                line2.add(s.charAt(i));</div><div class="line">            &#125;else&#123;</div><div class="line">                line3.add(s.charAt(i));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        StringBuilder res=new StringBuilder();</div><div class="line">        for(int i=0;i&lt;line1.size();i++)&#123;</div><div class="line">            res.append(line1.get(i));</div><div class="line">        &#125;</div><div class="line">         for(int i=0;i&lt;line2.size();i++)&#123;</div><div class="line">            res.append(line2.get(i));</div><div class="line">        &#125;</div><div class="line">         for(int i=0;i&lt;line3.size();i++)&#123;</div><div class="line">            res.append(line3.get(i));</div><div class="line">        &#125;</div><div class="line">        return res.toString();</div><div class="line">    &#125;</div><div class="line">2）根据题意按顺序遍历就好了</div><div class="line"> public String convert(String s, int numRows) &#123;</div><div class="line">      StringBuilder[] strs=new StringBuilder[numRows];</div><div class="line">      int i=0,n=s.length(),lineIndex;</div><div class="line">      for(i=0;i&lt;numRows;i++)&#123;</div><div class="line">          strs[i]=new StringBuilder();</div><div class="line">      &#125;</div><div class="line">      i=0;</div><div class="line">      while(i&lt;n)&#123;</div><div class="line">          for(lineIndex=0;lineIndex&lt;numRows &amp;&amp; i&lt;n;lineIndex++)&#123;</div><div class="line">              strs[lineIndex].append(s.charAt(i));</div><div class="line">              //System.out.print(s.charAt(i));</div><div class="line">              i++;</div><div class="line">          &#125;</div><div class="line">          </div><div class="line">          for(lineIndex=numRows-2;lineIndex&gt;=1 &amp;&amp; i&lt;n;lineIndex--)&#123;</div><div class="line">              strs[lineIndex].append(s.charAt(i));</div><div class="line">             // System.out.print(s.charAt(i));</div><div class="line">              i++;</div><div class="line">          &#125;</div><div class="line">      &#125;  </div><div class="line">     StringBuilder res=new StringBuilder();</div><div class="line">        for(i=0;i&lt;numRows;i++)&#123;</div><div class="line">            res.append(strs[i]);</div><div class="line">        &#125;</div><div class="line">        return res.toString();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="17、电话号码的字母组合"><a href="#17、电话号码的字母组合" class="headerlink" title="17、电话号码的字母组合"></a>17、电话号码的字母组合</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。</div><div class="line">给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。</div><div class="line">示例:</div><div class="line">输入：&quot;23&quot;</div><div class="line">输出：[&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>先用一个dict存储每个按键所对应的字母，然后对每个按键的所有字母都分别排列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">public List&lt;String&gt; letterCombinations(String digits) &#123;</div><div class="line">      String[] dict=new String[]&#123;&quot;&quot;,&quot;&quot;,&quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;, &quot;jkl&quot;, &quot;mno&quot;, &quot;pqrs&quot;, &quot;tuv&quot;, &quot;wxyz&quot;&#125;;</div><div class="line">       List&lt;String&gt;res=new ArrayList&lt;String&gt;();</div><div class="line">       if(digits.length()==0)&#123;</div><div class="line">           return res;</div><div class="line">       &#125;</div><div class="line">       StringBuilder tmp=new StringBuilder();</div><div class="line">       dfs(res,dict,digits,digits.length(),tmp,0);</div><div class="line">       return res;</div><div class="line">   &#125;</div><div class="line">   public void dfs(List&lt;String&gt;res,String[] dict,String digits,int len,StringBuilder tmp,int level)&#123;</div><div class="line">       if(level==len)&#123;</div><div class="line">           res.add(tmp.toString());</div><div class="line">           return;</div><div class="line">       &#125;</div><div class="line">       String str=dict[digits.charAt(level)-&apos;0&apos;];</div><div class="line">       for(int i=0;i&lt;str.length();i++)&#123;</div><div class="line">           tmp.append(str.charAt(i));</div><div class="line">           dfs(res,dict,digits,len,tmp,level+1);</div><div class="line">           tmp.deleteCharAt(tmp.length()-1);</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="142、环形链表II"><a href="#142、环形链表II" class="headerlink" title="142、环形链表II"></a>142、环形链表II</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。</div><div class="line">为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。</div><div class="line">说明：不允许修改给定的链表。</div><div class="line">示例 1：</div><div class="line">输入：head = [3,2,0,-4], pos = 1</div><div class="line">输出：tail connects to node index 1</div><div class="line">解释：链表中有一个环，其尾部连接到第二个节点。</div><div class="line">示例 2：</div><div class="line">输入：head = [1,2], pos = 0</div><div class="line">输出：tail connects to node index 0</div><div class="line">解释：链表中有一个环，其尾部连接到第一个节点。</div><div class="line">示例 3：</div><div class="line">输入：head = [1], pos = -1</div><div class="line">输出：no cycle</div><div class="line">解释：链表中没有环。</div></pre></td></tr></table></figure>
+<p>解法：先判断有没有环(快节点一次走两个，慢节点一次走一个)，然后再求环的长度，再使快节点先走环的长度的距离，快慢节点一起走，当两节点相等的时候就是环的入口位置</p>
+<p>注：其实快慢节点第一次相遇之后，使其中一个节点从起始位置开始走，再次相遇的时候就是环的入口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"> 1）</div><div class="line"> public ListNode detectCycle(ListNode head) &#123;</div><div class="line">        ListNode fast=head,slow=head;</div><div class="line">        boolean hasCircle=false;</div><div class="line">        while(fast!=null &amp;&amp; fast.next!=null)&#123;</div><div class="line">            fast=fast.next.next;</div><div class="line">            slow=slow.next;</div><div class="line">            if(fast==slow)&#123;</div><div class="line">                hasCircle=true;</div><div class="line">                break;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if(hasCircle==false)&#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        int len=1;</div><div class="line">        slow=slow.next;</div><div class="line">        while(slow!=fast)&#123;</div><div class="line">            slow=slow.next;</div><div class="line">            len++;</div><div class="line">        &#125;</div><div class="line">        slow=head;</div><div class="line">        fast=head;</div><div class="line">        while(len&gt;0)&#123;</div><div class="line">            fast=fast.next;</div><div class="line">            len--;</div><div class="line">        &#125;</div><div class="line">        while(slow!=fast)&#123;</div><div class="line">            slow=slow.next;</div><div class="line">            fast=fast.next;</div><div class="line">        &#125;</div><div class="line">        return slow;</div><div class="line">    &#125;</div><div class="line">2）</div><div class="line"> ListNode *detectCycle(ListNode *head) &#123;</div><div class="line">        ListNode *slow = head, *fast = head;</div><div class="line">        while (fast &amp;&amp; fast-&gt;next) &#123;</div><div class="line">            slow = slow-&gt;next;</div><div class="line">            fast = fast-&gt;next-&gt;next;</div><div class="line">            if (slow == fast) break;</div><div class="line">        &#125;</div><div class="line">        if (!fast || !fast-&gt;next) return NULL;</div><div class="line">        slow = head;</div><div class="line">        while (slow != fast) &#123;</div><div class="line">            slow = slow-&gt;next;</div><div class="line">            fast = fast-&gt;next;</div><div class="line">        &#125;</div><div class="line">        return fast;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="118、杨辉三角"><a href="#118、杨辉三角" class="headerlink" title="118、杨辉三角"></a>118、杨辉三角</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">给定一个非负整数 numRows，生成杨辉三角的前 numRows 行。</div><div class="line">示例:</div><div class="line">输入: 5</div><div class="line">输出:</div><div class="line">[</div><div class="line">     [1],</div><div class="line">    [1,1],</div><div class="line">   [1,2,1],</div><div class="line">  [1,3,3,1],</div><div class="line"> [1,4,6,4,1]</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public List&lt;List&lt;Integer&gt;&gt; generate(int numRows) &#123;</div><div class="line">        List&lt;List&lt;Integer&gt;&gt;res=new ArrayList&lt;&gt;();</div><div class="line">        if(numRows==0)&#123;</div><div class="line">            return res;    </div><div class="line">        &#125;</div><div class="line">        if(numRows&gt;=1)&#123;</div><div class="line">            ArrayList&lt;Integer&gt; line1=new ArrayList&lt;&gt;();</div><div class="line">            line1.add(1);</div><div class="line">            res.add(line1);</div><div class="line">        &#125;</div><div class="line">        if(numRows&gt;=2)&#123;</div><div class="line">             ArrayList&lt;Integer&gt; line2=new ArrayList&lt;&gt;();</div><div class="line">            line2.add(1);</div><div class="line">            line2.add(1);</div><div class="line">            res.add(line2);</div><div class="line">        &#125;</div><div class="line">        for(int i=2;i&lt;numRows;i++)&#123;</div><div class="line">            ArrayList&lt;Integer&gt; line=new ArrayList&lt;&gt;();</div><div class="line">            line.add(1);</div><div class="line">            List&lt;Integer&gt; preLine=res.get(i-1);</div><div class="line">            for(int j=0;j&lt;preLine.size()-1;j++)&#123;</div><div class="line">                int tmp=preLine.get(j)+preLine.get(j+1);</div><div class="line">                line.add(tmp);</div><div class="line">            &#125;</div><div class="line">            line.add(1);</div><div class="line">            res.add(line);</div><div class="line">        &#125;</div><div class="line">        return res;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="119、杨辉三角II"><a href="#119、杨辉三角II" class="headerlink" title="119、杨辉三角II"></a>119、杨辉三角II</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">给定一个非负索引 k，其中 k ≤ 33，返回杨辉三角的第 k 行。</div><div class="line">在杨辉三角中，每个数是它左上方和右上方的数的和。</div><div class="line">示例:</div><div class="line">输入: 3</div><div class="line">输出: [1,3,3,1]</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public List&lt;Integer&gt; getRow(int rowIndex) &#123;</div><div class="line">      List&lt;Integer&gt;list=new ArrayList&lt;Integer&gt;();</div><div class="line">      if(rowIndex==0)&#123;</div><div class="line">          list.add(1);</div><div class="line">          return list;</div><div class="line">      &#125;</div><div class="line">      if(rowIndex==1)&#123;</div><div class="line">          list.add(1);</div><div class="line">          list.add(1);</div><div class="line">          return list;</div><div class="line">      &#125;</div><div class="line">      list.add(1);</div><div class="line">      list.add(1);</div><div class="line">      for(int i=1;i&lt;rowIndex;i++)&#123;</div><div class="line">          for(int j=i;j&gt;=1;j--)&#123; //注意是从后往前遍历</div><div class="line">              list.set(j,list.get(j)+list.get(j-1));</div><div class="line">          &#125;</div><div class="line">          list.add(1);</div><div class="line">      &#125;</div><div class="line">      return list;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h5 id="108、将有序数组转换为二叉搜索树"><a href="#108、将有序数组转换为二叉搜索树" class="headerlink" title="108、将有序数组转换为二叉搜索树"></a>108、将有序数组转换为二叉搜索树</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">将一个按照升序排列的有序数组，转换为一棵高度平衡二叉搜索树。</div><div class="line">本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。</div><div class="line">示例:</div><div class="line">给定有序数组: [-10,-3,0,5,9],</div><div class="line">一个可能的答案是：[0,-3,9,-10,null,5]，它可以表示下面这个高度平衡二叉搜索树：</div><div class="line">      0</div><div class="line">     / \</div><div class="line">   -3   9</div><div class="line">   /   /</div><div class="line"> -10  5</div></pre></td></tr></table></figure>
+<p>解法：如果将二叉搜索树按中序遍历的话，得到的就是一个有序数组了。那么反过来，我们可以得知，根节点应该是有序数组的中间点，从中间点分开为左右两个有序数组，在分别找出其中间点作为原中间点的左右两个子节点，这不就是是二分查找法的核心思想么。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public TreeNode sortedArrayToBST(int[] nums) &#123;</div><div class="line">      TreeNode root=  helper(nums,0,nums.length-1);</div><div class="line">      return root;</div><div class="line">  &#125;</div><div class="line">  TreeNode helper(int[] nums,int start,int end)&#123;</div><div class="line">      if(start&gt;end)&#123;</div><div class="line">          return null;</div><div class="line">      &#125;</div><div class="line">      int midium=(start+end)/2;</div><div class="line">      TreeNode root=new TreeNode(nums[midium]);</div><div class="line">      root.left=helper(nums,start,midium-1);</div><div class="line">      root.right=helper(nums,midium+1,end);</div><div class="line">      return root;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h5 id="109、有序链表转换二叉搜索树"><a href="#109、有序链表转换二叉搜索树" class="headerlink" title="109、有序链表转换二叉搜索树"></a>109、有序链表转换二叉搜索树</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">给定一个单链表，其中的元素按升序排序，将其转换为高度平衡的二叉搜索树。</div><div class="line">本题中，一个高度平衡二叉树是指一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过 1。</div><div class="line">示例:</div><div class="line">给定的有序链表： [-10, -3, 0, 5, 9],</div><div class="line"></div><div class="line">一个可能的答案是：[0, -3, 9, -10, null, 5], 它可以表示下面这个高度平衡二叉搜索树：</div><div class="line"></div><div class="line">      0</div><div class="line">     / \</div><div class="line">   -3   9</div><div class="line">   /   /</div><div class="line"> -10  5</div></pre></td></tr></table></figure>
+<p>解法：和上题一样，只不过将数组换成链表，链表的中点通过快慢指针实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public TreeNode sortedListToBST(ListNode head) &#123;</div><div class="line">       if(head==null)&#123;</div><div class="line">           return null;</div><div class="line">       &#125;</div><div class="line">      TreeNode res=helper(head,null);</div><div class="line">       return res;</div><div class="line">   &#125;</div><div class="line">   TreeNode helper(ListNode head,ListNode tail)&#123;</div><div class="line">       if(head==tail)&#123;</div><div class="line">           return null;</div><div class="line">       &#125;</div><div class="line">       ListNode slow=head,fast=head;</div><div class="line">       while(fast!=tail &amp;&amp; fast.next!=tail)&#123;</div><div class="line">           slow=slow.next;</div><div class="line">           fast=fast.next.next;</div><div class="line">       &#125;</div><div class="line">       TreeNode node=new TreeNode(slow.val);</div><div class="line">       node.left=helper(head,slow);</div><div class="line">       node.right=helper(slow.next,tail);</div><div class="line">       return node;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="121、买卖股票的最佳时机"><a href="#121、买卖股票的最佳时机" class="headerlink" title="121、买卖股票的最佳时机"></a>121、买卖股票的最佳时机</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</div><div class="line">如果你最多只允许完成一笔交易（即买入和卖出一支股票），设计一个算法来计算你所能获取的最大利润。</div><div class="line">注意你不能在买入股票前卖出股票。</div><div class="line">示例 1:</div><div class="line">输入: [7,1,5,3,6,4]</div><div class="line">输出: 5</div><div class="line">解释: 在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。</div><div class="line">     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格。</div><div class="line">示例 2:</div><div class="line">输入: [7,6,4,3,1]</div><div class="line">输出: 0</div><div class="line">解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">int min=Integer.MAX_VALUE,res=0;</div><div class="line">       for(int i=0;i&lt;prices.length;i++)&#123;</div><div class="line">           if(prices[i]&lt;min)&#123;</div><div class="line">               min=prices[i];</div><div class="line">           &#125;</div><div class="line">           if(prices[i]-min&gt;res)&#123;</div><div class="line">               res=prices[i]-min;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       return res;</div></pre></td></tr></table></figure>
+<h5 id="122、买卖股票的最佳时机-II"><a href="#122、买卖股票的最佳时机-II" class="headerlink" title="122、买卖股票的最佳时机 II"></a>122、买卖股票的最佳时机 II</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。</div><div class="line">设计一个算法来计算你所能获取的最大利润。你可以尽可能地完成更多的交易（多次买卖一支股票）。</div><div class="line">注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。</div><div class="line">示例 1:</div><div class="line">输入: [7,1,5,3,6,4]</div><div class="line">输出: 7</div><div class="line">解释: 在第 2 天（股票价格 = 1）的时候买入，在第 3 天（股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。</div><div class="line">     随后，在第 4 天（股票价格 = 3）的时候买入，在第 5 天（股票价格 = 6）的时候卖出, 这笔交易所能获得利润 = 6-3 = 3 。</div><div class="line">示例 2:</div><div class="line">输入: [1,2,3,4,5]</div><div class="line">输出: 4</div><div class="line">解释: 在第 1 天（股票价格 = 1）的时候买入，在第 5 天 （股票价格 = 5）的时候卖出, 这笔交易所能获得利润 = 5-1 = 4 。</div><div class="line">     注意你不能在第 1 天和第 2 天接连购买股票，之后再将它们卖出。</div><div class="line">     因为这样属于同时参与了多笔交易，你必须在再次购买前出售掉之前的股票。</div><div class="line">示例 3:</div><div class="line">输入: [7,6,4,3,1]</div><div class="line">输出: 0</div><div class="line">解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">1)public int maxProfit(int[] prices) &#123;</div><div class="line">        int res = 0;</div><div class="line">        for (int i = 0; i &lt; prices.length - 1; ++i) &#123;</div><div class="line">            if (prices[i] &lt; prices[i + 1]) &#123;</div><div class="line">                res += prices[i + 1] - prices[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">2)</div><div class="line">   public int maxProfit(int[] prices) &#123;</div><div class="line">        int res=0,start=0,end=0;</div><div class="line">        int n=prices.length;</div><div class="line">        if(n&lt;=1)&#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">        for(int i=1;i&lt;prices.length;i++)&#123;</div><div class="line">            if(prices[i]&gt;=prices[i-1])&#123;</div><div class="line">                end++;</div><div class="line">            &#125;else&#123;</div><div class="line">                res+=prices[end]-prices[start];</div><div class="line">                start=end=i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        if(end==prices.length-1 &amp;&amp; prices[n-1]&gt;=prices[n-2])&#123;</div><div class="line">            res+=prices[end]-prices[start];</div><div class="line">        &#125;</div><div class="line">        return res;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="144、二叉树的前序遍历"><a href="#144、二叉树的前序遍历" class="headerlink" title="144、二叉树的前序遍历"></a>144、二叉树的前序遍历</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">给定一个二叉树，返回它的 前序 遍历。</div><div class="line">示例:</div><div class="line">输入: [1,null,2,3]  </div><div class="line">   1</div><div class="line">    \</div><div class="line">     2</div><div class="line">    /</div><div class="line">   3 </div><div class="line">输出: [1,2,3]</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public List&lt;Integer&gt; preorderTraversal(TreeNode root) &#123;</div><div class="line">       List&lt;Integer&gt;res=new ArrayList&lt;&gt;();</div><div class="line">       preOrder(root,res);</div><div class="line">       return res;</div><div class="line">   &#125;</div><div class="line">   void preOrder(TreeNode root,List&lt;Integer&gt;res)&#123;</div><div class="line">       if(root==null)&#123;</div><div class="line">           return;</div><div class="line">       &#125;</div><div class="line">       res.add(root.val);</div><div class="line">       preOrder(root.left,res);</div><div class="line">       preOrder(root.right,res);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="146、LRU缓存机制"><a href="#146、LRU缓存机制" class="headerlink" title="146、LRU缓存机制"></a>146、LRU缓存机制</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">运用你所掌握的数据结构，设计和实现一个  LRU (最近最少使用) 缓存机制。它应该支持以下操作： 获取数据 get 和 写入数据 put 。</div><div class="line">获取数据 get(key) - 如果密钥 (key) 存在于缓存中，则获取密钥的值（总是正数），否则返回 -1。</div><div class="line">写入数据 put(key, value) - 如果密钥不存在，则写入其数据值。当缓存容量达到上限时，它应该在写入新数据之前删除最近最少使用的数据值，从而为新的数据值留出空间。</div><div class="line">进阶:</div><div class="line">你是否可以在 O(1) 时间复杂度内完成这两种操作？</div><div class="line">示例:</div><div class="line">LRUCache cache = new LRUCache( 2 /* 缓存容量 */ );</div><div class="line">cache.put(1, 1);</div><div class="line">cache.put(2, 2);</div><div class="line">cache.get(1);       // 返回  1</div><div class="line">cache.put(3, 3);    // 该操作会使得密钥 2 作废</div><div class="line">cache.get(2);       // 返回 -1 (未找到)</div><div class="line">cache.put(4, 4);    // 该操作会使得密钥 1 作废</div><div class="line">cache.get(1);       // 返回 -1 (未找到)</div><div class="line">cache.get(3);       // 返回  3</div><div class="line">cache.get(4);       // 返回  4</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>1）使用list存储键值对，若get到，则将此键值对放到list头部</p>
+<p>2）使用list存储键值对，使用map存储键和此条记录在list中的位置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div></pre></td><td class="code"><pre><div class="line">1)</div><div class="line">class LRUCache &#123;</div><div class="line">    List&lt;Map&lt;Integer,Integer&gt;&gt; list;</div><div class="line">    int mCapacity=0;</div><div class="line">    public LRUCache(int capacity) &#123;</div><div class="line">        list=new ArrayList&lt;&gt;();</div><div class="line">        mCapacity=capacity;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public int get(int key) &#123;</div><div class="line">        boolean get=false;</div><div class="line">        for(int i=0;i&lt;list.size();i++)&#123;</div><div class="line">            if(list.get(i).containsKey(key))&#123;</div><div class="line">                int res=list.get(i).get(key);</div><div class="line">                get=true;</div><div class="line">                Map&lt;Integer,Integer&gt;tmp=list.get(i);</div><div class="line">                list.remove(i);</div><div class="line">                list.add(tmp);</div><div class="line">                return res;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public void put(int key, int value) &#123;</div><div class="line">        boolean isIn=false;</div><div class="line">         for(int i=0;i&lt;list.size();i++)&#123;</div><div class="line">              if(list.get(i).containsKey(key))&#123;</div><div class="line">                  list.get(i).put(key,value);</div><div class="line">                  Map&lt;Integer,Integer&gt;tmp=list.get(i);</div><div class="line">                  list.remove(i);</div><div class="line">                  list.add(tmp);</div><div class="line">                  isIn=true;</div><div class="line">                  break;</div><div class="line">              &#125;</div><div class="line">         &#125;</div><div class="line">        if(isIn==false)&#123;</div><div class="line">            if(list.size()&gt;=mCapacity)&#123;</div><div class="line">                list.remove(0);</div><div class="line">            &#125;</div><div class="line">            Map&lt;Integer,Integer&gt;tmp=new HashMap&lt;&gt;();</div><div class="line">            tmp.put(key,value);</div><div class="line">            list.add(tmp);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">2)</div><div class="line">class LRUCache&#123;</div><div class="line">public:</div><div class="line">    LRUCache(int capacity) &#123;</div><div class="line">        cap = capacity;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    int get(int key) &#123;</div><div class="line">        auto it = m.find(key);</div><div class="line">        if (it == m.end()) return -1;</div><div class="line">        l.splice(l.begin(), l, it-&gt;second);</div><div class="line">        return it-&gt;second-&gt;second;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    void put(int key, int value) &#123;</div><div class="line">        auto it = m.find(key);</div><div class="line">        if (it != m.end()) l.erase(it-&gt;second);</div><div class="line">        l.push_front(make_pair(key, value));</div><div class="line">        m[key] = l.begin();</div><div class="line">        if (m.size() &gt; cap) &#123;</div><div class="line">            int k = l.rbegin()-&gt;first;</div><div class="line">            l.pop_back();</div><div class="line">            m.erase(k);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">private:</div><div class="line">    int cap;</div><div class="line">    list&lt;pair&lt;int, int&gt;&gt; l;</div><div class="line">    unordered_map&lt;int, list&lt;pair&lt;int, int&gt;&gt;::iterator&gt; m;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h5 id="110、平衡二叉树"><a href="#110、平衡二叉树" class="headerlink" title="110、平衡二叉树"></a>110、平衡二叉树</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">给定一个二叉树，判断它是否是高度平衡的二叉树。</div><div class="line">本题中，一棵高度平衡二叉树定义为：</div><div class="line">一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。</div><div class="line">示例 1:</div><div class="line">给定二叉树 [3,9,20,null,null,15,7]</div><div class="line">    3</div><div class="line">   / \</div><div class="line">  9  20</div><div class="line">    /  \</div><div class="line">   15   7</div><div class="line">返回 true 。</div><div class="line">示例 2:</div><div class="line">给定二叉树 [1,2,2,3,3,null,null,4,4]</div><div class="line">       1</div><div class="line">      / \</div><div class="line">     2   2</div><div class="line">    / \</div><div class="line">   3   3</div><div class="line">  / \</div><div class="line"> 4   4</div><div class="line">返回 false 。</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>1）递归求左右子树的深度，然后判断</p>
+<p>2）优化解法：如果我们发现子树不平衡，则不计算具体的深度，而是直接返回-1。那么优化后的方法为：对于每一个节点，我们通过checkDepth方法递归获得左右子树的深度，如果子树是平衡的，则返回真实的深度，若不平衡，直接返回-1，此方法时间复杂度O(N)，空间复杂度O(H)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">1)</div><div class="line">  public boolean isBalanced(TreeNode root) &#123;</div><div class="line">        if(root==null)&#123;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">        if(Math.abs(getDepth(root.left)-getDepth(root.right))&gt;1)&#123;</div><div class="line">            return false;</div><div class="line">        &#125;</div><div class="line">        return isBalanced(root.left) &amp;&amp; isBalanced(root.right);</div><div class="line">    &#125;</div><div class="line">    int getDepth(TreeNode node)&#123;</div><div class="line">        if(node==null)&#123;</div><div class="line">            return 0;</div><div class="line">        &#125;</div><div class="line">        return Math.max(getDepth(node.left),getDepth(node.right))+1;</div><div class="line">    &#125;</div><div class="line">2)</div><div class="line"> bool isBalanced(TreeNode *root) &#123;</div><div class="line">        if (checkDepth(root) == -1) return false;</div><div class="line">        else return true;</div><div class="line">    &#125;</div><div class="line">    int checkDepth(TreeNode *root) &#123;</div><div class="line">        if (!root) return 0;</div><div class="line">        int left = checkDepth(root-&gt;left);</div><div class="line">        if (left == -1) return -1;</div><div class="line">        int right = checkDepth(root-&gt;right);</div><div class="line">        if (right == -1) return -1;</div><div class="line">        int diff = abs(left - right);</div><div class="line">        if (diff &gt; 1) return -1;</div><div class="line">        else return 1 + max(left, right);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="111、二叉树的最小深度"><a href="#111、二叉树的最小深度" class="headerlink" title="111、二叉树的最小深度"></a>111、二叉树的最小深度</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">给定一个二叉树，找出其最小深度。</div><div class="line">最小深度是从根节点到最近叶子节点的最短路径上的节点数量。</div><div class="line">说明: 叶子节点是指没有子节点的节点。</div><div class="line">示例:</div><div class="line">给定二叉树 [3,9,20,null,null,15,7],</div><div class="line">    3</div><div class="line">   / \</div><div class="line">  9  20</div><div class="line">    /  \</div><div class="line">   15   7</div><div class="line">返回它的最小深度  2.</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public int minDepth(TreeNode root) &#123;</div><div class="line">       if(root==null)&#123;</div><div class="line">           return 0;</div><div class="line">       &#125;</div><div class="line">       if(root.left==null)&#123;</div><div class="line">           return 1+minDepth(root.right);</div><div class="line">       &#125;</div><div class="line">       if(root.right==null)&#123;</div><div class="line">           return 1+minDepth(root.left);</div><div class="line">       &#125;</div><div class="line">       return 1+Math.min(minDepth(root.left),minDepth(root.right));</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="125、验证回文串"><a href="#125、验证回文串" class="headerlink" title="125、验证回文串"></a>125、验证回文串</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。</div><div class="line">说明：本题中，我们将空字符串定义为有效的回文串。</div><div class="line">示例 1:</div><div class="line">输入: &quot;A man, a plan, a canal: Panama&quot;</div><div class="line">输出: true</div><div class="line">示例 2:</div><div class="line">输入: &quot;race a car&quot;</div><div class="line">输出: false</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">public boolean isPalindrome(String s) &#123;</div><div class="line">        int start=0,end=s.length()-1;</div><div class="line">        String str=s.toLowerCase();</div><div class="line">        System.out.println(str);</div><div class="line">        while(start&lt;=end)&#123;</div><div class="line">            while(start&lt;=end &amp;&amp; !isAlphaNum(str.charAt(start)))&#123;</div><div class="line">                start++;</div><div class="line">            &#125;</div><div class="line">             while(start&lt;=end &amp;&amp; !isAlphaNum(str.charAt(end)))&#123;</div><div class="line">                end--;</div><div class="line">            &#125;</div><div class="line">            if(start&lt;=end &amp;&amp; str.charAt(start)!=str.charAt(end))&#123;</div><div class="line">                return false;</div><div class="line">            &#125;</div><div class="line">            start++;</div><div class="line">            end--;</div><div class="line">        &#125;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    public boolean isAlphaNum(char c)&#123;</div><div class="line">        if(c&gt;=&apos;0&apos; &amp;&amp; c&lt;=&apos;9&apos;)&#123;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">        if(c&gt;=&apos;a&apos; &amp;&amp; c&lt;=&apos;z&apos;)&#123;</div><div class="line">            return true;</div><div class="line">        &#125;</div><div class="line">        return false;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="450、删除二叉搜索树中的节点"><a href="#450、删除二叉搜索树中的节点" class="headerlink" title="450、删除二叉搜索树中的节点"></a>450、删除二叉搜索树中的节点</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">给定一个二叉搜索树的根节点 root 和一个值 key，删除二叉搜索树中的 key 对应的节点，并保证二叉搜索树的性质不变。返回二叉搜索树（有可能被更新）的根节点的引用。</div><div class="line">一般来说，删除节点可分为两个步骤：</div><div class="line">首先找到需要删除的节点；</div><div class="line">如果找到了，删除它。</div><div class="line">说明： 要求算法时间复杂度为 O(h)，h 为树的高度。</div><div class="line">示例:</div><div class="line">root = [5,3,6,2,4,null,7]</div><div class="line">key = 3</div><div class="line">    5</div><div class="line">   / \</div><div class="line">  3   6</div><div class="line"> / \   \</div><div class="line">2   4   7</div><div class="line">给定需要删除的节点值是 3，所以我们首先找到 3 这个节点，然后删除它。</div><div class="line">一个正确的答案是 [5,4,6,2,null,null,7], 如下图所示。</div><div class="line">    5</div><div class="line">   / \</div><div class="line">  4   6</div><div class="line"> /     \</div><div class="line">2       7</div><div class="line">另一个正确答案是 [5,2,6,null,4,null,7]。</div><div class="line">    5</div><div class="line">   / \</div><div class="line">  2   6</div><div class="line">   \   \</div><div class="line">    4   7</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>先通过先序遍历得到有序数组(不包括key节点)，然后通过有序序列重建二叉搜索树</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">public TreeNode deleteNode(TreeNode root, int key) &#123;</div><div class="line">       List&lt;TreeNode&gt;list=new ArrayList&lt;&gt;();</div><div class="line">       boolean hasKey=midOrder(root,list,key);</div><div class="line">       if(hasKey==false)&#123;</div><div class="line">           return root;</div><div class="line">       &#125;</div><div class="line">       TreeNode res=helper(list,0,list.size()-1);</div><div class="line">       return res;</div><div class="line">   &#125;</div><div class="line">   boolean midOrder(TreeNode root,List&lt;TreeNode&gt;list,int key)&#123;</div><div class="line">       if(root==null)&#123;</div><div class="line">           return false;</div><div class="line">       &#125;</div><div class="line">       boolean res=key==root.val;</div><div class="line">       boolean resLeft=midOrder(root.left,list,key);</div><div class="line">       if(!res)&#123;</div><div class="line">           list.add(root);    </div><div class="line">       &#125;</div><div class="line">       boolean resRight=midOrder(root.right,list,key);</div><div class="line">       return res|| resLeft ||resRight;</div><div class="line">   &#125;</div><div class="line">    TreeNode helper(List&lt;TreeNode&gt; nums,int start,int end)&#123;</div><div class="line">       if(start&gt;end)&#123;</div><div class="line">           return null;</div><div class="line">       &#125;</div><div class="line">       int midium=(start+end)/2;</div><div class="line">       TreeNode root=new TreeNode(nums.get(midium).val);</div><div class="line">       root.left=helper(nums,start,midium-1);</div><div class="line">       root.right=helper(nums,midium+1,end);</div><div class="line">       return root;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="150、逆波兰表达式求值"><a href="#150、逆波兰表达式求值" class="headerlink" title="150、逆波兰表达式求值"></a>150、逆波兰表达式求值</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">根据逆波兰表示法，求表达式的值。</div><div class="line">有效的运算符包括 +, -, *, / 。每个运算对象可以是整数，也可以是另一个逆波兰表达式。</div><div class="line">说明：</div><div class="line">整数除法只保留整数部分。</div><div class="line">给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。</div><div class="line">示例 1：</div><div class="line">输入: [&quot;2&quot;, &quot;1&quot;, &quot;+&quot;, &quot;3&quot;, &quot;*&quot;]</div><div class="line">输出: 9</div><div class="line">解释: ((2 + 1) * 3) = 9</div><div class="line">示例 2：</div><div class="line">输入: [&quot;4&quot;, &quot;13&quot;, &quot;5&quot;, &quot;/&quot;, &quot;+&quot;]</div><div class="line">输出: 6</div><div class="line">解释: (4 + (13 / 5)) = 6</div><div class="line">示例 3：</div><div class="line">输入: [&quot;10&quot;, &quot;6&quot;, &quot;9&quot;, &quot;3&quot;, &quot;+&quot;, &quot;-11&quot;, &quot;*&quot;, &quot;/&quot;, &quot;*&quot;, &quot;17&quot;, &quot;+&quot;, &quot;5&quot;, &quot;+&quot;]</div><div class="line">输出: 22</div><div class="line">解释: </div><div class="line">  ((10 * (6 / ((9 + 3) * -11))) + 17) + 5</div><div class="line">= ((10 * (6 / (12 * -11))) + 17) + 5</div><div class="line">= ((10 * (6 / -132)) + 17) + 5</div><div class="line">= ((10 * 0) + 17) + 5</div><div class="line">= (0 + 17) + 5</div><div class="line">= 17 + 5</div><div class="line">= 22</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>通过栈来实现，遇运算符则出栈两个数，再将计算结果入栈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">public int evalRPN(String[] tokens) &#123;</div><div class="line">      Stack&lt;Integer&gt;stack=new Stack&lt;&gt;();</div><div class="line">       int num1,num2;</div><div class="line">      for(String str:tokens)&#123;</div><div class="line">          if(str.equals(&quot;+&quot;))&#123;</div><div class="line">              num2=stack.pop();</div><div class="line">              num1=stack.pop();</div><div class="line">              stack.push(num1+num2);</div><div class="line">          &#125;else if(str.equals(&quot;-&quot;))&#123;</div><div class="line">               num2=stack.pop();</div><div class="line">              num1=stack.pop();</div><div class="line">              stack.push(num1-num2);</div><div class="line">          &#125;else if(str.equals(&quot;*&quot;))&#123;</div><div class="line">               num2=stack.pop();</div><div class="line">              num1=stack.pop();</div><div class="line">              stack.push(num1*num2);</div><div class="line">          &#125;else if(str.equals(&quot;/&quot;))&#123;</div><div class="line">               num2=stack.pop();</div><div class="line">              num1=stack.pop();</div><div class="line">              stack.push(num1/num2);</div><div class="line">          &#125;else&#123;</div><div class="line">              stack.push(Integer.parseInt(str));</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">   return stack.pop();   </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h5 id="133、克隆图-好"><a href="#133、克隆图-好" class="headerlink" title="133、克隆图_好"></a>133、克隆图_好</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">给定无向连通图中一个节点的引用，返回该图的深拷贝（克隆）。图中的每个节点都包含它的值 val（Int） 和其邻居的列表（list[Node]）。</div><div class="line">示例：</div><div class="line">输入：</div><div class="line">&#123;&quot;$id&quot;:&quot;1&quot;,&quot;neighbors&quot;:[&#123;&quot;$id&quot;:&quot;2&quot;,&quot;neighbors&quot;:[&#123;&quot;$ref&quot;:&quot;1&quot;&#125;,&#123;&quot;$id&quot;:&quot;3&quot;,&quot;neighbors&quot;:[&#123;&quot;$ref&quot;:&quot;2&quot;&#125;,&#123;&quot;$id&quot;:&quot;4&quot;,&quot;neighbors&quot;:[&#123;&quot;$ref&quot;:&quot;3&quot;&#125;,&#123;&quot;$ref&quot;:&quot;1&quot;&#125;],&quot;val&quot;:4&#125;],&quot;val&quot;:3&#125;],&quot;val&quot;:2&#125;,&#123;&quot;$ref&quot;:&quot;4&quot;&#125;],&quot;val&quot;:1&#125;</div><div class="line">解释：</div><div class="line">节点 1 的值是 1，它有两个邻居：节点 2 和 4 。</div><div class="line">节点 2 的值是 2，它有两个邻居：节点 1 和 3 。</div><div class="line">节点 3 的值是 3，它有两个邻居：节点 2 和 4 。</div><div class="line">节点 4 的值是 4，它有两个邻居：节点 1 和 3 。</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>使用深搜或者广搜，通过map来记录出现过的节点</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">1)深搜</div><div class="line">  public Node cloneGraph(Node node) &#123;</div><div class="line">      Map&lt;Node,Node&gt;map=new HashMap&lt;&gt;();</div><div class="line">      return dfs(map,node);  </div><div class="line">    &#125;</div><div class="line">    Node dfs(Map&lt;Node,Node&gt;map,Node node)&#123;</div><div class="line">        if(node==null)&#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        if(map.containsKey(node))&#123;</div><div class="line">            return map.get(node);</div><div class="line">        &#125;</div><div class="line">        Node clone=new Node(node.val);</div><div class="line">        clone.neighbors=new ArrayList&lt;Node&gt;();//注意要新建</div><div class="line">        map.put(node,clone);</div><div class="line">        for(Node neighbor:node.neighbors)&#123;</div><div class="line">            clone.neighbors.add(dfs(map,neighbor));</div><div class="line">        &#125;</div><div class="line">        return clone;</div><div class="line">    &#125;</div><div class="line">2）广搜</div><div class="line"> Node* cloneGraph(Node* node) &#123;</div><div class="line">        if (!node) return NULL;</div><div class="line">        unordered_map&lt;Node*, Node*&gt; m;</div><div class="line">        queue&lt;Node*&gt; q&#123;&#123;node&#125;&#125;;</div><div class="line">        Node *clone = new Node(node-&gt;val);</div><div class="line">        m[node] = clone;</div><div class="line">        while (!q.empty()) &#123;</div><div class="line">            Node *t = q.front(); q.pop();</div><div class="line">            for (Node *neighbor : t-&gt;neighbors) &#123;</div><div class="line">                if (!m.count(neighbor)) &#123;</div><div class="line">                    m[neighbor] = new Node(neighbor-&gt;val);</div><div class="line">                    q.push(neighbor);</div><div class="line">                &#125;</div><div class="line">                m[t]-&gt;neighbors.push_back(m[neighbor]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        return clone;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="134、加油站"><a href="#134、加油站" class="headerlink" title="134、加油站"></a>134、加油站</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line">在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。</div><div class="line">你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。</div><div class="line">如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。</div><div class="line">说明: </div><div class="line">如果题目有解，该答案即为唯一答案。</div><div class="line">输入数组均为非空数组，且长度相同。</div><div class="line">输入数组中的元素均为非负数。</div><div class="line">示例 1:</div><div class="line">输入: </div><div class="line">gas  = [1,2,3,4,5]</div><div class="line">cost = [3,4,5,1,2]</div><div class="line">输出: 3</div><div class="line">解释:</div><div class="line">从 3 号加油站(索引为 3 处)出发，可获得 4 升汽油。此时油箱有 = 0 + 4 = 4 升汽油</div><div class="line">开往 4 号加油站，此时油箱有 4 - 1 + 5 = 8 升汽油</div><div class="line">开往 0 号加油站，此时油箱有 8 - 2 + 1 = 7 升汽油</div><div class="line">开往 1 号加油站，此时油箱有 7 - 3 + 2 = 6 升汽油</div><div class="line">开往 2 号加油站，此时油箱有 6 - 4 + 3 = 5 升汽油</div><div class="line">开往 3 号加油站，你需要消耗 5 升汽油，正好足够你返回到 3 号加油站。</div><div class="line">因此，3 可为起始索引。</div><div class="line">示例 2:</div><div class="line">输入: </div><div class="line">gas  = [2,3,4]</div><div class="line">cost = [3,4,3]</div><div class="line">输出: -1</div><div class="line">解释:</div><div class="line">你不能从 0 号或 1 号加油站出发，因为没有足够的汽油可以让你行驶到下一个加油站。</div><div class="line">我们从 2 号加油站出发，可以获得 4 升汽油。 此时油箱有 = 0 + 4 = 4 升汽油</div><div class="line">开往 0 号加油站，此时油箱有 4 - 3 + 2 = 3 升汽油</div><div class="line">开往 1 号加油站，此时油箱有 3 - 3 + 3 = 3 升汽油</div><div class="line">你无法返回 2 号加油站，因为返程需要消耗 4 升汽油，但是你的油箱只有 3 升汽油。</div><div class="line">因此，无论怎样，你都不可能绕环路行驶一周。</div></pre></td></tr></table></figure>
+<p>解法：假设开始设置起点start = 0, 并从这里出发，如果当前的gas值大于cost值，就可以继续前进，此时到下一个站点，剩余的gas加上当前的gas再减去cost，看是否大于0，若大于0，则继续前进。当到达某一站点时，若这个值小于0了，则说明从起点到这个点中间的任何一个点都不能作为起点，则把起点设为下一个点，继续遍历。当遍历完整个环时，当前保存的起点即为所求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public int canCompleteCircuit(int[] gas, int[] cost) &#123;</div><div class="line">      int sum=0,start=0,total=0;</div><div class="line">      for(int i=0;i&lt;gas.length;i++)&#123;</div><div class="line">          sum+=(gas[i]-cost[i]);</div><div class="line">          total+=(gas[i]-cost[i]);</div><div class="line">          if(sum&lt;0)&#123;</div><div class="line">              sum=0;</div><div class="line">              start=i+1;</div><div class="line">          &#125;</div><div class="line">      &#125;</div><div class="line">      if(total&lt;0)&#123;</div><div class="line">          return -1;</div><div class="line">      &#125;else&#123;</div><div class="line">          return start;    </div><div class="line">      &#125;   </div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h5 id="139、复制带随机指针的链表"><a href="#139、复制带随机指针的链表" class="headerlink" title="139、复制带随机指针的链表"></a>139、复制带随机指针的链表</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">给定一个链表，每个节点包含一个额外增加的随机指针，该指针可以指向链表中的任何节点或空节点。</div><div class="line">要求返回这个链表的深拷贝。 </div><div class="line">示例：</div><div class="line">输入：</div><div class="line">&#123;&quot;$id&quot;:&quot;1&quot;,&quot;next&quot;:&#123;&quot;$id&quot;:&quot;2&quot;,&quot;next&quot;:null,&quot;random&quot;:&#123;&quot;$ref&quot;:&quot;2&quot;&#125;,&quot;val&quot;:2&#125;,&quot;random&quot;:&#123;&quot;$ref&quot;:&quot;2&quot;&#125;,&quot;val&quot;:1&#125;</div><div class="line">解释：</div><div class="line">节点 1 的值是 1，它的下一个指针和随机指针都指向节点 2 。</div><div class="line">节点 2 的值是 2，它的下一个指针指向 null，随机指针指向它自己。</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>1）使用map记录原链表和新链表中相应节点的对应关系</p>
+<p>2）剑指offer中的解法，在原链表中的每个节点后复制一个相同节点，于是新链表中random的指向</p>
+<p>就是原链表中的random.next</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">1)</div><div class="line">/*</div><div class="line">class Node &#123;</div><div class="line">    public int val;</div><div class="line">    public Node next;</div><div class="line">    public Node random;</div><div class="line">    public Node() &#123;&#125;</div><div class="line">    public Node(int _val,Node _next,Node _random) &#123;</div><div class="line">        val = _val;</div><div class="line">        next = _next;</div><div class="line">        random = _random;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">*/</div><div class="line">class Solution &#123;</div><div class="line">    public Node copyRandomList(Node head) &#123;</div><div class="line">        Node node=head,newHead=new Node(),curNode=newHead;</div><div class="line">        Map&lt;Node,Node&gt;map=new HashMap&lt;Node,Node&gt;();</div><div class="line">        while(node!=null)&#123;</div><div class="line">            Node tmp=new Node(node.val);</div><div class="line">            map.put(node,tmp);</div><div class="line">            curNode.next=tmp;</div><div class="line">            curNode=curNode.next;</div><div class="line">            node=node.next;</div><div class="line">        &#125;</div><div class="line">        node=head;</div><div class="line">        curNode=newHead.next;</div><div class="line">        while(node!=null)&#123;</div><div class="line">            if(node.random!=null)&#123;</div><div class="line">                curNode.random=map.get(node.random);</div><div class="line">            &#125;</div><div class="line">            node=node.next;</div><div class="line">            curNode=curNode.next;</div><div class="line">        &#125;</div><div class="line">        return newHead.next;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="123、重排链表"><a href="#123、重排链表" class="headerlink" title="123、重排链表"></a>123、重排链表</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">给定一个单链表 L：L0→L1→…→Ln-1→Ln ，</div><div class="line">将其重新排列后变为： L0→Ln→L1→Ln-1→L2→Ln-2→…</div><div class="line">你不能只是单纯的改变节点内部的值，而是需要实际的进行节点交换。</div><div class="line">示例 1:</div><div class="line">给定链表 1-&gt;2-&gt;3-&gt;4, 重新排列为 1-&gt;4-&gt;2-&gt;3.</div><div class="line">示例 2:</div><div class="line">给定链表 1-&gt;2-&gt;3-&gt;4-&gt;5, 重新排列为 1-&gt;5-&gt;2-&gt;4-&gt;3.</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<p>建两个链表，一个正序存储，一个倒序存储，然后改变next节点</p>
+<p>注：可以使用一个链表来存储，然后一边从前面出，一边从后面出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public void reorderList(ListNode head) &#123;</div><div class="line">        List&lt;ListNode&gt;list=new ArrayList&lt;&gt;();</div><div class="line">        while(head!=null)&#123;</div><div class="line">            list.add(head);</div><div class="line">            head=head.next;</div><div class="line">        &#125;</div><div class="line">        List&lt;ListNode&gt;list1=new ArrayList&lt;&gt;(list);</div><div class="line">        Collections.reverse(list1);</div><div class="line">        int n=list.size();</div><div class="line">        if(n&lt;=1)&#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        for(int i=0;i&lt;n/2;i++)&#123;</div><div class="line">            list.get(i).next=list1.get(i);</div><div class="line">            list1.get(i).next=list.get(i+1);</div><div class="line">        &#125;</div><div class="line">        System.out.println(n);</div><div class="line">        if(n%2==1)&#123;</div><div class="line">             list.get(n/2).next=null;     </div><div class="line">        &#125;else&#123;</div><div class="line">            list1.get(n/2-1).next=null;    </div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h5 id="148、排序链表-好"><a href="#148、排序链表-好" class="headerlink" title="148、排序链表_好"></a>148、排序链表_好</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">在 O(n log n) 时间复杂度和常数级空间复杂度下，对链表进行排序。</div><div class="line">示例 1:</div><div class="line">输入: 4-&gt;2-&gt;1-&gt;3</div><div class="line">输出: 1-&gt;2-&gt;3-&gt;4</div><div class="line">示例 2:</div><div class="line">输入: -1-&gt;5-&gt;3-&gt;4-&gt;0</div><div class="line">输出: -1-&gt;0-&gt;3-&gt;4-&gt;5</div></pre></td></tr></table></figure>
+<p>解法：使用归并排序，merge内部相当于有序链表组合任务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">public ListNode sortList(ListNode head) &#123;</div><div class="line">     if(head==null || head.next==null)&#123;</div><div class="line">         return head;</div><div class="line">     &#125;</div><div class="line">     ListNode slow=head,pre=head,fast=head;</div><div class="line">     while(fast!=null &amp;&amp; fast.next!=null)&#123;</div><div class="line">         pre=slow;</div><div class="line">         slow=slow.next;</div><div class="line">         fast=fast.next.next;</div><div class="line">     &#125;</div><div class="line">     pre.next=null;</div><div class="line">     return merge(sortList(head),sortList(slow));</div><div class="line"> &#125;</div><div class="line"> ListNode merge(ListNode l1,ListNode l2)&#123;</div><div class="line">     ListNode pre=new ListNode(-1),cur=pre;</div><div class="line">     while(l1!=null &amp;&amp; l2!=null)&#123;</div><div class="line">         if(l1.val&lt;l2.val)&#123;</div><div class="line">             cur.next=l1;</div><div class="line">             cur=cur.next;</div><div class="line">             l1=l1.next;</div><div class="line">         &#125;else&#123;</div><div class="line">             cur.next=l2;</div><div class="line">             cur=cur.next;</div><div class="line">             l2=l2.next;</div><div class="line">         &#125;</div><div class="line">     &#125;</div><div class="line">     if(l1!=null)&#123;</div><div class="line">         cur.next=l1;</div><div class="line">     &#125;</div><div class="line">     if(l2!=null)&#123;</div><div class="line">         cur.next=l2;</div><div class="line">     &#125;</div><div class="line">     return pre.next;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h5 id="39、组合总和"><a href="#39、组合总和" class="headerlink" title="39、组合总和"></a>39、组合总和</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。</div><div class="line">candidates 中的数字可以无限制重复被选取。</div><div class="line">说明：</div><div class="line">所有数字（包括 target）都是正整数。</div><div class="line">解集不能包含重复的组合。 </div><div class="line">示例 1:</div><div class="line">输入: candidates = [2,3,6,7], target = 7,</div><div class="line">所求解集为:</div><div class="line">[</div><div class="line">  [7],</div><div class="line">  [2,2,3]</div><div class="line">]</div><div class="line">示例 2:</div><div class="line">输入: candidates = [2,3,5], target = 8,</div><div class="line">所求解集为:</div><div class="line">[</div><div class="line">  [2,2,2,2],</div><div class="line">  [2,3,3],</div><div class="line">  [3,5]</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>解法：深搜</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public List&lt;List&lt;Integer&gt;&gt; combinationSum(int[] candidates, int target) &#123;</div><div class="line">        List&lt;List&lt;Integer&gt;&gt;res=new ArrayList&lt;&gt;();</div><div class="line">        if(candidates.length==0)&#123;</div><div class="line">            return res;</div><div class="line">        &#125;</div><div class="line">        List&lt;Integer&gt;tmp=new ArrayList&lt;&gt;();</div><div class="line">        dfs(res,candidates,tmp,0,target,0);</div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">    void dfs(List&lt;List&lt;Integer&gt;&gt;res,int[] candidates,List&lt;Integer&gt;tmp,int sum,int target,int index)&#123;</div><div class="line">        if(sum==target)&#123;</div><div class="line">             for(int j=0;j&lt;tmp.size();j++)&#123;</div><div class="line">                System.out.print(tmp.get(j));</div><div class="line">            &#125;</div><div class="line">            List&lt;Integer&gt;newLine=new ArrayList&lt;&gt;();</div><div class="line">            newLine.addAll(tmp);</div><div class="line">            res.add(newLine);</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        if(sum&gt;target)&#123;</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        for(int i=index;i&lt;candidates.length;i++)&#123;</div><div class="line">            tmp.add(candidates[i]);</div><div class="line">            dfs(res,candidates,tmp,sum+candidates[i],target,i);</div><div class="line">            tmp.remove(tmp.size()-1);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>#####49、字母异位词分组</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">给定一个字符串数组，将字母异位词组合在一起。字母异位词指字母相同，但排列不同的字符串。</div><div class="line">示例:</div><div class="line">输入: [&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;],</div><div class="line">输出:</div><div class="line">[</div><div class="line">  [&quot;ate&quot;,&quot;eat&quot;,&quot;tea&quot;],</div><div class="line">  [&quot;nat&quot;,&quot;tan&quot;],</div><div class="line">  [&quot;bat&quot;]</div><div class="line">]</div><div class="line">说明：</div><div class="line">所有输入均为小写字母。</div><div class="line">不考虑答案输出的顺序。</div></pre></td></tr></table></figure>
+<p>解法：先对字符串排序，将排序后的字符串作为key，然后使用map存储此key和key所对应的返回数组的下标</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public List&lt;List&lt;String&gt;&gt; groupAnagrams(String[] strs) &#123;</div><div class="line">       List&lt;List&lt;String&gt;&gt;res=new ArrayList&lt;&gt;();</div><div class="line">       Map&lt;String,Integer&gt;map=new HashMap&lt;&gt;();</div><div class="line">       for(int i=0;i&lt;strs.length;i++)&#123;</div><div class="line">           char[] s_arr = strs[i].toCharArray();</div><div class="line">           Arrays.sort(s_arr);</div><div class="line">           String key = String.valueOf(s_arr); </div><div class="line">           if(!map.containsKey(key))&#123;</div><div class="line">               List&lt;String&gt;newLine=new ArrayList&lt;&gt;();</div><div class="line">               newLine.add(strs[i]);</div><div class="line">               res.add(newLine);</div><div class="line">               map.put(key,res.size()-1);</div><div class="line">           &#125;else&#123;</div><div class="line">               int index=map.get(key);</div><div class="line">               res.get(index).add(strs[i]);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       return res;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h5 id="27、移除元素"><a href="#27、移除元素" class="headerlink" title="27、移除元素"></a>27、移除元素</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">给定一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，返回移除后数组的新长度。</div><div class="line">不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。</div><div class="line">元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。</div><div class="line">示例 1:</div><div class="line">给定 nums = [3,2,2,3], val = 3,</div><div class="line">函数应该返回新的长度 2, 并且 nums 中的前两个元素均为 2。</div><div class="line">你不需要考虑数组中超出新长度后面的元素。</div><div class="line">示例 2:</div><div class="line">给定 nums = [0,1,2,2,3,0,4,2], val = 2,</div><div class="line">函数应该返回新的长度 5, 并且 nums 中的前五个元素为 0, 1, 3, 0, 4。</div><div class="line">注意这五个元素可为任意顺序。</div><div class="line">你不需要考虑数组中超出新长度后面的元素。</div></pre></td></tr></table></figure>
+<p>解法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public int removeElement(int[] nums, int val) &#123;</div><div class="line">       int res=nums.length-1,tmp;</div><div class="line">       for(int i=0;i&lt;=res;i++)&#123;</div><div class="line">           if(nums[i]==val)&#123;</div><div class="line">               tmp=nums[i];</div><div class="line">               nums[i]=nums[res];</div><div class="line">               nums[res]=tmp;</div><div class="line">               res--;</div><div class="line">               i--;</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">       return res+1;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/27/Android启动页视频-图片转换效果实现/" rel="next" title="Android启动页视频+图片转换效果实现">
+                <i class="fa fa-chevron-left"></i> Android启动页视频+图片转换效果实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/20/音视频图像编解码相关/" rel="prev" title="音视频图像编解码相关">
+                音视频图像编解码相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/panpan.jpg"
+                alt="CoderZWei" />
+            
+              <p class="site-author-name" itemprop="name">CoderZWei</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#活字印刷"><span class="nav-number">1.</span> <span class="nav-text">活字印刷</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#50、Pow-x-n"><span class="nav-number">2.</span> <span class="nav-text">50、Pow(x,n)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#95、不同的二叉搜索树II"><span class="nav-number">3.</span> <span class="nav-text">95、不同的二叉搜索树II</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#96、-不同的二叉搜索树"><span class="nav-number">4.</span> <span class="nav-text">96、 不同的二叉搜索树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#71、-简化路径"><span class="nav-number">5.</span> <span class="nav-text">71、 简化路径</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#75、颜色分类"><span class="nav-number">6.</span> <span class="nav-text">75、颜色分类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#112、路径总和"><span class="nav-number">7.</span> <span class="nav-text">112、路径总和</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#67、二进制求和"><span class="nav-number">8.</span> <span class="nav-text">67、二进制求和</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#77、组合"><span class="nav-number">9.</span> <span class="nav-text">77、组合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#100、相同的树"><span class="nav-number">10.</span> <span class="nav-text">100、相同的树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#74、搜索二维矩阵"><span class="nav-number">11.</span> <span class="nav-text">74、搜索二维矩阵</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#106、从中序与后序遍历序列构造二叉树"><span class="nav-number">12.</span> <span class="nav-text">106、从中序与后序遍历序列构造二叉树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#107、二叉树的层次遍历-II"><span class="nav-number">13.</span> <span class="nav-text">107、二叉树的层次遍历 II</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#219、存在重复元素-II"><span class="nav-number">14.</span> <span class="nav-text">219、存在重复元素 II</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#268、缺失数字"><span class="nav-number">15.</span> <span class="nav-text">268、缺失数字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#331、验证二叉树的前序序列化"><span class="nav-number">16.</span> <span class="nav-text">331、验证二叉树的前序序列化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#345、反转字符串中的元音字母"><span class="nav-number">17.</span> <span class="nav-text">345、反转字符串中的元音字母</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6、Z字形变换"><span class="nav-number">18.</span> <span class="nav-text">6、Z字形变换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#17、电话号码的字母组合"><span class="nav-number">19.</span> <span class="nav-text">17、电话号码的字母组合</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#142、环形链表II"><span class="nav-number">20.</span> <span class="nav-text">142、环形链表II</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#118、杨辉三角"><span class="nav-number">21.</span> <span class="nav-text">118、杨辉三角</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#119、杨辉三角II"><span class="nav-number">22.</span> <span class="nav-text">119、杨辉三角II</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#108、将有序数组转换为二叉搜索树"><span class="nav-number">23.</span> <span class="nav-text">108、将有序数组转换为二叉搜索树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#109、有序链表转换二叉搜索树"><span class="nav-number">24.</span> <span class="nav-text">109、有序链表转换二叉搜索树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#121、买卖股票的最佳时机"><span class="nav-number">25.</span> <span class="nav-text">121、买卖股票的最佳时机</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#122、买卖股票的最佳时机-II"><span class="nav-number">26.</span> <span class="nav-text">122、买卖股票的最佳时机 II</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#144、二叉树的前序遍历"><span class="nav-number">27.</span> <span class="nav-text">144、二叉树的前序遍历</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#146、LRU缓存机制"><span class="nav-number">28.</span> <span class="nav-text">146、LRU缓存机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#110、平衡二叉树"><span class="nav-number">29.</span> <span class="nav-text">110、平衡二叉树</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#111、二叉树的最小深度"><span class="nav-number">30.</span> <span class="nav-text">111、二叉树的最小深度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#125、验证回文串"><span class="nav-number">31.</span> <span class="nav-text">125、验证回文串</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#450、删除二叉搜索树中的节点"><span class="nav-number">32.</span> <span class="nav-text">450、删除二叉搜索树中的节点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#150、逆波兰表达式求值"><span class="nav-number">33.</span> <span class="nav-text">150、逆波兰表达式求值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#133、克隆图-好"><span class="nav-number">34.</span> <span class="nav-text">133、克隆图_好</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#134、加油站"><span class="nav-number">35.</span> <span class="nav-text">134、加油站</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#139、复制带随机指针的链表"><span class="nav-number">36.</span> <span class="nav-text">139、复制带随机指针的链表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#123、重排链表"><span class="nav-number">37.</span> <span class="nav-text">123、重排链表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#148、排序链表-好"><span class="nav-number">38.</span> <span class="nav-text">148、排序链表_好</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#39、组合总和"><span class="nav-number">39.</span> <span class="nav-text">39、组合总和</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#27、移除元素"><span class="nav-number">40.</span> <span class="nav-text">27、移除元素</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CoderZWei</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
